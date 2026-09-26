@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kontakt Os - Innopixel</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Kontakt Innopixel i Odense. Lad os drøfte din næste VR-applikation, interaktive installation eller 3D-projekt.">
+    <meta name="keywords" content="kontakt innopixel, xr produktionshus odense, vr udvikling fyn, ring til innopixel">
+    
+    <!-- Theme Toggle Blocking Script -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            const theme = savedTheme || systemTheme;
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <!-- Light Theme FX Canvas & Grid -->
+    <canvas id="pixel-canvas"></canvas>
+    <div class="cyber-grid"></div>
+    <div class="scanline-overlay"></div>
+    
+    <!-- Ambient Soft Glow Orbs -->
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+
+    <!-- Sticky Header -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo-wrapper">
+                <img src="../../images/logo-innopixel.svg" alt="innopixel" class="logo-img">
+            </a>
+            
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Hjem</a>
+                <a href="about.html" class="nav-link">Om os</a>
+                <a href="team.html" class="nav-link">Teamet</a>
+                <a href="ydelser.html" class="nav-link">Ydelser</a>
+                <a href="projekter.html" class="nav-link">Cases</a>
+                <a href="kontakt.html" class="nav-link nav-btn">Kontakt</a>
+                
+                <!-- Language Selector Flags -->
+                <div class="lang-selector">
+                    <a href="kontakt.html" class="lang-btn active" title="Dansk">
+                        <svg class="flag-icon" viewBox="0 0 37 28" width="18" height="14">
+                            <rect width="37" height="28" fill="#c8102e"/>
+                            <rect x="12" width="4" height="28" fill="#ffffff"/>
+                            <rect y="12" width="37" height="4" fill="#ffffff"/>
+                        </svg>
+                    </a>
+                    <a href="../kontakt.html" class="lang-btn" title="English">
+                        <svg class="flag-icon" viewBox="0 0 50 30" width="18" height="11">
+                            <rect width="50" height="30" fill="#012169"/>
+                            <path d="M0 0 L50 30 M50 0 L0 30" stroke="#fff" stroke-width="6"/>
+                            <path d="M0 0 L50 30 M50 0 L0 30" stroke="#C8102E" stroke-width="2"/>
+                            <path d="M25 0 V30 M0 15 H50" stroke="#fff" stroke-width="10"/>
+                            <path d="M25 0 V30 M0 15 H50" stroke="#C8102E" stroke-width="6"/>
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- Theme Toggle Switch -->
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme" title="Toggle Theme">
+                    <!-- Sun Icon (shown in dark mode) -->
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <!-- Moon Icon (shown in light mode) -->
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </nav>
+            
+            <button class="mobile-nav-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Banner -->
+        <section class="page-banner">
+            <div class="container">
+                <span class="section-subtitle" style="justify-content: center;">Kom i gang</span>
+                <h1>Lad os skabe noget <span class="gradient-red-text">sammen</span></h1>
+                <p>Uanset om du har en fastlagt projektbeskrivelse eller blot en løs idé, står vi klar til at hjælpe dig videre med den rette teknologi.</p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="section" style="padding-top: 0; padding-bottom: 10rem;">
+            <div class="container">
+                <div class="contact-grid">
+                    
+                    <!-- Left: Info Panel -->
+                    <div class="contact-info-panel reveal-left">
+                        <div>
+                            <span class="badge">Odense NV, Danmark</span>
+                            <h2 style="margin-bottom: 1rem; color: var(--text-primary);">Lad os tale tech & design.</h2>
+                            <p style="color: var(--text-secondary); max-width: 420px;">Vi fungerer som et dynamisk produktionshus og kreativt kollektiv, der samler de bedste uafhængige softwareudviklere, 3D-kunstnere og hardwareingeniører til at matche dit projekts omfang.</p>
+                            
+                            <div class="contact-details">
+                                <div class="contact-detail-item">
+                                    <div class="contact-icon-box">
+                                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                            <polyline points="22,6 12,13 2,6"></polyline>
+                                        </svg>
+                                    </div>
+                                    <div class="contact-detail-content">
+                                        <h4>E-mail os</h4>
+                                        <a href="mailto:hello@innopixel.dk">hello@innopixel.dk</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-detail-item">
+                                    <div class="contact-icon-box">
+                                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="contact-detail-content">
+                                        <h4>Ring til os</h4>
+                                        <a href="tel:+4542754206">+45 42 75 42 06</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-detail-item">
+                                    <div class="contact-icon-box">
+                                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                    </div>
+                                    <div class="contact-detail-content">
+                                        <h4>Besøg vores Hub</h4>
+                                        <p>Bækkelunds Have 8,<br>5210 Odense NV, Danmark</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-detail-item">
+                                    <div class="contact-icon-box">
+                                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="contact-detail-content">
+                                        <h4>Virksomhedsinfo</h4>
+                                        <p>Innopixel ApS &bull; CVR: 38861840</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 style="margin-bottom: 1rem; color: var(--text-primary);">Følg os</h4>
+                            <div class="social-list">
+                                <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn" class="social-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                        <rect x="2" y="9" width="4" height="12"></rect>
+                                        <circle cx="4" cy="4" r="2"></circle>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right: Contact Form (Frosted Panel) -->
+                    <div class="glass-panel reveal-right pixel-corner-border">
+                        <form id="contact-form" onsubmit="event.preventDefault(); alert('Besked sendt! Tak fordi du kontaktede Innopixel.'); this.reset();">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Dit Navn</label>
+                                <input type="text" id="name" class="form-control" placeholder="F.eks. John Doe" required autocomplete="name">
+                                <span class="form-line"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" class="form-label">E-mailadresse</label>
+                                <input type="email" id="email" class="form-control" placeholder="F.eks. john@firma.dk" required autocomplete="email">
+                                <span class="form-line"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="project-type" class="form-label">Projekttype</label>
+                                <select id="project-type" class="form-control" required>
+                                    <option value="" disabled selected>Vælg projektfokus...</option>
+                                    <option value="training">Træningsværktøjer & Simulatorer</option>
+                                    <option value="edutainment">Edutainment & Læringsspil</option>
+                                    <option value="mediation">Historisk & Kulturel Formidling</option>
+                                    <option value="3d">3D-modellering & Grafik</option>
+                                    <option value="interactive">Interaktiv udstilling / IoT-hardware</option>
+                                    <option value="web">Web- & generel udvikling</option>
+                                    <option value="other">Rådgivning & andet</option>
+                                </select>
+                                <span class="form-line"></span>
+                            </div>
+                            
+                            <div class="form-group" style="margin-bottom: 2.5rem;">
+                                <label for="message" class="form-label">Besked</label>
+                                <textarea id="message" class="form-control" placeholder="Beskriv din idé, dit budget eller dine tidsrammer..." required></textarea>
+                                <span class="form-line"></span>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1.1rem;">
+                                Send besked
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <img src="../../images/logo-innopixel-white-text.svg" alt="innopixel" class="footer-logo">
+                <p>Handcrafting pixels to fit tomorrow's reality. Vi er en agil multimedie-hub, der bygger immersive, formålsdrevne digitale produkter.</p>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="index.html">Hjem</a></li>
+                    <li><a href="about.html">Om os</a></li>
+                    <li><a href="team.html">Teamet</a></li>
+                    <li><a href="ydelser.html">Ydelser</a></li>
+                    <li><a href="projekter.html">Cases</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-social">
+                <h4>Følg med</h4>
+                <div class="footer-social-icons">
+                    <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn" class="social-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p>&copy; 2026 Innopixel ApS &bull; CVR: 38861840 &bull; Odense NV, Danmark</p>
+                <p>Designet med passion & digitalt håndværk</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../app.js"></script>
+</body>
+</html>

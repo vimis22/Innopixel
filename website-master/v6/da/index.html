@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Innopixel - Vi skaber pixels, der former fremtidens virkelighed.</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Innopixel er et moderne multimediehus i Odense. Vi kombinerer design, teknologi, storytelling og interaktive medier til at skabe immersive VR-, AR- og 3D-oplevelser.">
+    <meta name="keywords" content="innopixel, multimediehus, virtual reality, vr, augmented reality, ar, 3d-modellering, webgl, interaktive medier, museer, odense, edutech, xr-udvikling">
+    <meta name="author" content="Innopixel ApS">
+    <link rel="canonical" href="https://innopixel.dk/v6/da/index.html">
+    
+    <!-- Alternate Language Equivalents -->
+    <link rel="alternate" hreflang="en" href="https://innopixel.dk/v6/index.html">
+    <link rel="alternate" hreflang="da" href="https://innopixel.dk/v6/da/index.html">
+    <link rel="alternate" hreflang="x-default" href="https://innopixel.dk/v6/index.html">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Innopixel - Vi skaber pixels, der former fremtidens virkelighed.">
+    <meta property="og:description" content="Innopixel er et moderne multimediehus i Odense. Vi kombinerer design, teknologi, storytelling og interaktive medier til at skabe immersive VR-, AR- og 3D-oplevelser.">
+    <meta property="og:image" content="https://innopixel.dk/images/hero_xr_visual.jpg">
+    <meta property="og:url" content="https://innopixel.dk/v6/da/index.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Theme Toggle Blocking Script -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            const theme = savedTheme || systemTheme;
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../style.css">
+    
+    <!-- Structured Data (JSON-LD Schema Markup) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Innopixel ApS",
+      "image": "https://innopixel.dk/images/logo-innopixel.svg",
+      "url": "https://innopixel.dk/v6/index.html",
+      "telephone": "+4542754206",
+      "email": "hello@innopixel.dk",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Bækkelunds Have 8",
+        "addressLocality": "Odense NV",
+        "postalCode": "5210",
+        "addressCountry": "DK"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 55.4098,
+        "longitude": 10.3340
+      },
+      "vatID": "DK38861840",
+      "sameAs": [
+        "https://www.linkedin.com/company/innopixel"
+      ],
+      "priceRange": "$$$"
+    }
+    </script>
+</head>
+<body>
+
+    <!-- Light Theme FX Canvas & Grid -->
+    <canvas id="pixel-canvas"></canvas>
+    <div class="cyber-grid"></div>
+    <div class="scanline-overlay"></div>
+    
+    <!-- Ambient Soft Glow Orbs -->
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+
+    <!-- Sticky Header -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo-wrapper">
+                <img src="../../images/logo-innopixel.svg" alt="innopixel" class="logo-img">
+            </a>
+            
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Hjem</a>
+                <a href="about.html" class="nav-link">Om os</a>
+                <a href="team.html" class="nav-link">Teamet</a>
+                <a href="ydelser.html" class="nav-link">Ydelser</a>
+                <a href="projekter.html" class="nav-link">Cases</a>
+                <a href="kontakt.html" class="nav-link nav-btn">Kontakt</a>
+                
+                <!-- Language Selector Flags -->
+                <div class="lang-selector">
+                    <a href="index.html" class="lang-btn active" title="Dansk">
+                        <svg class="flag-icon" viewBox="0 0 37 28" width="18" height="14">
+                            <rect width="37" height="28" fill="#c8102e"/>
+                            <rect x="12" width="4" height="28" fill="#ffffff"/>
+                            <rect y="12" width="37" height="4" fill="#ffffff"/>
+                        </svg>
+                    </a>
+                    <a href="../index.html" class="lang-btn" title="English">
+                        <svg class="flag-icon" viewBox="0 0 50 30" width="18" height="11">
+                            <rect width="50" height="30" fill="#012169"/>
+                            <path d="M0 0 L50 30 M50 0 L0 30" stroke="#fff" stroke-width="6"/>
+                            <path d="M0 0 L50 30 M50 0 L0 30" stroke="#C8102E" stroke-width="2"/>
+                            <path d="M25 0 V30 M0 15 H50" stroke="#fff" stroke-width="10"/>
+                            <path d="M25 0 V30 M0 15 H50" stroke="#C8102E" stroke-width="6"/>
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- Theme Toggle Switch -->
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme" title="Toggle Theme">
+                    <!-- Sun Icon (shown in dark mode) -->
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <!-- Moon Icon (shown in light mode) -->
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </nav>
+            
+            <button class="mobile-nav-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container hero-container">
+                <div class="hero-content reveal">
+                    <span class="badge pixel-corner-border">Multimediehus & Interaktiv Tech</span>
+                    <h1 class="hero-title">Vi skaber pixels, der former <span class="gradient-red-text">fremtidens</span> virkelighed.</h1>
+                    <p class="hero-description">Hos Innopixel brænder vi for at hjælpe virksomheder med at navigere i teknologijunglen. Vi bygger smukke, formålsdrevne oplevelser inden for Virtual Reality, Augmented Reality og 3D-animation, som skaber reel kommerciel og pædagogisk værdi.</p>
+                    <div class="hero-actions">
+                        <a href="projekter.html" class="btn btn-primary">Se cases</a>
+                        <a href="kontakt.html" class="btn btn-secondary">Kontakt os</a>
+                    </div>
+                </div>
+                
+                <div class="hero-visual reveal delay-200">
+                    <div class="visual-backdrop"></div>
+                    <div class="wireframe-scene">
+                        <div class="isometric-hexagon">
+                            <div class="hexagon-ring"></div>
+                            <div class="hexagon-ring inner"></div>
+                            <div class="tech-cube">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                        </div>
+                        <div class="node-point"></div>
+                        <div class="node-point"></div>
+                        <div class="node-point"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="container stats-grid">
+                <div class="stat-card reveal delay-100">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Samarbejdspartnere</div>
+                </div>
+                <div class="stat-card reveal delay-200">
+                    <div class="stat-number">2017</div>
+                    <div class="stat-label">Etableret i Odense</div>
+                </div>
+                <div class="stat-card reveal delay-300">
+                    <div class="stat-number">6+</div>
+                    <div class="stat-label">Kernekompetencer</div>
+                </div>
+                <div class="stat-card reveal delay-400">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Formålsdrevet Design</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partners/Clients Carousel Section -->
+        <section class="partners-section reveal">
+            <div class="container">
+                <h3 class="partners-title">Vi samarbejder med</h3>
+                <div class="carousel-3d-container">
+                    <div class="carousel-3d-track">
+                        <!-- Dynamic Logo Cards Injected by app.js -->
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-subtitle">Kerneområder</span>
+                    <h2 class="section-title">Hvad vi bygger</h2>
+                    <p class="section-desc">Vi bygger bro mellem kompleks teknologi og engagerende kommunikation og fører dine idéer fra koncept til færdigt produkt.</p>
+                </div>
+                
+                <div class="services-grid">
+                    <!-- Service 1: Træningsværktøj -->
+                    <div class="service-card tilt-card reveal delay-100">
+                        <div class="service-icon-wrapper">
+                            <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                            </svg>
+                        </div>
+                        <h3>Træningsværktøjer</h3>
+                        <p>Vi bygger interaktive 3D-simulatorer og virtuelle træningsmiljøer, der gør det muligt for brugere at øve komplekse og risikofyldte opgaver sikkert.</p>
+                    </div>
+                    
+                    <!-- Service 2: Edutainment -->
+                    <div class="service-card tilt-card reveal delay-200">
+                        <div class="service-icon-wrapper">
+                            <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="6" width="20" height="12" rx="3" />
+                                <path d="M6 12h4M8 10v4M16 11h.01M18 13h.01" />
+                            </svg>
+                        </div>
+                        <h3>Edutainment</h3>
+                        <p>Vi fusionerer pædagogisk indhold med spilmekanikker, og skaber lærings-apps og simulationsspil, der gør indlæring aktiv og engagerende.</p>
+                    </div>
+                    
+                    <!-- Service 3: Historisk & Kulturel Formidling -->
+                    <div class="service-card tilt-card reveal delay-100">
+                        <div class="service-icon-wrapper">
+                            <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 22h18M5 10v10M9 10v10M13 10v10M17 10v10M2 10l10-8 10 8z" />
+                            </svg>
+                        </div>
+                        <h3>Historisk Formidling</h3>
+                        <p>Vi vækker kulturarven til live. Ved at koble digital teknologi med stærk historiefortælling designer vi interaktive udstillinger til museer.</p>
+                    </div>
+                    
+                    <!-- Service 4: 3D Håndværk -->
+                    <div class="service-card tilt-card reveal delay-200">
+                        <div class="service-icon-wrapper">
+                            <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-2.222-1.124H5.25a2.25 2.25 0 00-2.25 2.25v3c0 1.242 1.008 2.25 2.25 2.25h13.5a2.25 2.25 0 002.25-2.25v-3a2.25 2.25 0 00-2.25-2.25h-2.058a3 3 0 00-2.222 1.124l-.872 1.107a3 3 0 01-4.444 0l-.871-1.107z" />
+                            </svg>
+                        </div>
+                        <h3>3D Håndværk</h3>
+                        <p>Digitale oplevelser i høj kvalitet kræver enestående grafik. Vores team skaber polygon-optimerede 3D-modeller og animationer tilpasset realtidsmotorer og web-applikationer.</p>
+                    </div>
+                    
+                    <!-- Service 5: Interaktive Medier & IoT -->
+                    <div class="service-card tilt-card reveal delay-100">
+                        <div class="service-icon-wrapper">
+                            <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+                            </svg>
+                        </div>
+                        <h3>Interaktive Medier & IoT</h3>
+                        <p>Vi krydser grænsen mellem software og fysiske rum. Fra smarte udstillingstabeller med NFC-sensorer til projection mapping og specialdesignede udstillingsmontrer.</p>
+                    </div>
+                </div>
+                
+                <div class="flex-center" style="margin-top: 4rem;">
+                    <a href="ydelser.html" class="btn btn-secondary">
+                        Se alle ydelser
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Selected Cases Section -->
+        <section class="section" style="background-color: var(--bg-secondary); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-subtitle">Udvalgte Cases</span>
+                    <h2 class="section-title">Kreativ udførelse</h2>
+                    <p class="section-desc">Gå på opdagelse i et udvalg af vores projekter bygget til uddannelse, museer og industriel diagnostik.</p>
+                </div>
+                
+                <div class="projects-grid">
+                    <!-- Project 1: Lillebælt AR -->
+                    <div class="project-card reveal delay-100" data-project="lillebaelt-ar" data-eu-funded="true">
+                        <div class="project-img-wrapper">
+                            <span class="project-tag">EduTech / Havmiljø</span>
+                            <span class="eu-badge">
+                                <svg class="eu-flag-icon" viewBox="0 0 30 20" width="18" height="12">
+                                    <rect width="30" height="20" fill="#003399"/>
+                                    <g fill="#ffcc00" transform="translate(15,10) scale(0.6)">
+                                        <g transform="rotate(0) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(30) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(60) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(90) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(120) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(150) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(180) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(210) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(240) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(270) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(300) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(330) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                    </g>
+                                </svg>
+                                <span>EU Støttet</span>
+                            </span>
+                            <img src="../../images/project_lillebaelt.png" alt="Naturpark Lillebælt AR App">
+                        </div>
+                        <div class="project-info">
+                            <div>
+                                <h3>Naturpark Lillebælt AR</h3>
+                                <p class="project-intro">En interaktiv lærings-app, der gør det muligt for havnens gæster at se et simuleret marint økosystem under vandets overflade.</p>
+                            </div>
+                            <button class="text-btn">Læs case study <span>&rarr;</span></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 2: Turbine Maintenance -->
+                    <div class="project-card reveal delay-200" data-project="sensible-xr">
+                        <div class="project-img-wrapper">
+                            <span class="project-tag">Industriel træning / Grøn energi</span>
+                            <img src="../../images/project_turbine.png" alt="Sensible Turbine Maintenance AR">
+                        </div>
+                        <div class="project-info">
+                            <div>
+                                <h3>Sensible - XR Turbinevedligeholdelse</h3>
+                                <p class="project-intro">Microsoft HoloLens 2 remote support-guide, der streamer live-diagnostik og wireframe-vejledninger til turbinegear.</p>
+                            </div>
+                            <button class="text-btn">Læs case study <span>&rarr;</span></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex-center" style="margin-top: 4rem;">
+                    <a href="projekter.html" class="btn btn-secondary">Se flere cases</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process / Technical Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-subtitle">Vores Metode</span>
+                    <h2 class="section-title">Udvikling af digitale produkter</h2>
+                    <p class="section-desc">Vi følger en struktureret, kollaborativ proces, der kombinerer teknisk styrke med kunstnerisk design.</p>
+                </div>
+                
+                <div class="process-grid">
+                    <!-- Left: Interactive Tab Buttons -->
+                    <div class="process-steps reveal-left">
+                        <button class="process-step-btn active" data-step="1">
+                            <span class="process-num">01</span>
+                            <span class="process-step-title">Koncept & Storytelling</span>
+                        </button>
+                        <button class="process-step-btn" data-step="2">
+                            <span class="process-num">02</span>
+                            <span class="process-step-title">Hurtig Prototyping</span>
+                        </button>
+                        <button class="process-step-btn" data-step="3">
+                            <span class="process-num">03</span>
+                            <span class="process-step-title">Teknisk Arkitektur</span>
+                        </button>
+                        <button class="process-step-btn" data-step="4">
+                            <span class="process-num">04</span>
+                            <span class="process-step-title">Udrulning & Launch</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Right: Details Display Panel -->
+                    <div class="glass-panel process-display-container reveal-right">
+                        <!-- Step 1 Details -->
+                        <div class="process-display-card active" data-step="1">
+                            <div class="process-desc-header">
+                                <h3>01. Koncept & Storytelling</h3>
+                                <p class="process-desc-body">Hvert projekt starter med et formål. Vi samarbejder tæt med museer, virksomheder og undervisere om at rammesætte kommunikationsmålene, visualisere oplevelsen og kortlægge interaktionsveje for design og teknologi.</p>
+                            </div>
+                            <div class="process-tech-tags">
+                                <span class="tech-tag">Brugerprofiler</span>
+                                <span class="tech-tag">Storyboarding</span>
+                                <span class="tech-tag">Interaktionsdesign</span>
+                                <span class="tech-tag">UX Flow Mapping</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2 Details -->
+                        <div class="process-display-card" data-step="2">
+                            <div class="process-desc-header">
+                                <h3>02. Hurtig Prototyping</h3>
+                                <p class="process-desc-body">Vi tror på aktiv eksperimentering. I stedet for lange planlægningscyklusser udvikler vi hurtigt grove grå-bokse prototyper i Unity eller WebGL. Dette gør det muligt for kunden at teste mekanikkerne med det samme.</p>
+                            </div>
+                            <div class="process-tech-tags">
+                                <span class="tech-tag">Grey-boxing</span>
+                                <span class="tech-tag">Unity URP</span>
+                                <span class="tech-tag">WebGL skitser</span>
+                                <span class="tech-tag">Playtesting</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 3 Details -->
+                        <div class="process-display-card" data-step="3">
+                            <div class="process-desc-header">
+                                <h3>03. Teknisk Arkitektur</h3>
+                                <p class="process-desc-body">Vores team skriver robust kode, der kan skalere. Vi implementerer 3D-optimeringspipelines, ren komponentbaseret kode og forbinder fysisk hardware (som NFC-sensorer) med responsive server-API'er.</p>
+                            </div>
+                            <div class="process-tech-tags">
+                                <span class="tech-tag">C# / Unity Engine</span>
+                                <span class="tech-tag">Node.js Backends</span>
+                                <span class="tech-tag">IoT Hardware APIs</span>
+                                <span class="tech-tag">Shader-programmering</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 4 Details -->
+                        <div class="process-display-card" data-step="4">
+                            <div class="process-desc-header">
+                                <h3>04. Udrulning & Launch</h3>
+                                <p class="process-desc-body">Vi konfigurerer installationen på stedet eller udgiver den globalt. Hvad enten det er opsætning af VR-headsets i klasseværelser, montering af projektorer på museer eller udrulning til højt tilgængelige web-servere.</p>
+                            </div>
+                            <div class="process-tech-tags">
+                                <span class="tech-tag">On-Site Kalibrering</span>
+                                <span class="tech-tag">Standalone VR (Quest)</span>
+                                <span class="tech-tag">Web Hosting</span>
+                                <span class="tech-tag">Teknisk træning</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stack Widget / Partners -->
+        <section class="tech-stack-section">
+            <div class="container">
+                <div class="section-header reveal" style="margin-bottom: 3.5rem;">
+                    <span class="section-subtitle">Teknisk Kompetence</span>
+                    <h2 class="section-title">Vores værktøjskasse</h2>
+                </div>
+                
+                <div class="tech-stack-grid reveal">
+                    <div class="tech-logo-card">
+                        <svg class="tech-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                        </svg>
+                        <span class="tech-name">Unity Engine</span>
+                    </div>
+                    <div class="tech-logo-card">
+                        <svg class="tech-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
+                        </svg>
+                        <span class="tech-name">SynergyXR</span>
+                    </div>
+                    <div class="tech-logo-card">
+                        <svg class="tech-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+                        </svg>
+                        <span class="tech-name">WebGL & 3D Web</span>
+                    </div>
+                    <div class="tech-logo-card">
+                        <svg class="tech-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                            <line x1="8" y1="21" x2="16" y2="21"/>
+                            <line x1="12" y1="17" x2="12" y2="21"/>
+                        </svg>
+                        <span class="tech-name">C# Scripting</span>
+                    </div>
+                    <div class="tech-logo-card">
+                        <svg class="tech-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            <path d="M2 12h20"/>
+                        </svg>
+                        <span class="tech-name">Node / IoT</span>
+                    </div>
+                    <div class="tech-logo-card">
+                        <svg class="tech-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                        <span class="tech-name">Arduino / NFC</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call To Action Section -->
+        <section class="section" style="padding-bottom: 10rem;">
+            <div class="container">
+                <div class="glass-panel reveal pixel-corner-border" style="text-align: center; max-width: 900px; margin: 0 auto; padding: 5rem 3rem; background: radial-gradient(circle at center, rgba(225, 29, 72, 0.04), transparent 70%), var(--bg-card);">
+                    <span class="section-subtitle" style="justify-content: center;">Lad os samarbejde</span>
+                    <h2 class="section-title">Klar til at vække dine idéer til live?</h2>
+                    <p class="section-desc" style="max-width: 600px; margin: 0 auto 3rem; line-height: 1.7;">Har du et kommende projekt, en udstilling eller en VR-app, du ønsker at udvikle? Vi er klar til at samarbejde med dig hele vejen fra design til udrulning.</p>
+                    <a href="kontakt.html" class="btn btn-primary" style="padding: 1.1rem 3rem;">Start et projekt nu</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <img src="../../images/logo-innopixel-white-text.svg" alt="innopixel" class="footer-logo">
+                <p>Handcrafting pixels to fit tomorrow's reality. Vi er en agil multimedie-hub, der bygger immersive, formålsdrevne digitale produkter.</p>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="index.html">Hjem</a></li>
+                    <li><a href="about.html">Om os</a></li>
+                    <li><a href="team.html">Teamet</a></li>
+                    <li><a href="ydelser.html">Ydelser</a></li>
+                    <li><a href="projekter.html">Cases</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-social">
+                <h4>Følg med</h4>
+                <div class="footer-social-icons">
+                    <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn" class="social-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p>&copy; 2026 Innopixel ApS &bull; CVR: 38861840 &bull; Odense NV, Danmark</p>
+                <p>Designet med passion & digitalt håndværk</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../app.js"></script>
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cases & Projekter | Immersive VR & AR Portfolio - Innopixel</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Se Innopixels cases. Interaktive løsninger, VR-simuleringer og AR-software udviklet til skoler, museer og erhverv.">
+    <meta name="keywords" content="innopixel portfolio, vr cases, ar cases, interaktive installationer, unity projekter danmark">
+    <meta name="author" content="Innopixel ApS">
+    <link rel="canonical" href="https://innopixel.dk/v6/da/projekter.html">
+    
+    <!-- Alternate Language Equivalents -->
+    <link rel="alternate" hreflang="en" href="https://innopixel.dk/v6/projekter.html">
+    <link rel="alternate" hreflang="da" href="https://innopixel.dk/v6/da/projekter.html">
+    <link rel="alternate" hreflang="x-default" href="https://innopixel.dk/v6/projekter.html">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Cases & Projekter | Immersive VR & AR Portfolio - Innopixel">
+    <meta property="og:description" content="Se Innopixels cases. Interaktive løsninger, VR-simuleringer og AR-software udviklet til skoler, museer og erhverv.">
+    <meta property="og:image" content="https://innopixel.dk/images/hero_xr_visual.jpg">
+    <meta property="og:url" content="https://innopixel.dk/v6/da/projekter.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Theme Toggle Blocking Script -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            const theme = savedTheme || systemTheme;
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <!-- Light Theme FX Canvas & Grid -->
+    <canvas id="pixel-canvas"></canvas>
+    <div class="cyber-grid"></div>
+    <div class="scanline-overlay"></div>
+    
+    <!-- Ambient Soft Glow Orbs -->
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-3"></div>
+
+    <!-- Sticky Header -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo-wrapper">
+                <img src="../../images/logo-innopixel.svg" alt="innopixel" class="logo-img">
+            </a>
+            
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Hjem</a>
+                <a href="about.html" class="nav-link">Om os</a>
+                <a href="team.html" class="nav-link">Teamet</a>
+                <a href="ydelser.html" class="nav-link">Ydelser</a>
+                <a href="projekter.html" class="nav-link">Cases</a>
+                <a href="kontakt.html" class="nav-link nav-btn">Kontakt</a>
+                
+                <!-- Language Selector Flags -->
+                <div class="lang-selector">
+                    <a href="projekter.html" class="lang-btn active" title="Dansk">
+                        <svg class="flag-icon" viewBox="0 0 37 28" width="18" height="14">
+                            <rect width="37" height="28" fill="#c8102e"/>
+                            <rect x="12" width="4" height="28" fill="#ffffff"/>
+                            <rect y="12" width="37" height="4" fill="#ffffff"/>
+                        </svg>
+                    </a>
+                    <a href="../projekter.html" class="lang-btn" title="English">
+                        <svg class="flag-icon" viewBox="0 0 50 30" width="18" height="11">
+                            <rect width="50" height="30" fill="#012169"/>
+                            <path d="M0 0 L50 30 M50 0 L0 30" stroke="#fff" stroke-width="6"/>
+                            <path d="M0 0 L50 30 M50 0 L0 30" stroke="#C8102E" stroke-width="2"/>
+                            <path d="M25 0 V30 M0 15 H50" stroke="#fff" stroke-width="10"/>
+                            <path d="M25 0 V30 M0 15 H50" stroke="#C8102E" stroke-width="6"/>
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- Theme Toggle Switch -->
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme" title="Toggle Theme">
+                    <!-- Sun Icon (shown in dark mode) -->
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <!-- Moon Icon (shown in light mode) -->
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </nav>
+            
+            <button class="mobile-nav-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Banner -->
+        <section class="page-banner">
+            <div class="container">
+                <span class="section-subtitle" style="justify-content: center;">Udstilling & Cases</span>
+                <h1>Udvalgte <span class="gradient-red-text">Projekter</span></h1>
+                <p>Udforsk hvordan vi forener design, teknologi og historiefortælling for at skabe konkret kommerciel og pædagogisk værdi på tværs af brancher.</p>
+            </div>
+        </section>
+
+        <!-- Projects Grid Section -->
+        <section class="section" style="padding-top: 0;">
+            <div class="container">
+                
+                <!-- Portfolio Filter Controls Container -->
+                <div class="portfolio-filter-container reveal">
+                    <!-- Category Filter Controls -->
+                    <!-- Category Filter Controls -->
+                    <div class="portfolio-controls">
+                        <button class="filter-btn active" data-filter="all">Alle Projekter</button>
+                        <button class="filter-btn" data-filter="history">Kulturhistorie</button>
+                        <button class="filter-btn" data-filter="nature">Natur & Læring</button>
+                        <button class="filter-btn" data-filter="industry">Industri & Erhverv</button>
+                    </div>
+                    
+                    <!-- EU Toggle Switch -->
+                    <div class="eu-toggle-wrapper">
+                        <span class="eu-toggle-label">EU Støttet</span>
+                        <label class="eu-switch" title="Vis kun EU-støttede projekter">
+                            <input type="checkbox" id="eu-toggle">
+                            <span class="eu-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Projects Grid -->
+                <div class="projects-grid">
+                    
+                    <!-- Case 1: Lillebælt AR -->
+                    <div class="project-card reveal delay-100" data-project="lillebaelt-ar" data-category="nature" data-eu-funded="true">
+                        <div class="project-img-wrapper">
+                            <span class="project-tag">EduTech / Havmiljø</span>
+                            <span class="eu-badge">
+                                <svg class="eu-flag-icon" viewBox="0 0 30 20" width="18" height="12">
+                                    <rect width="30" height="20" fill="#003399"/>
+                                    <g fill="#ffcc00" transform="translate(15,10) scale(0.6)">
+                                        <g transform="rotate(0) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(30) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(60) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(90) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(120) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(150) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(180) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(210) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(240) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(270) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(300) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(330) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                    </g>
+                                </svg>
+                                <span>EU Støttet</span>
+                            </span>
+                            <img src="../../images/project_lillebaelt.png" alt="Naturpark Lillebælt AR App">
+                        </div>
+                        <div class="project-info">
+                            <div>
+                                <h3>Naturpark Lillebælt AR</h3>
+                                <p class="project-intro">En interaktiv lærings-app, der gør det muligt for havnens gæster at se et simuleret marint økosystem under vandets overflade.</p>
+                            </div>
+                            <button class="text-btn">Læs case study <span>&rarr;</span></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Case 2: Turbine Maintenance -->
+                    <div class="project-card reveal delay-200" data-project="sensible-xr" data-category="industry">
+                        <div class="project-img-wrapper">
+                            <span class="project-tag">Industriel træning / Grøn energi</span>
+                            <img src="../../images/project_turbine.png" alt="Sensible Turbine Maintenance AR">
+                        </div>
+                        <div class="project-info">
+                            <div>
+                                <h3>Sensible - XR Turbinevedligeholdelse</h3>
+                                <p class="project-intro">Microsoft HoloLens 2 remote support-guide, der streamer live-diagnostik og wireframe-vejledninger til turbinegear.</p>
+                            </div>
+                            <button class="text-btn">Læs case study <span>&rarr;</span></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Case 3: Veterandykkerne -->
+                    <div class="project-card reveal delay-100" data-project="veterandykkerne" data-category="nature">
+                        <div class="project-img-wrapper">
+                            <span class="project-tag">Kulturhistorie / Maritim kulturarv</span>
+                            <img src="../../images/project_dive.png" alt="Veterandykkerne Havets Helte">
+                        </div>
+                        <div class="project-info">
+                            <div>
+                                <h3>Veterandykkerne - Havets Helte</h3>
+                                <p class="project-intro">Immersive 3D historisk dykkersimulering stillet til rådighed som en interaktiv museumskærm.</p>
+                            </div>
+                            <button class="text-btn">Læs case study <span>&rarr;</span></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Case 4: ErhvervsTanken -->
+                    <div class="project-card reveal delay-200" data-project="nfc-display" data-category="nature">
+                        <div class="project-img-wrapper">
+                            <span class="project-tag">Erhvervsuddannelse / Grøn omstilling</span>
+                            <img src="../../images/project_nfc.jpg" alt="ErhvervsTanken NFC Display">
+                        </div>
+                        <div class="project-info">
+                            <div>
+                                <h3>ErhvervsTanken - NFC Display</h3>
+                                <p class="project-intro">Taktilt udstillingsbord, der anvender 3D-printede tokens og NFC-hardware til at præsentere erhvervsuddannelser.</p>
+                            </div>
+                            <button class="text-btn">Læs case study <span>&rarr;</span></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Case 5: Lillebælt VR -->
+                    <div class="project-card reveal delay-100" data-project="lillebaelt-vr" data-category="nature" data-eu-funded="true">
+                        <div class="project-img-wrapper">
+                            <span class="project-tag">EduTech / Havmiljø</span>
+                            <span class="eu-badge">
+                                <svg class="eu-flag-icon" viewBox="0 0 30 20" width="18" height="12">
+                                    <rect width="30" height="20" fill="#003399"/>
+                                    <g fill="#ffcc00" transform="translate(15,10) scale(0.6)">
+                                        <g transform="rotate(0) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(30) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(60) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(90) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(120) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(150) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(180) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(210) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(240) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(270) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(300) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                        <g transform="rotate(330) translate(0,-6)"><polygon points="0,-1.5 0.4,-0.4 1.5,-0.4 0.6,0.2 0.9,1.3 0,0.7 -0.9,1.3 -0.6,0.2 -1.5,-0.4 -0.4,-0.4"/></g>
+                                    </g>
+                                </svg>
+                                <span>EU Støttet</span>
+                            </span>
+                            <img src="../../images/project_lillebaelt_vr.png" alt="Naturpark Lillebælt VR Game">
+                        </div>
+                        <div class="project-info">
+                            <div>
+                                <h3>Lillebælt VR Økosystemspil</h3>
+                                <p class="project-intro">Pædagogisk VR-sandkassespil, hvor elever agerer havbiologer og genopretter stenfiskeri og ålegræsenge.</p>
+                            </div>
+                            <button class="text-btn">Læs case study <span>&rarr;</span></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Case 6: Jelling Metaverse -->
+                    <div class="project-card reveal delay-200" data-project="jelling-metaverse" data-category="history">
+                        <div class="project-img-wrapper">
+                            <span class="project-tag">Kulturhistorie / Formidling</span>
+                            <img src="../../images/project_jelling.png" alt="Kongernes Jelling Metaverse Exhibit">
+                        </div>
+                        <div class="project-info">
+                            <div>
+                                <h3>InnovationCamp 2022 - Jelling</h3>
+                                <p class="project-intro">Virtuel kollaborativ museumsgalleri i SynergyXR, som gør det muligt for skoleklasser at udforske Jellingstenene.</p>
+                            </div>
+                            <button class="text-btn">Læs case study <span>&rarr;</span></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Case 7: Viking Escape Box -->
+                    <div class="project-card reveal delay-100" data-project="viking-escape-box" data-category="history">
+                        <div class="project-img-wrapper">
+                            <span class="project-tag">Kulturhistorie / Formidling</span>
+                            <img src="../../images/project_viking_escape.png" alt="Viking Escape Box">
+                        </div>
+                        <div class="project-info">
+                            <div>
+                                <h3>Viking Escape Box</h3>
+                                <p class="project-intro">Interaktiv Tour de France-vikingeudstilling, der kombinerer motionscykler og fysiske gåde-bokse.</p>
+                            </div>
+                            <button class="text-btn">Læs case study <span>&rarr;</span></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Case 8: Gorm den Gamle Prototype -->
+                    <div class="project-card reveal delay-200" data-project="jelling-gorm" data-category="history">
+                        <div class="project-img-wrapper">
+                            <span class="project-tag">Kulturhistorie / AI & Motion Capture</span>
+                            <img src="../../images/project_jelling_gorm.jpg" alt="Gorm den Gamle AI Prototype">
+                        </div>
+                        <div class="project-info">
+                            <div>
+                                <h3>Gorm den Gamle AI Prototype</h3>
+                                <p class="project-intro">Foranalyse og 3D-karakter-prototyping af Gorm den Gamle med AI-dialog og live motion-capture.</p>
+                            </div>
+                            <button class="text-btn">Læs case study <span>&rarr;</span></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Case 9: Landsoldaten App -->
+                    <div class="project-card reveal delay-100" data-project="landsoldaten" data-category="history">
+                        <div class="project-img-wrapper">
+                            <span class="project-tag">Kulturhistorie / Spilbaseret turisme</span>
+                            <img src="../../images/project_landsoldaten.jpg" alt="Landsoldaten App">
+                        </div>
+                        <div class="project-info">
+                            <div>
+                                <h3>Landsoldaten App</h3>
+                                <p class="project-intro">En interaktiv mobil-app, der tager turister og borgere med på en spilbaseret historisk rute på Fredericia Vold.</p>
+                            </div>
+                            <button class="text-btn">Læs case study <span>&rarr;</span></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Case 10: Deepfake Portrætter -->
+                    <div class="project-card reveal delay-200" data-project="fredericia-display" data-category="history">
+                        <div class="project-img-wrapper">
+                            <span class="project-tag">Kulturhistorie / AI Video-teknologi</span>
+                            <img src="../../images/project_fredericia_display.gif" alt="Museum Deepfake Portrætter">
+                        </div>
+                        <div class="project-info">
+                            <div>
+                                <h3>Museum Deepfake Portrætter</h3>
+                                <p class="project-intro">AI-drevede portrætter udviklet til at vække historiske personer til live, så malerier taler direkte til gæsterne.</p>
+                            </div>
+                            <button class="text-btn">Læs case study <span>&rarr;</span></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Case 11: Esbjerg Havn -->
+                    <div class="project-card reveal delay-100" data-project="esbjerg-havn" data-category="industry">
+                        <div class="project-img-wrapper">
+                            <span class="project-tag">Offentlig kunst / Projection Mapping</span>
+                            <img src="../../images/project_esbjerg_havn.jpg" alt="Esbjerg Havn 150 Års Show">
+                        </div>
+                        <div class="project-info">
+                            <div>
+                                <h3>Esbjerg Havn 150 Års Show</h3>
+                                <p class="project-intro">Storslået lysshow og projection mapping på administrationsbygningens vinduer i anledning af 150-års jubilæum.</p>
+                            </div>
+                            <button class="text-btn">Læs case study <span>&rarr;</span></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Case 12: Novozymes VR -->
+                    <div class="project-card reveal delay-200" data-project="novozymes" data-category="industry">
+                        <div class="project-img-wrapper">
+                            <span class="project-tag">Industriel træning / Virtuel virkelighed</span>
+                            <img src="../../images/project_novozymes.jpg" alt="Novozymes 360° VR Rundvisning">
+                        </div>
+                        <div class="project-info">
+                            <div>
+                                <h3>Novozymes 360° VR Rundvisning</h3>
+                                <p class="project-intro">Stereoskopisk 360° VR-rundvisning på Novozymes' produktionsfacilitet i Kalundborg til globale salgsteam.</p>
+                            </div>
+                            <button class="text-btn">Læs case study <span>&rarr;</span></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Case 13: Egeskov Slot -->
+                    <div class="project-card reveal delay-100" data-project="egeskov-castle" data-category="history">
+                        <div class="project-img-wrapper">
+                            <span class="project-tag">Offentlig kunst / Kulturhistorie</span>
+                            <img src="../../images/project_egeskov_castle.jpg" alt="Egeskov Slot 3D Mapping">
+                        </div>
+                        <div class="project-info">
+                            <div>
+                                <h3>Egeskov Slot 3D Mapping</h3>
+                                <p class="project-intro">Storskala 3D projection mapping på Egeskov Slots facade, der væver slottets historie sammen med lys og lyd.</p>
+                            </div>
+                            <button class="text-btn">Læs case study <span>&rarr;</span></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Case 14: Red Ink -->
+                    <div class="project-card reveal delay-200" data-project="red-ink" data-category="nature">
+                        <div class="project-img-wrapper">
+                            <span class="project-tag">AR Marketing / Formidling</span>
+                            <img src="../../images/project_red_ink.jpg" alt="Red Ink - Pigen & Ravnen AR">
+                        </div>
+                        <div class="project-info">
+                            <div>
+                                <h3>Red Ink - Pigen & Ravnen AR</h3>
+                                <p class="project-intro">En augmented reality-bog og oplevelse, der vækker trykt markedsføringsmateriale til turismesektoren til live.</p>
+                            </div>
+                            <button class="text-btn">Læs case study <span>&rarr;</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="section" style="padding-bottom: 10rem;">
+            <div class="container">
+                <div class="glass-panel reveal pixel-corner-border" style="text-align: center; max-width: 900px; margin: 0 auto; padding: 5rem 3rem; background: radial-gradient(circle at center, rgba(225, 29, 72, 0.04), transparent 70%), var(--bg-card);">
+                    <span class="section-subtitle" style="justify-content: center;">Har du en vision?</span>
+                    <h2 class="section-title">Lad os forme din næste digitale oplevelse.</h2>
+                    <p class="section-desc" style="max-width: 600px; margin: 0 auto 3rem; line-height: 1.7;">Hvad enten du har brug for kompleks Unity-udvikling, interaktive webskabeloner eller fysiske smart-borde, hjælper vi dig med at bygge det.</p>
+                    <a href="kontakt.html" class="btn btn-primary" style="padding: 1.1rem 3rem;">Drøft din case</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <img src="../../images/logo-innopixel-white-text.svg" alt="innopixel" class="footer-logo">
+                <p>Handcrafting pixels to fit tomorrow's reality. Vi er en agil multimedie-hub, der bygger immersive, formålsdrevne digitale produkter.</p>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="index.html">Hjem</a></li>
+                    <li><a href="about.html">Om os</a></li>
+                    <li><a href="team.html">Teamet</a></li>
+                    <li><a href="ydelser.html">Ydelser</a></li>
+                    <li><a href="projekter.html">Cases</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-social">
+                <h4>Følg med</h4>
+                <div class="footer-social-icons">
+                    <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn" class="social-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p>&copy; 2026 Innopixel ApS &bull; CVR: 38861840 &bull; Odense NV, Danmark</p>
+                <p>Designet med passion & digitalt håndværk</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../app.js"></script>
+</body>
+</html>

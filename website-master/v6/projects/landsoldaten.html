@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Landsoldaten App - Innopixel Case Study</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="An interactive mobile game app taking tourists and residents on an educational historic tour around Fredericia's 17th-century ramparts.">
+    <link rel="canonical" href="https://innopixel.dk/v6/projects/landsoldaten.html">
+    
+    <!-- Alternate Language Equivalents -->
+    <link rel="alternate" hreflang="en" href="https://innopixel.dk/v6/projects/landsoldaten.html">
+    <link rel="alternate" hreflang="da" href="https://innopixel.dk/v6/da/projects/landsoldaten.html">
+    <link rel="alternate" hreflang="x-default" href="https://innopixel.dk/v6/projects/landsoldaten.html">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Landsoldaten App - Innopixel Case Study">
+    <meta property="og:description" content="An interactive mobile game app taking tourists and residents on an educational historic tour around Fredericia's 17th-century ramparts.">
+    <meta property="og:image" content="https://innopixel.dk/images/project_landsoldaten.jpg">
+    <meta property="og:url" content="https://innopixel.dk/v6/projects/landsoldaten.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://innopixel.dk/v6/projects/landsoldaten.html">
+    
+    <!-- Alternate Language Equivalents -->
+    <link rel="alternate" hreflang="en" href="https://innopixel.dk/v6/projects/landsoldaten.html">
+    <link rel="alternate" hreflang="da" href="https://innopixel.dk/v6/da/projects/landsoldaten.html">
+    <link rel="alternate" hreflang="x-default" href="https://innopixel.dk/v6/projects/landsoldaten.html">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Landsoldaten App - Innopixel Case Study">
+    <meta property="og:description" content="An interactive mobile game app taking tourists and residents on an educational historic tour around Fredericia's 17th-century ramparts.">
+    <meta property="og:image" content="https://innopixel.dk/images/project_landsoldaten.jpg">
+    <meta property="og:url" content="https://innopixel.dk/v6/projects/landsoldaten.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Theme Toggle Blocking Script -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            const theme = savedTheme || systemTheme;
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .case-detail-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .back-btn-wrapper {
+            margin-bottom: 2rem;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-family: var(--font-display);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+        .back-btn:hover {
+            color: var(--accent-red);
+            transform: translateX(-5px);
+        }
+        
+        /* Horizontal Metadata Strip */
+        .case-meta-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            backdrop-filter: blur(16px);
+            box-shadow: var(--shadow-sm);
+        }
+        @media (max-width: 768px) {
+            .case-meta-strip {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 2rem;
+            }
+        }
+        .case-meta-strip h4 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        .case-meta-strip ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .case-meta-strip li {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.4rem;
+            line-height: 1.4;
+        }
+        
+        /* Case Body Layout */
+        .case-body {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: 4rem 5rem;
+            backdrop-filter: blur(16px);
+            box-shadow: var(--shadow-sm);
+        }
+        @media (max-width: 768px) {
+            .case-body {
+                padding: 2.5rem 2rem;
+            }
+        }
+        .case-intro {
+            font-size: 1.25rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+            max-width: 900px;
+            margin: 0 auto 3.5rem auto;
+            text-align: center;
+        }
+        
+        /* Articles Styling */
+        .case-body article {
+            display: block;
+            margin-bottom: 3.5rem;
+            padding-bottom: 3.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .case-body article:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        /* Text Columns - Centered Reading Width */
+        .case-body .wrap--lg {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .case-body .col-3 {
+            width: 100%;
+            margin-bottom: 1.2rem;
+        }
+        .case-body .col-8 {
+            width: 100%;
+        }
+        .case-body .col-3 h1, .case-body .col-3 h2, .case-body .col-3 h3 {
+            font-family: var(--font-display);
+            font-size: 1.9rem;
+            color: var(--text-primary);
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+            position: relative;
+            display: inline-block;
+        }
+        .case-body .col-3 h1::after, .case-body .col-3 h2::after, .case-body .col-3 h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 35px;
+            height: 3px;
+            background: var(--accent-red);
+            border-radius: 2px;
+        }
+        .case-body .col-8 p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.08rem;
+        }
+        .case-body .col-8 p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Wide Assets Breakout */
+        .case-body .wrap--xlg {
+            max-width: 100%;
+            margin: 3.5rem 0;
+        }
+        .case-body .base-img--grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .case-body .wrap--xlg img {
+            width: 100%;
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+        .case-body .wrap--xlg img:hover {
+            transform: translateY(-2px);
+        }
+        .case-body .wrap--xlg iframe, .case-body iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        }
+        @media (max-width: 768px) {
+            .case-body .base-img--grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .case-body .wrap--xlg {
+                margin: 2.5rem 0;
+            }
+        }
+        .detail-link {
+            color: var(--accent-red);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .detail-link:hover {
+            color: var(--accent-orange);
+        }
+        .detail-link span {
+            transition: transform 0.2s ease;
+        }
+        .detail-link:hover span {
+            transform: translateX(3px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Light Theme FX Canvas & Grid -->
+    <canvas id="pixel-canvas"></canvas>
+    <div class="cyber-grid"></div>
+    <div class="scanline-overlay"></div>
+    
+    <!-- Ambient Soft Glow Orbs -->
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+
+    <!-- Sticky Header -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo-wrapper">
+                <img src="../../images/logo-innopixel.svg" alt="innopixel" class="logo-img">
+            </a>
+            
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="../about.html" class="nav-link">About Us</a>
+                <a href="../team.html" class="nav-link">Team</a>
+                <a href="../ydelser.html" class="nav-link">Services</a>
+                <a href="../projekter.html" class="nav-link">Cases</a>
+                <a href="../kontakt.html" class="nav-link nav-btn">Contact</a>
+                
+                <!-- Language Selector Flags -->
+                <div class="lang-selector">
+                    <a href="../da/projects/landsoldaten.html" class="lang-btn" title="Dansk">
+                        <svg class="flag-icon" viewBox="0 0 37 28" width="18" height="14">
+                            <rect width="37" height="28" fill="#c8102e"/>
+                            <rect x="12" width="4" height="28" fill="#ffffff"/>
+                            <rect y="12" width="37" height="4" fill="#ffffff"/>
+                        </svg>
+                    </a>
+                    <a href="landsoldaten.html" class="lang-btn active" title="English">
+                        <svg class="flag-icon" viewBox="0 0 50 30" width="18" height="11">
+                            <rect width="50" height="30" fill="#012169"/>
+                            <path d="M0 0 L50 30 M50 0 L0 30" stroke="#fff" stroke-width="6"/>
+                            <path d="M0 0 L50 30 M50 0 L0 30" stroke="#C8102E" stroke-width="2"/>
+                            <path d="M25 0 V30 M0 15 H50" stroke="#fff" stroke-width="10"/>
+                            <path d="M25 0 V30 M0 15 H50" stroke="#C8102E" stroke-width="6"/>
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- Theme Toggle Switch -->
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme" title="Toggle Theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </nav>
+            
+            <button class="mobile-nav-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Banner -->
+        <section class="page-banner">
+            <div class="container">
+                <span class="section-subtitle" style="justify-content: center;">Case Study</span>
+                <h1>Landsoldaten App</h1>
+                <div style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem;">
+                    <span class="theme-tag">History & Culture</span><span class="theme-tag">Gamified Tourism</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Case Detail Section -->
+        <section class="section" style="padding-top: 0;">
+            <div class="container case-detail-container">
+                <div class="back-btn-wrapper">
+                    <a href="../projekter.html" class="back-btn">
+                        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none" width="16" height="16">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        Back to Cases
+                    </a>
+                </div>
+                
+                <!-- Horizontal Metadata Strip -->
+                <div class="case-meta-strip glass-panel">
+                    <div class="meta-col">
+                        <h4>Client / Partner</h4><ul><li>Fredericia Museum</li></ul>
+                    </div>
+                    <div class="meta-col">
+                        <h4>Services</h4><ul><li>Game design</li><li>3D design</li><li>3D animation</li><li>Video production</li><li>Sound design</li></ul>
+                    </div>
+                    <div class="meta-col">
+                        <h4>Project Links</h4><ul><li><a href="https://www.fredericia.dk/nyheder/museerne-i-fredericia-modtager-flot-formidlerpris?fbclid=IwAR0oF5aAL-XRy8La1atpNBLWsavazqFPhTZEimbC07She1ZQpjTfXXjXZ58" target="_blank" class="detail-link">ODM Award 2021 <span>&rarr;</span></a></li><li><a href="https://www.fredericiahistorie.dk/" target="_blank" class="detail-link">Fredericia Museum <span>&rarr;</span></a></li><li><a href="https://www.pielab.dk/" target="_blank" class="detail-link">PieLab <span>&rarr;</span></a></li></ul>
+                    </div>
+                </div>
+
+                <!-- Centered Case Body -->
+                <div class="case-body glass-panel">
+                    <p class="case-intro">
+                        <strong>An interactive mobile game app taking tourists and residents on an educational historic tour around Fredericia's 17th-century ramparts.</strong>
+                    </p>
+                    <article class="wrap--lg">
+<div class="col-3">
+<h1>The Challenge</h1>
+</div>
+<div class="col-8">
+<p>For this project we teamed up with PieLab to develop a brand new way of bringing digital storytelling to the world of museums. Our design was not clear to begin with, and required many collaborative sessions with the museum, before we hatched a design concept that we felt was worth making.</p>
+<p>The challenge was to develop a concept that would bring tourists and city residents outside to explore the history and the massive remnants of the 17th century ramparts that encompass the city of Fredericia. Moreover, the main representative of the local history, Before we could begin development of this concept, we first had to explore the different technological approaches.</p>
+</div>
+</article><article class="wrap--lg font--light">
+<h1>Combining an active, outdoor experience with digital  storytelling, using locationbased tracking.</h1>
+</article><article class="wrap--lg">
+<div class="col-3">
+<h1>Our Approach</h1>
+</div>
+<div class="col-8">
+<p>We first had to scope the technological requirements to match what we wanted to develop, and at the same time keep the design at an equilibrium with the expected user group. When we began the concept design phase, we created a simplistic raw version of the game, that allowed for extensive gameplay testing, in order to test stability, activity and test whether or not the game was fun to play. </p>
+<p>On the basis of successful testing, we continued our development, moving into the final development phase.</p>
+</div>
+</article><article class="wrap--xlg base-img--grid">
+<div class="img">
+<img alt="Egeskov Slot Luminis 2017" src="../../images/landsoldaten-delivery-innopixel.jpg" style="width: 100%; border-radius: 8px;"/>
+</div>
+<div class="img">
+<img alt="Egeskov Slot Luminis 2017" src="../../images/landsoldaten-app.jpg" style="width: 100%; border-radius: 8px;"/>
+</div>
+</article><article class="wrap--lg">
+<div class="col-3">
+<h1>The Solution</h1>
+</div>
+<div class="col-8 tags">
+<p>The App was endearingly named “Landsoldaten”, after the famous statue and symbol of the 1850 era wartime victory monument. The app begins at the real Landsoldat statue, where users approach the statue in real life, and there the game activates the experience. In the game, the statue jumps down and sends the player on a series of missions that they have to complete. The player will find items associated with the history, and once all items are found in a mission, the full story of that mission is revealed with an animation. This matrix allows for several missions within a historical epoch.</p>
+</div>
+</article><article class="wrap--xlg">
+<div class="video__wrap margin-b-50">
+<iframe allow="encrypted-media" allowfullscreen="" frameborder="0" gesture="media" height="719" src="https://www.youtube.com/embed/T_N7_lC67ME" width="1917"></iframe>
+</div>
+</article><article class="wrap--lg border-b padding-b-100">
+<div class="col-12">
+<div class="col-3">
+<h1>Our <br/>Conclusion</h1>
+</div>
+<div class="col-8">
+<div class="col-12">
+<p>In this project we were able to develop a new concept to learning history in an active environment. We delivered a full mobile game to the Museums in Fredericia, which they can now use, to teach the history of the city, to tourists, schools and locals alike. Many thanks to Google for funding this project, and the Museums of Fredericia for a great partnership.</p>
+</div>
+<div class="col-12 margin-t-100 tags--vertical">
+<div class="col-3">
+
+
+</div>
+<div class="col-3">
+
+
+</div>
+<div class="col-3">
+
+
+</div>
+<div class="col-3">
+
+
+</div>
+</div>
+</div>
+</div>
+</article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <img src="../../images/logo-innopixel-white-text.svg" alt="innopixel" class="footer-logo">
+                <p>Handcrafting pixels to fit tomorrow's reality. We are an agile multimedia hub building immersive, purpose-driven digital products.</p>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About Us</a></li>
+                    <li><a href="../team.html">Team</a></li>
+                    <li><a href="../ydelser.html">Services</a></li>
+                    <li><a href="../projekter.html">Cases</a></li>
+                    <li><a href="../kontakt.html">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-social">
+                <h4>Follow us</h4>
+                <div class="footer-social-icons">
+                    <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn" class="social-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p>&copy; 2026 Innopixel ApS &bull; CVR: 38861840 &bull; Odense NV, Denmark</p>
+                <p>Designed with passion & digital craftsmanship</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../app.js"></script>
+</body>
+</html>

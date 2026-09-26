@@ -1,0 +1,206 @@
+{
+  "en": {
+    "projects": {
+      "lillebaelt-ar": {
+        "title": "Naturpark Lillebælt AR App",
+        "tags": ["EduTech", "Marine Conservation"],
+        "image": "../images/project_lillebaelt.png",
+        "intro": "An interactive underwater exploration application developed to engage school children in the marine ecosystem of the Lillebælt nature park.",
+        "body": "<h4>The Challenge</h4><p>Engaging children in environmental education can be challenging, especially when the subject is hidden beneath the ocean surface. Naturpark Lillebælt wanted an innovative solution that schools, museums, and visitors could use directly at the harbor docks to 'see' underwater wildlife in real-time.</p><h4>The Solution</h4><p>Innopixel developed a custom markerless AR app. When users point their mobile devices toward the water surface, a virtual 3D ecosystem renders. Students can interact with native species (like porpoises, crabs, and cod), play educational quizzes, and log sightings.</p><h4>Technical Integration</h4><p>Built with Unity and AR Foundation, optimizing custom 3D low-poly models to run smoothly at 60fps on consumer devices. It includes a custom spatial sound design that makes players feel fully submerged.</p>"
+      },
+      "sensible-xr": {
+        "title": "XR Turbine Maintenance Guide",
+        "tags": ["Industrial Training", "Green Energy"],
+        "image": "../images/project_turbine.png",
+        "intro": "An advanced augmented reality training tool for technicians performing remote diagnostics and repair on complex offshore wind turbines.",
+        "body": "<h4>The Challenge</h4><p>Offshore wind turbine maintenance is high-risk, expensive, and requires highly specialized skills. Errors during repair operations result in costly downtime. Our client needed a remote assistant guide that technicians could wear on-site to inspect turbine elements step-by-step.</p><h4>The Solution</h4><p>An immersive AR guide built for Microsoft HoloLens 2. The application overlays wireframe schematics, live diagnostic feeds, and vector directions directly over the physical wind turbine gears. Technicians can execute inspection checklists hands-free using hand gestures and voice controls.</p><h4>Technical Integration</h4><p>Built using MRTK (Mixed Reality Toolkit) and Unity. Integration with IoT sensors on the turbine allows real-time telemetry (RPM, heat levels) to stream directly into the technician's HUD.</p>"
+      },
+      "veterandykkerne": {
+        "title": "Veterandykkerne - Havets Helte",
+        "tags": ["Cultural History", "Maritime Heritage"],
+        "image": "../images/project_dive.png",
+        "intro": "A digital memorial exhibition and immersive 3D simulation documenting the perilous underwater missions of Denmark's pioneer commercial divers.",
+        "body": "<h4>The Challenge</h4><p>The history of pioneer divers who laid down the cables and pipelines in the North Sea is largely invisible. The Veterandykkerne organization wanted to preserve this heritage and educate the public on the physical toll and extreme conditions of historical diving.</p><h4>The Solution</h4><p>We created an interactive museum installation combining physical relics with a Virtual Reality diving helmet simulation. Users can put on a mock helmet and experience a simulated 1970s deep-sea dive, navigating through dark water, cold currents, and executing weld operations under pressure.</p><h4>Technical Integration</h4><p>Created detailed 3D models of vintage diving gear and environments. Rendered with custom lighting and particles in WebGL and WebXR to allow access from standard browsers as well as VR headsets.</p>"
+      },
+      "nfc-display": {
+        "title": "ErhvervsTanken NFC Exhibition",
+        "tags": ["Vocational Training", "Green Transition"],
+        "image": "../images/project_nfc.jpg",
+        "intro": "A tangible exhibition table utilizing NFC hardware and 3D printing to guide teenagers through green transition career opportunities.",
+        "body": "<h4>The Challenge</h4><p>Youth career exhibitions are often filled with flat screens and pamphlets that fail to hold teenagers' interest. ErhvervsTanken wanted a physical, tactile game that would spark curiosity about vocational schools in green energy.</p><h4>The Solution</h4><p>Innopixel designed and built a wooden smart table embedded with NFC sensors and glowing light tracks. Visitors pick up custom 3D-printed tokens representing different energy resources (wind blade, solar panel, hydrogen pipe) and slot them into sockets. The table reads the NFC tags and starts a projection-mapped visual showcasing how those energy choices affect a local town.</p><h4>Technical Integration</h4><p>Arduino/Raspberry Pi microcontrollers process sensor inputs, communicating with a custom front-end built in Node.js and HTML5 Canvas that drives the ultra-short-throw projector feed.</p>"
+      },
+      "lillebaelt-vr": {
+        "title": "Lillebælt VR Ecosystem Game",
+        "tags": ["EduTech", "Marine Conservation"],
+        "image": "../images/project_lillebaelt_vr.png",
+        "intro": "A classroom-focused VR simulator where students take on the role of marine biologists restoring a depleted harbor ecosystem.",
+        "body": "<h4>The Challenge</h4><p>Understanding marine conservation requires seeing the macro-effects of human waste and agricultural runoff. Traditional classroom textbooks lack the immersion to drive emotional engagement with underwater conservation.</p><h4>The Solution</h4><p>An educational VR game where players dive into Lillebælt. Armed with a scanning tool, they identify pollutants, plant eelgrass meadows, build stone reefs, and watch marine life return. The simulation covers a 10-year span compressed into a 15-minute experience.</p><h4>Technical Integration</h4><p>Optimized for standalone VR headsets (Meta Quest 2/3) using Unity's Universal Render Pipeline (URP). It leverages active spatial audio and highly optimized water physics to simulate real underwater environments.</p>"
+      },
+      "jelling-metaverse": {
+        "title": "Kongernes Jelling Metaverse Exhibit",
+        "tags": ["Cultural History", "Heritage Education"],
+        "image": "../images/project_jelling.png",
+        "intro": "A collaborative virtual museum gallery designed for Kongernes Jelling, bringing Viking monuments to global classrooms in the metaverse.",
+        "body": "<h4>The Challenge</h4><p>The Jelling runic stones and royal mounds are UNESCO heritage sites in Denmark. Due to distance and scale, many schools can never visit them physically. The museum wanted to create a collaborative virtual exhibition where guides could host digital school tours.</p><h4>The Solution</h4><p>We designed a custom virtual metaverse pavilion. Using SynergyXR, we imported high-fidelity photogrammetry scans of the Jelling mounds, runic stones, and archaeological finds. Museum educators can meet up with classes from around the world inside this virtual space as avatars, giving live, interactive presentations.</p><h4>Technical Integration</h4><p>Photogrammetry cleaning of large-scale scans, texturing, and rendering optimizations for cross-platform access across WebGL, HoloLens, PC VR, and mobile tablets.</p>"
+      },
+      "viking-escape-box": {
+        "title": "Viking Escape Box",
+        "tags": ["History & Culture", "Heritage Education"],
+        "image": "../images/project_viking_escape.png",
+        "intro": "An interactive Tour de France Viking special exhibition combining stationary bikes, virtual reality elements, and physical puzzle boxes.",
+        "body": "<h4>The Challenge</h4><p>For the special Tour de France Viking exhibition, Kongernes Jelling museum wanted a concept to get visitors active while experiencing history. The idea was to have visitors mount stationary bikes and complete virtual and physical escape puzzles.</p><h4>The Solution</h4><p>Innopixel designed the Viking Escape Box experience. By blending physical prop boxes with digital challenges, users pedaled their way through historic landscapes to crack Viking codes and escape before time ran out.</p><h4>Technical Integration</h4><p>Built with Android applications, custom hardware sensors on the stationary bikes, and integrated logic with physical escape boxes to trigger lights and video responses upon puzzle completion.</p>"
+      },
+      "jelling-gorm": {
+        "title": "Gorm the Old AI Prototype",
+        "tags": ["History & Culture", "AI & Motion Capture"],
+        "image": "../images/project_jelling_gorm.jpg",
+        "intro": "Preliminary analysis and 3D character prototyping of King Gorm the Old using AI dialogue and live motion capture.",
+        "body": "<h4>The Challenge</h4><p>To explore how advanced AI and 3D technologies can bring historical figures to life as interactive characters. The goal was to build an authentic prototype of King Gorm the Old who could hold a dialogue with museum guests.</p><h4>The Solution</h4><p>Innopixel created a detailed 3D model of King Gorm. Using Rokoko motion capture suits for realistic body movement and OpenAI API integrations, Gorm was programmed to respond dynamically to visitors' spoken questions.</p><h4>Technical Integration</h4><p>Built in Unity, utilizing Rokoko Studio for live body capture, custom voice synthesis, and real-time LLM query routing to generate voice responses in character.</p>"
+      },
+      "landsoldaten": {
+        "title": "Landsoldaten App",
+        "tags": ["History & Culture", "Gamified Tourism"],
+        "image": "../images/project_landsoldaten.jpg",
+        "intro": "An interactive mobile game app taking tourists and residents on an educational historic tour around Fredericia's 17th-century ramparts.",
+        "body": "<h4>The Challenge</h4><p>Fredericia Museum wanted to engage tourists and locals in the history of the city's unique 17th-century ramparts. Traditional pamphlets were failing to inspire younger audiences to explore the outdoor historical sites.</p><h4>The Solution</h4><p>Innopixel, in partnership with PieLab, developed a location-based AR learning game. Guided by characters like \"Landsoldaten\", users visit physical locations, unlock historical diaries, solve quizzes, and interact with virtual history.</p><h4>Technical Integration</h4><p>Developed for iOS and Android, integrating GPS location-tracking, offline historical database storage, custom 3D animations of soldiers, and high-fidelity sound design. The project received the prestigious ODM Award in 2021.</p>"
+      },
+      "fredericia-display": {
+        "title": "Museum Deepfake Portraits",
+        "tags": ["History & Culture", "AI Video Technology"],
+        "image": "../images/project_fredericia_display.gif",
+        "intro": "AI deepfake portraits developed to bring historical figures to life, allowing museum guests to listen to paintings speaking.",
+        "body": "<h4>The Challenge</h4><p>Bringing long-dead historical figures to life inside museum galleries usually requires high-budget CGI animation. The museum needed a cost-effective, realistic way to make historical paintings talk directly to visitors.</p><h4>The Solution</h4><p>Innopixel utilized cutting-edge AI deepfake technology to animate flat historical paintings of figures like King Frederik VII. By mapping live facial recordings onto the paintings, the portraits talk to the guests with highly realistic eye and mouth movements.</p><h4>Technical Integration</h4><p>Leveraged advanced AI neural networks for image manipulation, combined with custom hardware controllers powered by Raspberry Pi to stream the videos onto high-resolution vertical screens disguised as picture frames.</p>"
+      },
+      "esbjerg-havn": {
+        "title": "Esbjerg Port 150 Years Show",
+        "tags": ["Public Art", "Projection Mapping"],
+        "image": "../images/project_esbjerg_havn.jpg",
+        "intro": "Large-scale window projection mapping show celebrating Esbjerg Port's 150-year anniversary.",
+        "body": "<h4>The Challenge</h4><p>Esbjerg Port wanted an spectacular outdoor installation to celebrate their 150th anniversary. However, the coastal environment presented harsh salt and wind conditions, and traditional lasers were ruled out for safety reasons near windows.</p><h4>The Solution</h4><p>Innopixel developed a high-powered 2D animation show projected onto the giant glass facade of the port's administration building. The show illustrated the 150-year evolution of the port from a small fishing harbor to an offshore wind hub.</p><h4>Technical Integration</h4><p>Designed and rendered custom 2D vector animations. Collaborated with DVC to deploy high-lumen projectors with custom lenses to handle glass reflection and ambient harbor lights without distortion.</p>"
+      },
+      "novozymes": {
+        "title": "Novozymes 360° VR Tour",
+        "tags": ["Industrial Training", "Immersive VR"],
+        "image": "../images/project_novozymes.jpg",
+        "intro": "Stereoscopic 360° VR tour of Novozymes' production facility in Kalundborg for remote sales teams and global clients.",
+        "body": "<h4>The Challenge</h4><p>Novozymes needed a way to present their highly advanced factory in Kalundborg to international clients and sales teams without travel expenses and without compromising classified manufacturing secrets.</p><h4>The Solution</h4><p>Innopixel built a fully immersive 360° VR tour. We created a high-fidelity version for HTC Vive headsets for premium boardroom presentations, and a portable version optimized for iPads and iPhones for on-the-go sales visits.</p><h4>Technical Integration</h4><p>Recorded using the Nokia OZO 360-degree camera capturing 4K stereoscopic video. Integrated spatial audio using eight built-in microphones to create a realistic sense of physical presence inside the high-noise factory.</p>"
+      },
+      "egeskov-castle": {
+        "title": "Egeskov Castle 3D Mapping",
+        "tags": ["Public Art", "Cultural History"],
+        "image": "../images/project_egeskov_castle.jpg",
+        "intro": "Large-scale 3D projection mapping show on Egeskov Castle's facade combining abstract history storytelling and visual effects.",
+        "body": "<h4>The Challenge</h4><p>Egeskov Castle wanted an impressive show for their 50th anniversary of the veteran car museum. Previous animators had focused only on visual effects, leaving the show feeling incoherent. They needed a strong, narrative-driven experience.</p><h4>The Solution</h4><p>We designed an abstract, effect-driven story traveling through time, showcasing the creation of the castle, the industrial revolution, and a vision of the future. The show turned the brick walls of the castle into a dynamic canvas.</p><h4>Technical Integration</h4><p>Used high-lumen projectors aligned to overlap seamlessly. Collaborated closely with DVC for hardware staging, ensuring the projection mapped the castle's complex turret architecture perfectly without test runs until the final week.</p>"
+      },
+      "red-ink": {
+        "title": "Red Ink - The Girl & The Raven",
+        "tags": ["AR Marketing", "Heritage Education"],
+        "image": "../images/project_red_ink.jpg",
+        "intro": "An augmented reality book and marketing experience bringing printed tourism material to life in 3D for children.",
+        "body": "<h4>The Challenge</h4><p>Red Ink wanted to enhance physical marketing brochures for the tourism industry. They needed a way to capture children's interest offline, without moving away from physical print entirely.</p><h4>The Solution</h4><p>We developed a vibrant AR mobile app: \"The Girl & The Raven\". When children point their smartphone at the brochure, 3D animated characters rise from the page, guiding them through local sights and attractions in a playful story.</p><h4>Technical Integration</h4><p>Developed in Unity, optimizing high-quality low-poly 3D models and character animations to run on consumer iOS and Android devices, using target-image tracking to lock characters onto physical booklet pages.</p>"
+      }
+    }
+  },
+  "da": {
+    "projects": {
+      "lillebaelt-ar": {
+        "title": "Naturpark Lillebælt AR App",
+        "tags": ["EduTech", "Havmiljø"],
+        "image": "../images/project_lillebaelt.png",
+        "intro": "En interaktiv lærings-app, der gør det muligt for havnens gæster at se et simuleret marint økosystem under vandets overflade.",
+        "body": "<h4>Udfordringen</h4><p>At engagere børn i miljøundervisning kan være en udfordring, især når emnet befinder sig under havets overflade. Naturpark Lillebælt ønskede en innovativ løsning, som skoler, museer og besøgende kunne bruge direkte på havnekajen for at 'se' dyrelivet i realtid.</p><h4>Løsningen</h4><p>Innopixel udviklede en specialdesignet, markørløs AR-app. Når brugere peger deres mobile enheder mod vandoverfladen, renderes et virtuelt 3D-økosystem. Elever kan interagere med hjemmehørende arter (såsom marsvin, krabber og torsk), svare på quizzer og logge observationer.</p><h4>Teknisk integration</h4><p>Udviklet med Unity og AR Foundation, optimeret til at køre med 60fps på almindelige smartphones. Indeholder rumlig 3D-lyd, der skaber en autentisk undervandsstemning.</p>"
+      },
+      "sensible-xr": {
+        "title": "Sensible - XR Turbinevedligeholdelse",
+        "tags": ["Industriel træning", "Grøn energi"],
+        "image": "../images/project_turbine.png",
+        "intro": "Et avanceret augmented reality-træningsværktøj til teknikere, der udfører fjerndiagnostik og reparation på komplekse havvindmøller.",
+        "body": "<h4>Udfordringen</h4><p>Vedligeholdelse af havvindmøller er forbundet med høj risiko, store omkostninger og kræver specialiserede færdigheder. Fejl under reparationer medfører dyre nedetider. Vores kunde manglede en remote assistant-guide, som teknikere kunne bære on-site.</p><h4>Løsningen</h4><p>En immersiv AR-guide bygget til Microsoft HoloLens 2. Applikationen lægger wireframe-diagrammer, live diagnostiske data og retningsanvisninger direkte oven på de fysiske gearhjul. Teknikere kan gennemgå tjeklister håndfrit via gestus- og stemmestyring.</p><h4>Teknisk integration</h4><p>Udviklet med Unity og MRTK. Integration med IoT-sensorer på vindmøllen tillader realtidsdata (omdrejningstal, temperaturer) at streame direkte ind i teknikerens synsfelt.</p>"
+      },
+      "veterandykkerne": {
+        "title": "Veterandykkerne - Havets Helte",
+        "tags": ["Kulturhistorie", "Maritim kulturarv"],
+        "image": "../images/project_dive.png",
+        "intro": "En digital mindeudstilling og immersiv 3D-simulering, der dokumenterer de farefulde missioner for Danmarks pioner-erhvervsdykkere.",
+        "body": "<h4>Udfordringen</h4><p>Historien om de pionerdykkere, der lagde kabler og rørledninger i Nordsøen, er i høj grad usynlig. Organisationen Veterandykkerne ønskede at bevare denne kulturarv og uddanne offentligheden om de ekstreme forhold under historiske dyk.</p><h4>Løsningen</h4><p>Vi skabte en interaktiv museumsinstallation, der kombinerer fysiske genstande med en Virtual Reality-dykkerhjelm-simulering. Brugere kan tage en replika af en historisk dykkerhjelm på og opleve et simuleret dybhavsdyk fra 1970'erne under stærk strøm.</p><h4>Teknisk integration</h4><p>Detaljerede 3D-modeller af vintage dykkerudstyr. Renderet med lys- og partikeleffekter i WebGL og WebXR for at tillade adgang direkte fra standard-browsere samt VR-headsets.</p>"
+      },
+      "nfc-display": {
+        "title": "ErhvervsTanken NFC-udstilling",
+        "tags": ["Erhvervsuddannelse", "Grøn omstilling"],
+        "image": "../images/project_nfc.jpg",
+        "intro": "Et fysisk oplevelsesbord med NFC-sensorer og 3D-printede brikker, der guider unge igennem erhvervsuddannelsernes grønne omstilling.",
+        "body": "<h4>Udfordringen</h4><p>Uddannelsesmesser er ofte fyldt med flade skærme og foldere, der ikke fanger de unges opmærksomhed. ErhvervsTanken ønskede et fysisk, taktilt spil, der vækker nysgerrighed om grøn energi på erhvervsskolerne.</p><h4>Løsningen</h4><p>Innopixel designede og byggede et smart-bord i træ med indbyggede NFC-sensorer og lysspor. Besøgende placerer 3D-printede brikker (fx vindmøllevinge, solcelle, brintrør) i hullerne. Bordet aflæser NFC-brikken og starter en projection mapping-visning af effekten.</p><h4>Teknisk integration</h4><p>Arduino og Raspberry Pi mikrokontrollere behandler sensorinput og kommunikerer med en Node.js-backend, der driver projektions- og lysstyringen.</p>"
+      },
+      "lillebaelt-vr": {
+        "title": "Lillebælt VR Økosystemspil",
+        "tags": ["EduTech", "Havmiljø"],
+        "image": "../images/project_lillebaelt_vr.png",
+        "intro": "En klasserumsfokuseret VR-simulator, hvor elever agerer havbiologer og genopretter et nedbrudt fjordmiljø.",
+        "body": "<h4>Udfordringen</h4><p>At forstå havmiljøet kræver, at man ser effekterne af forurening og iltsvind i stor skala. Traditionelle lærebøger mangler immersionen til at skabe følelsesmæssigt engagement i naturbevarelse.</p><h4>Løsningen</h4><p>Et læringsspil i VR, hvor spillere dykker ned i Lillebælt. Udrustet med scanningsværktøjer fjerner de affald, planter ålegræs, etablerer stenrev og ser livet vende tilbage. Spillet komprimerer 10 års miljøudvikling til 15 minutter.</p><h4>Teknisk integration</h4><p>Optimeret til standalone VR-headsets (Meta Quest 2/3) med Unitys Universal Render Pipeline (URP). Bruger rumlig lyd og partikeleffekter to simulere autentiske undervandsmiljøer.</p>"
+      },
+      "jelling-metaverse": {
+        "title": "InnovationCamp 2022 - Jelling",
+        "tags": ["Kulturhistorie", "Formidling"],
+        "image": "../images/project_jelling.png",
+        "intro": "Et virtuelt museumsgalleri designet til Kongernes Jelling, der bringer monumenterne direkte ind i globale klasserum.",
+        "body": "<h4>Udfordringen</h4><p>Jellingstenene og gravhøjene er på UNESCOs verdensarvsliste. På grund af geografi og rejseomkostninger kan mange klasser aldrig besøge monumenterne fysisk. Museet manglede et virtuelt udstillingsrum til guidede skoleture.</p><h4>Løsningen</h4><p>Vi designede en virtuel metaverse-pavillon. Ved hjælp af SynergyXR importerede vi detaljerede fotogrammetrisk-scannede 3D-modeller af runestenene og højene. Museumsformidlere kan mødes med klasser som avatarer og give live rundvisninger.</p><h4>Teknisk integration</h4><p>Fotogrammetrisk databehandling og optimering af store 3D-scanninger til cross-platform adgang på WebGL, HoloLens, PC VR og tablets.</p>"
+      },
+      "viking-escape-box": {
+        "title": "Viking Escape Box",
+        "tags": ["Kulturhistorie", "Formidling"],
+        "image": "../images/project_viking_escape.png",
+        "intro": "En interaktiv Tour de France-vikingeudstilling, der kombinerer motionscykler, virtual reality og fysiske gåde-bokse.",
+        "body": "<h4>Udfordringen</h4><p>Til særudstillingen i forbindelse med Tour de France ønskede Kongernes Jelling et koncept, der kunne aktivere museets gæster fysisk, mens de oplevede historien. Målet var at lade gæsterne cykle sig igennem historiske scenarier og løse gåder.</p><h4>Løsningen</h4><p>Innopixel designede Viking Escape Box-oplevelsen. Ved at koble fysiske trækasser med digitale udfordringer skulle gæsterne træde i pedalerne for at knække vikingekoder og nå i mål inden tiden løb ud.</p><h4>Teknisk integration</h4><p>Udviklet som en Android-applikation integreret med hardwaresensorer på motionscyklerne og specialbyggede fysiske kasser, der udløste lys- og videoreaktioner, når gåderne blev løst.</p>"
+      },
+      "jelling-gorm": {
+        "title": "Gorm den Gamle AI Prototype",
+        "tags": ["Kulturhistorie", "AI & Motion Capture"],
+        "image": "../images/project_jelling_gorm.jpg",
+        "intro": "Foranalyse og 3D-karakter-prototyping af Gorm den Gamle med kunstig intelligens og live motion-capture.",
+        "body": "<h4>Udfordringen</h4><p>At undersøge hvordan avanceret AI og 3D-teknologi kan vække historiske figurer til live. Formålet var at bygge en autentisk prototype af Kong Gorm den Gamle, som kunne føre en levende dialog med museets gæster.</p><h4>Løsningen</h4><p>Innopixel skabte en detaljeret 3D-model af Kong Gorm. Ved hjælp af Rokoko motion-capture dragter til kropsbevægelser og AI-integrationer blev Gorm programmeret til at svare dynamisk på gæsternes mundtlige spørgsmål.</p><h4>Teknisk integration</h4><p>Udviklet i Unity med integration til Rokoko Studio for live animation, stemmegendannelse og AI-sprogmodeller til at generere historisk korrekte svar i realtid.</p>"
+      },
+      "landsoldaten": {
+        "title": "Landsoldaten App",
+        "tags": ["Kulturhistorie", "Spilbaseret turisme"],
+        "image": "../images/project_landsoldaten.jpg",
+        "intro": "En interaktiv mobil-app, der tager turister og borgere med på en spilbaseret historisk rute rundt på Fredericia Vold.",
+        "body": "<h4>Udfordringen</h4><p>Fredericia Museum ønskede at engagere turister og lokale i historien om Fredericias unikke voldanlæg. Traditionelle brochurer fangede ikke det yngre publikum, som manglede motivation til at udforske de historiske steder udendørs.</p><h4>Løsningen</h4><p>Innopixel udviklede i samarbejde med PieLab et lokationsbaseret læringsspil. Anført af figurer som \"Landsoldaten\" sendes gæsterne ud på volden for at finde ledetråde, løse quizzer og låse op for historiske fortællinger.</p><h4>Teknisk integration</h4><p>Udviklet til iOS and Android med GPS-styring, offline databaser, 3D-animationer af historiske soldater og lydeffekter. Projektet modtog den fornemme ODM-pris (Museumsformidlere i Danmark) i 2021.</p>"
+      },
+      "fredericia-display": {
+        "title": "Museum Deepfake Portrætter",
+        "tags": ["Kulturhistorie", "AI Video-teknologi"],
+        "image": "../images/project_fredericia_display.gif",
+        "intro": "AI-drevede portrætter udviklet til at vække historiske personer til live, så museets gæster kan lytte til talende malerier.",
+        "body": "<h4>Udfordringen</h4><p>At vække afdøde historiske personer til live på museet kræver normalt dyre CGI-animationer. Museet manglede en naturtro og økonomisk overkommelig måde at lade malerier tale direkte til gæsterne.</p><h4>Løsningen</h4><p>Innopixel anvendte AI-deepfake-teknologi til at animere historiske malerier af bl.a. Frederik 7. Ved at overføre ansigtsbevægelser fra virkelige optagelser til de flade billeder, taler portrætterne nu til gæsterne med livagtige mimik.</p><h4>Teknisk integration</h4><p>Baseret på avancerede AI-neurale netværk kombineret med specialbygget Raspberry Pi-hardware, der styrer videoafspilningen på højopløselige vertikale skærme indbygget i malerirammer.</p>"
+      },
+      "esbjerg-havn": {
+        "title": "Esbjerg Havn 150 Års Show",
+        "tags": ["Offentlig kunst", "Projection Mapping"],
+        "image": "../images/project_esbjerg_havn.jpg",
+        "intro": "Storslået lysshow og projection mapping på administrationsbygningens vinduer i anledning af Esbjerg Havns 150-års jubilæum.",
+        "body": "<h4>Udfordringen</h4><p>Esbjerg Havn ønskede en spektakulær lysinstallation til deres 150-års jubilæum. Det kystnære miljø bød dog på hårde vind- og saltforhold, og traditionelle lasere var udelukket af sikkerhedshensyn pga. kontorvinduerne.</p><h4>Løsningen</h4><p>Innopixel udviklede et storstilet animationsshow projekteret direkte op på administrationsbygningens store glasfacade. Showet illustrerede havnens udvikling fra fiskerihavn til grønt energihub.</p><h4>Teknisk integration</h4><p>Design og rendering af skræddersyede 2D-animationer. Udviklet i tæt samarbejde med DVC, som leverede kraftfulde projektorer med speciallinser for at modvirke refleksioner i glasset under de rå havneforhold.</p>"
+      },
+      "novozymes": {
+        "title": "Novozymes 360° VR Rundvisning",
+        "tags": ["Industriel træning", "Virtuel virkelighed"],
+        "image": "../images/project_novozymes.jpg",
+        "intro": "Stereoskopisk 360° VR-rundvisning på Novozymes' produktionsfacilitet i Kalundborg til globale salgsteam og kunder.",
+        "body": "<h4>Udfordringen</h4><p>Novozymes manglede en løsning til at fremvise deres fabrik i Kalundborg for udenlandske partnere uden rejseudgifter og uden at kompromittere forretningshemmeligheder.</p><h4>Løsningen</h4><p>Innopixel byggede en immersiv 360° VR-rundvisning. Vi lavede en high-end version til HTC Vive til kundemøder, og en portabel version optimeret til iPad og iPhone, så sælgerne altid havde rundvisningen i lommen.</p><h4>Teknisk integration</h4><p>Optaget med det avancerede Nokia OZO 360-kamera i 4K stereoskopisk video. Den rumlige lyd blev optaget via otte retningsbestemte mikrofoner for at genskabe den autentiske støj og rumfornemmelse i produktionen.</p>"
+      },
+      "egeskov-castle": {
+        "title": "Egeskov Slot 3D Mapping",
+        "tags": ["Offentlig kunst", "Kulturhistorie"],
+        "image": "../images/project_egeskov_castle.jpg",
+        "intro": "Storskala 3D projection mapping på Egeskov Slots facade, der væver slottets historie sammen med lys- og lydeffekter.",
+        "body": "<h4>Udfordringen</h4><p>Egeskov Slot ønskede et mindeværdigt show til veteranmuseets 50-års jubilæum. Tidligere års shows manglede rød tråd og føltes usammenhængende, så de efterspurgte en stærk, fortællende oplevelse.</p><h4>Løsningen</h4><p>Vi skabte en effektfuld historie, der rejste gennem tiden: fra slottets opbygning til industrialiseringen og fremtiden. Showet forvandlede slottets mure til et levende lærred af lys og lyd.</p><h4>Teknisk integration</h4><p>Anvendte lysstærke projektorer kalibreret til at overlappe fejlfrit på slottets facader. Udviklet i tæt samarbejde med DVC om hardwarestyring, så slottets komplekse tårnarkitektur blev kortlagt uden fejl.</p>"
+      },
+      "red-ink": {
+        "title": "Red Ink - Pigen & Ravnen AR",
+        "tags": ["AR Marketing", "Formidling"],
+        "image": "../images/project_red_ink.jpg",
+        "intro": "En augmented reality-bog og oplevelse, der vækker trykt markedsføringsmateriale til turismesektoren til live i interaktiv 3D for børn.",
+        "body": "<h4>Udfordringen</h4><p>Red Ink ønskede at puste nyt liv i fysiske brochurer til turismesektoren. Målet var at fange børns interesse offline, uden at give afkald på det trykte medie.</p><h4>Løsningen</h4><p>Vi udviklede en farverig AR-app kaldet \"Pigen & Ravnen\". Når børn scanner brochuren med deres telefon, dukker animerede 3D-karakterer op på papiret og guider dem gennem lokale seværdigheder.</p><h4>Teknisk integration</h4><p>Udviklet i Unity med optimerede low-poly 3D-modeller, der kører flydende på iOS- og Android-enheder ved hjælp af avanceret billedgenkendelse og sporing af bogens sider.</p>"
+      }
+    }
+  }
+}

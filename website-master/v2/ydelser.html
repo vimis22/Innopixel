@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ydelser & Prisberegner - Innopixel</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Se hvad Innopixel tilbyder: VR simulationer, AR apps, 3D animationer og 360° video. Prøv vores interaktive prisberegner for dit projekt.">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Pixel Grid Background -->
+    <canvas id="pixel-canvas"></canvas>
+    <div class="matrix-grid"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo-wrapper">
+                <img src="../images/logo-innopixel.svg" alt="innopixel" class="logo-img">
+            </a>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Hjem</a>
+                <a href="ydelser.html" class="nav-link active">Ydelser</a>
+                <a href="projekter.html" class="nav-link">Projekter</a>
+                <a href="historie.html" class="nav-link">Vores Historie</a>
+                <a href="kontakt.html" class="nav-link nav-btn">Kontakt</a>
+            </nav>
+            <button class="mobile-nav-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Banner -->
+        <section class="page-banner">
+            <div class="container page-banner-grid">
+                <div class="reveal">
+                    <span class="badge">Hvad vi tilbyder</span>
+                    <h1>Kreative <span class="gradient-text">teknologier</span>, skræddersyet til formålet.</h1>
+                    <p>Vi designer, udtænker og bygger digitale oplevelser. Vi hjælper jer med at navigere i teknologijunglen, så I får en løsning, der rent faktisk skaber pædagogisk eller kommerciel værdi.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Services Grid -->
+        <section class="section" style="padding-top: 0;">
+            <div class="container">
+                <div class="services-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <!-- Service 1: VR -->
+                    <div class="service-card reveal pixel-corners">
+                        <div class="service-icon-wrapper">
+                            <svg class="service-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                            </svg>
+                        </div>
+                        <h3>Virtual Reality (VR)</h3>
+                        <p style="margin-bottom: 1.5rem;">Virtual Reality er vores primære værktøj til at skabe dyb indlevelse. Vi udvikler simuleringer til uddannelsesinstitutioner og erhvervsliv, som lader brugere træne komplicerede processer uden fysisk risiko.</p>
+                        <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.88rem; color: var(--color-text-secondary);">
+                            <li style="display: flex; gap: 0.5rem; align-items: center;"><span style="color: var(--color-primary); font-weight: bold;">&bull;</span> Unity & Unreal Engine udvikling</li>
+                            <li style="display: flex; gap: 0.5rem; align-items: center;"><span style="color: var(--color-primary); font-weight: bold;">&bull;</span> Standalone Meta Quest & HTC Vive</li>
+                            <li style="display: flex; gap: 0.5rem; align-items: center;"><span style="color: var(--color-primary); font-weight: bold;">&bull;</span> 3D-træningsscenarier og EduTech-spil</li>
+                            <li style="display: flex; gap: 0.5rem; align-items: center;"><span style="color: var(--color-primary); font-weight: bold;">&bull;</span> Fysik- og interaktionsdesign</li>
+                        </ul>
+                        <div class="pixel-corners"></div>
+                    </div>
+
+                    <!-- Service 2: AR -->
+                    <div class="service-card reveal delay-100 pixel-corners">
+                        <div class="service-icon-wrapper">
+                            <svg class="service-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                            </svg>
+                        </div>
+                        <h3>Augmented Reality (AR)</h3>
+                        <p style="margin-bottom: 1.5rem;">AR lægger digitale 3D-modeller eller animationer oven på den fysiske verden. Vi designer AR-oplevelser til museer, interaktive skolebøger og diagnosticeringsværktøjer til industriel service.</p>
+                        <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.88rem; color: var(--color-text-secondary);">
+                            <li style="display: flex; gap: 0.5rem; align-items: center;"><span style="color: var(--color-primary); font-weight: bold;">&bull;</span> iOS & Android AR Foundation apps</li>
+                            <li style="display: flex; gap: 0.5rem; align-items: center;"><span style="color: var(--color-primary); font-weight: bold;">&bull;</span> WebAR (ingen app-download påkrævet)</li>
+                            <li style="display: flex; gap: 0.5rem; align-items: center;"><span style="color: var(--color-primary); font-weight: bold;">&bull;</span> Lokationsbaseret AR til museer</li>
+                            <li style="display: flex; gap: 0.5rem; align-items: center;"><span style="color: var(--color-primary); font-weight: bold;">&bull;</span> Taktil integration med NFC-chips</li>
+                        </ul>
+                        <div class="pixel-corners"></div>
+                    </div>
+
+                    <!-- Service 3: 3D Modelling -->
+                    <div class="service-card reveal pixel-corners">
+                        <div class="service-icon-wrapper">
+                            <svg class="service-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-2.222-1.124H5.25a2.25 2.25 0 00-2.25 2.25v3c0 1.242 1.008 2.25 2.25 2.25h13.5a2.25 2.25 0 002.25-2.25v-3a2.25 2.25 0 00-2.25-2.25h-2.058a3 3 0 00-2.222 1.124l-.872 1.107a3 3 0 01-4.444 0l-.871-1.107z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+                            </svg>
+                        </div>
+                        <h3>Modellering & Animation</h3>
+                        <p style="margin-bottom: 1.5rem;">Banebrydende 3D-kunst danner grundlaget for enhver god digital oplevelse. Vi modellerer, teksturerer og animerer 3D-modeller med fokus på høj ydeevne og æstetisk kvalitet.</p>
+                        <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.88rem; color: var(--color-text-secondary);">
+                            <li style="display: flex; gap: 0.5rem; align-items: center;"><span style="color: var(--color-primary); font-weight: bold;">&bull;</span> Optimering af poly-counts til spil og web</li>
+                            <li style="display: flex; gap: 0.5rem; align-items: center;"><span style="color: var(--color-primary); font-weight: bold;">&bull;</span> PBR-teksturering (fysisk baseret rendering)</li>
+                            <li style="display: flex; gap: 0.5rem; align-items: center;"><span style="color: var(--color-primary); font-weight: bold;">&bull;</span> Karakteranimation og industrielle sprængskitser</li>
+                            <li style="display: flex; gap: 0.5rem; align-items: center;"><span style="color: var(--color-primary); font-weight: bold;">&bull;</span> Eksport til glTF, USDZ, FBX og OBJ</li>
+                        </ul>
+                        <div class="pixel-corners"></div>
+                    </div>
+
+                    <!-- Service 4: 360 Video -->
+                    <div class="service-card reveal delay-100 pixel-corners">
+                        <div class="service-icon-wrapper">
+                            <svg class="service-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25V9m7.5 0H6m9.75 0v3A2.25 2.25 0 0113.5 14.25h-3a2.25 2.25 0 01-2.25-2.25V9" />
+                            </svg>
+                        </div>
+                        <h3>360° Videoproduktion</h3>
+                        <p style="margin-bottom: 1.5rem;">Sfærisk 360° video er en effektiv måde at introducere immersive oplevelser på. Vi varetager hele forløbet, lige fra planlægning og optagelse til færdigredigeret interaktiv web- eller VR-onboarding.</p>
+                        <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.88rem; color: var(--color-text-secondary);">
+                            <li style="display: flex; gap: 0.5rem; align-items: center;"><span style="color: var(--color-primary); font-weight: bold;">&bull;</span> Optagelse i op til 8K med professionelt udstyr</li>
+                            <li style="display: flex; gap: 0.5rem; align-items: center;"><span style="color: var(--color-primary); font-weight: bold;">&bull;</span> Stitching og farvekorrigering i høj opløsning</li>
+                            <li style="display: flex; gap: 0.5rem; align-items: center;"><span style="color: var(--color-primary); font-weight: bold;">&bull;</span> Spatial/rumlig lydoptagelse</li>
+                            <li style="display: flex; gap: 0.5rem; align-items: center;"><span style="color: var(--color-primary); font-weight: bold;">&bull;</span> Integration i webbrowsere eller VR-headsets</li>
+                        </ul>
+                        <div class="pixel-corners"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Budget Estimator Section -->
+        <section class="section" style="background: rgba(10, 10, 15, 0.45); border-top: var(--border-glass); border-bottom: var(--border-glass);">
+            <div class="container">
+                <div class="section-header reveal" style="max-width: 700px; margin-bottom: 2rem;">
+                    <span class="badge">Budgetværktøj</span>
+                    <h2 class="section-title">Estimer jeres projektpris</h2>
+                    <p class="section-desc">Vi værdsætter fuld gennemsigtighed. Brug vores interaktive værktøj herunder til at få en umiddelbar idé om budgetrammen og tidshorisonten for jeres projekt.</p>
+                </div>
+                
+                <div class="estimator-container reveal">
+                    <div class="estimator-grid">
+                        <div class="estimator-controls">
+                            <!-- Step 1: Select Type -->
+                            <div class="estimator-group">
+                                <label>1. Vælg projekttype</label>
+                                <div class="estimator-options">
+                                    <div class="estimator-option-btn active" data-type="vr">
+                                        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                                        </svg>
+                                        <span>Virtual Reality</span>
+                                    </div>
+                                    <div class="estimator-option-btn" data-type="ar">
+                                        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                        </svg>
+                                        <span>Augmented Reality</span>
+                                    </div>
+                                    <div class="estimator-option-btn" data-type="3d">
+                                        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-2.222-1.124H5.25a2.25 2.25 0 00-2.25 2.25v3c0 1.242 1.008 2.25 2.25 2.25h13.5a2.25 2.25 0 002.25-2.25v-3a2.25 2.25 0 00-2.25-2.25h-2.058a3 3 0 00-2.222 1.124l-.872 1.107a3 3 0 01-4.444 0l-.871-1.107z" />
+                                        </svg>
+                                        <span>3D Modellering</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 2: Slider Complexity -->
+                            <div class="estimator-group">
+                                <label>2. Vælg kompleksitet & omfang</label>
+                                <div class="estimator-slider-wrapper">
+                                    <input type="range" min="1" max="3" value="1" class="estimator-slider" id="estimator-scale">
+                                    <span class="slider-val" id="slider-value-label">Simpelt Koncept</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Estimator Results -->
+                        <div class="estimator-result">
+                            <span class="result-heading">Vejledende Prisoverslag</span>
+                            <div class="result-price" id="calc-price">85.000 DKK</div>
+                            <span class="result-price-label">Ekskl. moms</span>
+                            
+                            <div style="border-top: 1px solid rgba(255,255,255,0.06); width: 100%; padding-top: 1.5rem; margin-top: 1rem; display: grid; grid-template-columns: 1fr; gap: 0.75rem;">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                                    <span style="color: var(--color-text-secondary);">Forventet varighed:</span>
+                                    <strong id="calc-duration">3 - 5 uger</strong>
+                                </div>
+                            </div>
+                            
+                            <a href="kontakt.html" class="btn btn-primary" style="margin-top: 2rem; width: 100%; font-size: 0.9rem;">Drøft projektet med os &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="../images/logo-innopixel.svg" alt="innopixel" class="footer-brand-logo">
+                    <p>Håndværker pixels til at passe til morgendagens virkelighed. En innovativ produktions-hub for XR, 3D og interaktive medier i Odense.</p>
+                </div>
+                
+                <div class="footer-nav">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Hjem</a></li>
+                        <li><a href="ydelser.html">Ydelser</a></li>
+                        <li><a href="projekter.html">Projekter</a></li>
+                        <li><a href="historie.html">Vores Historie</a></li>
+                        <li><a href="kontakt.html">Kontakt</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-info">
+                    <h4>Kontakt info</h4>
+                    <p style="font-size: 0.95rem; margin-bottom: 0.5rem;"><strong>Innopixel ApS</strong><br>Odense NV, Danmark</p>
+                    <p style="font-size: 0.95rem; margin-bottom: 1.5rem;">Email: info@innopixel.dk<br>CVR: 38861840</p>
+                    
+                    <div class="footer-social-links">
+                        <a href="https://linkedin.com" target="_blank" class="footer-social-btn" aria-label="LinkedIn">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Innopixel ApS. CVR: 38861840. Håndlavet i Odense.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privatlivspolitik</a>
+                    <a href="#">Cookieindstillinger</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>

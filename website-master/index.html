@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Innopixel - Handcrafting pixels to fit tomorrow's reality</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Førende XR-produktionshus i Odense. Vi udvikler Virtual Reality (VR), Augmented Reality (AR), 3D-modellering og interaktive digitale oplevelser til uddannelse og erhverv.">
+    <meta name="keywords" content="innopixel, virtual-reality, vr, augmented-reality, ar, 3d-modellering, animation, metaverse, odense, edutech, xr-udvikling, digital transformation">
+    <meta name="author" content="Innopixel ApS">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Innopixel - Handcrafting pixels to fit tomorrow's reality">
+    <meta property="og:description" content="Førende XR-produktionshus i Odense. Vi udvikler Virtual Reality (VR), Augmented Reality (AR), og interaktive 3D-løsninger.">
+    <meta property="og:image" content="images/hero_xr_visual.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://innopixel.dk">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Theme & Language Setup Script (Prevents FOUC) -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+            if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+            const savedLang = localStorage.getItem('lang') || 'da';
+            document.documentElement.setAttribute('lang', savedLang);
+        })();
+    </script>
+</head>
+<body>
+
+    <!-- Pixel Network Background Canvas -->
+    <canvas id="pixel-canvas"></canvas>
+
+    <!-- Header / Nav -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo-innopixel-white-text.svg" alt="innopixel" style="height: 35px; display: block;">
+            </a>
+            <nav class="nav">
+                <a href="index.html" class="nav-link active" data-i18n="nav.home">Hjem</a>
+                <a href="ydelser.html" class="nav-link" data-i18n="nav.services">Ydelser</a>
+                <a href="projekter.html" class="nav-link" data-i18n="nav.projects">Projekter</a>
+                <a href="historie.html" class="nav-link" data-i18n="nav.story">Vores Historie</a>
+                <a href="kontakt.html" class="nav-link nav-btn" data-i18n="nav.contact">Kontakt</a>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Skift tema" title="Skift tema">
+                    <svg class="icon-sun" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="icon-moon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="da" aria-label="Dansk" title="Dansk">
+                        <svg class="flag-icon" viewBox="0 0 640 480">
+                            <path fill="#c8102e" d="M0 0h640v480H0z"/>
+                            <path fill="#fff" d="M205.7 0h68.6v480h-68.6z"/>
+                            <path fill="#fff" d="M0 205.7h640v68.6H0z"/>
+                        </svg>
+                    </button>
+                    <button class="lang-btn" data-lang="en" aria-label="English" title="English">
+                        <svg class="flag-icon" viewBox="0 0 640 480">
+                            <path fill="#012169" d="M0 0h640v480H0z"/>
+                            <path stroke="#fff" stroke-width="60" d="M0 0l640 480M640 0L0 480"/>
+                            <path stroke="#c8102e" stroke-width="40" d="M0 0l640 480M640 0L0 480"/>
+                            <path stroke="#fff" stroke-width="100" d="M320 0v480M0 240h640"/>
+                            <path stroke="#c8102e" stroke-width="60" d="M320 0v480M0 240h640"/>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+            <button class="mobile-nav-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hjem" class="hero-section">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <div class="tag-badge" data-i18n="hero.badge">Innovation Hub & Production House</div>
+                    <h1 class="hero-title" data-i18n-html="hero.title">Vi skaber pixels, der former <span class="gradient-text">fremtidens</span> virkelighed.</h1>
+                    <p class="hero-description" data-i18n="hero.description">Hos Innopixel brænder vi for at hjælpe virksomheder med at navigere i teknologijunglen. Vi bygger smukke, formålsdrevne oplevelser inden for Virtual Reality, Augmented Reality og 3D-animation, som skaber reel kommerciel og pædagogisk værdi.</p>
+                    <div class="hero-actions">
+                        <a href="projekter.html" class="btn btn-primary" data-i18n="hero.btnProjects">Se projekter</a>
+                        <a href="ydelser.html" class="btn btn-secondary" data-i18n="hero.btnServices">Udforsk Ydelser</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="image-wrapper glow-effect">
+                        <img src="images/hero_xr_visual.jpg" alt="Futuristic XR Headset Concept" class="hero-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="container stats-container">
+                <div class="stat-card">
+                    <div class="stat-number gradient-text" data-i18n="stats.projectsCount">50+</div>
+                    <div class="stat-label" data-i18n="stats.projectsLabel">Leverede XR-projekter</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number gradient-text" data-i18n="stats.danishCount">100%</div>
+                    <div class="stat-label" data-i18n="stats.danishLabel">Dansk produceret</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number gradient-text" data-i18n="stats.experienceCount">10+</div>
+                    <div class="stat-label" data-i18n="stats.experienceLabel">Års samlet erfaring</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number gradient-text" data-i18n="stats.usersCount">15k+</div>
+                    <div class="stat-label" data-i18n="stats.usersLabel">Slutbrugere ramt</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA / Network Section -->
+        <section class="story-section">
+            <div class="container story-container">
+                <div class="story-visual">
+                    <div class="story-cube-wrapper">
+                        <div class="wireframe-cube">
+                            <div class="cube-face front"></div>
+                            <div class="cube-face back"></div>
+                            <div class="cube-face left"></div>
+                            <div class="cube-face right"></div>
+                            <div class="cube-face top"></div>
+                            <div class="cube-face bottom"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="story-content">
+                    <div class="section-subtitle" data-i18n="homeStory.subtitle">Vores DNA</div>
+                    <h2 class="section-title" data-i18n-html="homeStory.title">Fra Odense til <span class="gradient-text">Metaverset</span></h2>
+                    <p data-i18n="homeStory.p1">Hos Innopixel arbejder vi ud fra en filosofi om, at fremtidens digitale oplevelser skal føles nærværende, værdifulde og håndlavede ned til den enkelte pixel.</p>
+                    <p data-i18n="homeStory.p2">Med dybe rødder i det fynske innovationsmiljø skaber vi XR-løsninger, der bygger bro mellem kompleks teknologi og meningsfuld menneskelig interaktion.</p>
+                    <a href="historie.html" class="btn btn-secondary" style="margin-top: 1.5rem;" data-i18n="homeStory.btnStory">Læs hele historien</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact CTA Section -->
+        <section class="contact-section" style="text-align: center; padding: 6rem 0;">
+            <div class="container" style="max-width: 700px; margin: 0 auto;">
+                <div class="section-subtitle" data-i18n="contactPage.bannerSubtitle">Kontakt Os</div>
+                <h2 class="section-title" style="margin-bottom: 1.5rem;" data-i18n-html="homeCta.title">Klar til at skabe noget <span class="gradient-text">unikt sammen?</span></h2>
+                <p style="font-size: 1.15rem; margin-bottom: 2.5rem;" data-i18n="homeCta.description">Hvad enten I skal bruge en immersiv VR-simulator, en AR-app eller et interaktivt 3D-dashboard, står vi klar til at rådgive.</p>
+                <a href="kontakt.html" class="btn btn-primary" style="padding: 1rem 3rem;" data-i18n="homeCta.btnContact">Tag fat i os nu &rarr;</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">
+                    <img src="images/logo-innopixel-white-text.svg" alt="innopixel" style="height: 35px; display: block;">
+                </a>
+                <p data-i18n="footer.tagline">Handcrafting pixels to fit tomorrow's reality. Baseret i Odense, Danmark.</p>
+            </div>
+            <div class="footer-links">
+                <h4 data-i18n="footer.headingLinks">Hurtige Links</h4>
+                <ul>
+                    <li><a href="index.html" data-i18n="nav.home">Hjem</a></li>
+                    <li><a href="ydelser.html" data-i18n="nav.services">Ydelser</a></li>
+                    <li><a href="projekter.html" data-i18n="nav.projects">Projekter</a></li>
+                    <li><a href="historie.html" data-i18n="nav.story">Historie</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Følg med</h4>
+                <div class="social-icons">
+                    <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p data-i18n="footer.copyright">&copy; 2026 Innopixel ApS &bull; CVR: 38861840 &bull; Odense NV</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>

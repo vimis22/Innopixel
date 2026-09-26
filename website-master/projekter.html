@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Projekter - Innopixel</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Se vores cases inden for VR, AR, 3D og interaktive medier. Projekter bygget til uddannelse og erhvervsliv.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Theme & Language Setup Script (Prevents FOUC) -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+            if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+            const savedLang = localStorage.getItem('lang') || 'da';
+            document.documentElement.setAttribute('lang', savedLang);
+        })();
+    </script>
+</head>
+<body>
+
+    <!-- Pixel Network Background Canvas -->
+    <canvas id="pixel-canvas"></canvas>
+
+    <!-- Header / Nav -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo-innopixel-white-text.svg" alt="innopixel" style="height: 35px; display: block;">
+            </a>
+            <nav class="nav">
+                <a href="index.html" class="nav-link" data-i18n="nav.home">Hjem</a>
+                <a href="ydelser.html" class="nav-link" data-i18n="nav.services">Ydelser</a>
+                <a href="projekter.html" class="nav-link active" data-i18n="nav.projects">Projekter</a>
+                <a href="historie.html" class="nav-link" data-i18n="nav.story">Vores Historie</a>
+                <a href="kontakt.html" class="nav-link nav-btn" data-i18n="nav.contact">Kontakt</a>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Skift tema" title="Skift tema">
+                    <svg class="icon-sun" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="icon-moon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="da" aria-label="Dansk" title="Dansk">
+                        <svg class="flag-icon" viewBox="0 0 640 480">
+                            <path fill="#c8102e" d="M0 0h640v480H0z"/>
+                            <path fill="#fff" d="M205.7 0h68.6v480h-68.6z"/>
+                            <path fill="#fff" d="M0 205.7h640v68.6H0z"/>
+                        </svg>
+                    </button>
+                    <button class="lang-btn" data-lang="en" aria-label="English" title="English">
+                        <svg class="flag-icon" viewBox="0 0 640 480">
+                            <path fill="#012169" d="M0 0h640v480H0z"/>
+                            <path stroke="#fff" stroke-width="60" d="M0 0l640 480M640 0L0 480"/>
+                            <path stroke="#c8102e" stroke-width="40" d="M0 0l640 480M640 0L0 480"/>
+                            <path stroke="#fff" stroke-width="100" d="M320 0v480M0 240h640"/>
+                            <path stroke="#c8102e" stroke-width="60" d="M320 0v480M0 240h640"/>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+            <button class="mobile-nav-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Banner -->
+        <section class="page-banner">
+            <div class="container">
+                <div class="section-subtitle" data-i18n="projectsPage.bannerSubtitle">Cases & Portefølje</div>
+                <h1 data-i18n-html="projectsPage.bannerTitle">Vores <span class="gradient-text">Projekter</span></h1>
+                <p data-i18n="projectsPage.bannerDesc">Vi skaber skræddersyede interaktive oplevelser. Herunder kan du klikke på vores udvalgte cases for at dykke ned i teknologi, processer og pædagogiske mål.</p>
+            </div>
+        </section>
+
+        <!-- Projects Grid Section -->
+        <section class="projects-section" style="padding-top: 0;">
+            <div class="container">
+                <div class="projects-grid">
+                    <!-- Project 1: Lillebælt AR -->
+                    <div class="project-card animate-on-scroll" data-project="lillebaelt-ar">
+                        <div class="project-img-wrapper">
+                            <img src="images/project_lillebaelt.png" alt="Naturpark Lillebælt AR App">
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tag">Augmented Reality / EduTech</div>
+                            <h3>Naturpark Lillebælt AR</h3>
+                            <p class="project-intro">Undervands-læringsapplikation udviklet til at engagere skoleklasser i havmiljøet under overfladen.</p>
+                            <button class="btn-link text-btn">Læs mere &rarr;</button>
+                        </div>
+                    </div>
+                    <!-- Project 2: Sensible XR -->
+                    <div class="project-card animate-on-scroll" data-project="sensible-xr">
+                        <div class="project-img-wrapper">
+                            <img src="images/project_turbine.png" alt="Sensible Turbine Maintenance AR">
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tag">Extended Reality / Industri</div>
+                            <h3>Sensible - XR Turbine Maintenance</h3>
+                            <p class="project-intro">Avanceret AR-værktøj til fjernvedligeholdelse og diagnose af komplekse vindmøllesystemer.</p>
+                            <button class="btn-link text-btn">Læs mere &rarr;</button>
+                        </div>
+                    </div>
+                    <!-- Project 3: Veterandykkerne -->
+                    <div class="project-card animate-on-scroll" data-project="veterandykkerne">
+                        <div class="project-img-wrapper">
+                            <img src="images/project_dive.png" alt="Veterandykkerne Havets Helte">
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tag">3D Simulation / Kultur</div>
+                            <h3>Veterandykkerne - Havets Helte</h3>
+                            <p class="project-intro">Immersiv 3D-oplevelse og interaktiv formidling af veteraners arbejde i dybhavet.</p>
+                            <button class="btn-link text-btn">Læs mere &rarr;</button>
+                        </div>
+                    </div>
+                    <!-- Project 4: ErhvervsTanken -->
+                    <div class="project-card animate-on-scroll" data-project="nfc-display">
+                        <div class="project-img-wrapper">
+                            <img src="images/project_nfc.jpg" alt="ErhvervsTanken NFC Display">
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tag">Taktil 3D & NFC / Formidling</div>
+                            <h3>ErhvervsTanken - NFC Display</h3>
+                            <p class="project-intro">Interaktivt NFC-baseret udstillingssystem til formidling af erhvervsuddannelsernes rolle i grøn omstilling.</p>
+                            <button class="btn-link text-btn">Læs mere &rarr;</button>
+                        </div>
+                    </div>
+                    <!-- Project 5: Naturpark Lillebælt VR -->
+                    <div class="project-card animate-on-scroll" data-project="lillebaelt-vr">
+                        <div class="project-img-wrapper">
+                            <img src="images/project_lillebaelt_vr.png" alt="Naturpark Lillebælt VR Game">
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tag">Virtual Reality / EduTech</div>
+                            <h3>Naturpark Lillebælt VR Game</h3>
+                            <p class="project-intro">Pædagogisk simulationsspil i VR, der underviser unge i havbiologi og havbundenes bevarelse.</p>
+                            <button class="btn-link text-btn">Læs mere &rarr;</button>
+                        </div>
+                    </div>
+                    <!-- Project 6: InnovationCamp 2022 -->
+                    <div class="project-card animate-on-scroll" data-project="jelling-metaverse">
+                        <div class="project-img-wrapper">
+                            <img src="images/project_jelling.png" alt="InnovationCamp 2022 Viking Museum">
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tag">Metaverse / Museum & Kultur</div>
+                            <h3>InnovationCamp 2022 - Jelling</h3>
+                            <p class="project-intro">Virtuelt metaverse-museumsudstilling i SynergyXR i samarbejde med Kongernes Jelling.</p>
+                            <button class="btn-link text-btn">Læs mere &rarr;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">
+                    <img src="images/logo-innopixel-white-text.svg" alt="innopixel" style="height: 35px; display: block;">
+                </a>
+                <p data-i18n="footer.tagline">Handcrafting pixels to fit tomorrow's reality. Baseret i Odense, Danmark.</p>
+            </div>
+            <div class="footer-links">
+                <h4 data-i18n="footer.headingLinks">Hurtige Links</h4>
+                <ul>
+                    <li><a href="index.html" data-i18n="nav.home">Hjem</a></li>
+                    <li><a href="ydelser.html" data-i18n="nav.services">Ydelser</a></li>
+                    <li><a href="projekter.html" data-i18n="nav.projects">Projekter</a></li>
+                    <li><a href="historie.html" data-i18n="nav.story">Historie</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Følg med</h4>
+                <div class="social-icons">
+                    <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p data-i18n="footer.copyright">&copy; 2026 Innopixel ApS &bull; CVR: 38861840 &bull; Odense NV</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Project Drawer (Slide out panel) -->
+    <div id="project-drawer" class="project-drawer">
+        <button class="drawer-close" aria-label="Luk">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <div class="drawer-content">
+            <div id="drawer-loading" class="drawer-loading">
+                <div class="spinner"></div>
+            </div>
+            <div id="drawer-body" class="drawer-body hidden">
+                <div class="drawer-tag" id="d-tag">Augmented Reality</div>
+                <h2 id="d-title" class="drawer-title">Project Title</h2>
+                <div class="drawer-hero-img-wrapper glow-effect">
+                    <img id="d-img" src="" alt="Project Visual">
+                </div>
+                <div class="drawer-metadata">
+                    <div class="meta-item">
+                        <strong>Kunde:</strong>
+                        <span id="d-client">Naturpark Lillebælt</span>
+                    </div>
+                    <div class="meta-item">
+                        <strong>Teknologi:</strong>
+                        <span id="d-tech">Unity, AR Foundation, 3D Modellering</span>
+                    </div>
+                </div>
+                <div class="drawer-description" id="d-desc">
+                    <p>Description text goes here.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="drawer-overlay" class="drawer-overlay"></div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>

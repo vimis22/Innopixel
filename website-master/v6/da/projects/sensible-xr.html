@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sensible - XR Turbinevedligeholdelse - Innopixel Case Study</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Et avanceret augmented reality-træningsværktøj til teknikere, der udfører fjerndiagnostik og reparation på komplekse havvindmøller.">
+    <link rel="canonical" href="https://innopixel.dk/v6/da/projects/sensible-xr.html">
+    
+    <!-- Alternate Language Equivalents -->
+    <link rel="alternate" hreflang="en" href="https://innopixel.dk/v6/projects/sensible-xr.html">
+    <link rel="alternate" hreflang="da" href="https://innopixel.dk/v6/da/projects/sensible-xr.html">
+    <link rel="alternate" hreflang="x-default" href="https://innopixel.dk/v6/projects/sensible-xr.html">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Sensible - XR Turbinevedligeholdelse - Innopixel Case Study">
+    <meta property="og:description" content="Et avanceret augmented reality-træningsværktøj til teknikere, der udfører fjerndiagnostik og reparation på komplekse havvindmøller.">
+    <meta property="og:image" content="https://innopixel.dk/images/project_turbine.png">
+    <meta property="og:url" content="https://innopixel.dk/v6/da/projects/sensible-xr.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://innopixel.dk/v6/da/projects/sensible-xr.html">
+    
+    <!-- Alternate Language Equivalents -->
+    <link rel="alternate" hreflang="en" href="https://innopixel.dk/v6/projects/sensible-xr.html">
+    <link rel="alternate" hreflang="da" href="https://innopixel.dk/v6/da/projects/sensible-xr.html">
+    <link rel="alternate" hreflang="x-default" href="https://innopixel.dk/v6/projects/sensible-xr.html">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Sensible - XR Turbinevedligeholdelse - Innopixel Case Study">
+    <meta property="og:description" content="Et avanceret augmented reality-træningsværktøj til teknikere, der udfører fjerndiagnostik og reparation på komplekse havvindmøller.">
+    <meta property="og:image" content="https://innopixel.dk/images/project_turbine.png">
+    <meta property="og:url" content="https://innopixel.dk/v6/da/projects/sensible-xr.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Theme Toggle Blocking Script -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            const theme = savedTheme || systemTheme;
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+        .case-detail-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .back-btn-wrapper {
+            margin-bottom: 2rem;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-family: var(--font-display);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+        .back-btn:hover {
+            color: var(--accent-red);
+            transform: translateX(-5px);
+        }
+        
+        /* Horizontal Metadata Strip */
+        .case-meta-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            backdrop-filter: blur(16px);
+            box-shadow: var(--shadow-sm);
+        }
+        @media (max-width: 768px) {
+            .case-meta-strip {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 2rem;
+            }
+        }
+        .case-meta-strip h4 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        .case-meta-strip ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .case-meta-strip li {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.4rem;
+            line-height: 1.4;
+        }
+        
+        /* Case Body Layout */
+        .case-body {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: 4rem 5rem;
+            backdrop-filter: blur(16px);
+            box-shadow: var(--shadow-sm);
+        }
+        @media (max-width: 768px) {
+            .case-body {
+                padding: 2.5rem 2rem;
+            }
+        }
+        .case-intro {
+            font-size: 1.25rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+            max-width: 900px;
+            margin: 0 auto 3.5rem auto;
+            text-align: center;
+        }
+        
+        /* Articles Styling */
+        .case-body article {
+            display: block;
+            margin-bottom: 3.5rem;
+            padding-bottom: 3.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .case-body article:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        /* Text Columns - Centered Reading Width */
+        .case-body .wrap--lg {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .case-body .col-3 {
+            width: 100%;
+            margin-bottom: 1.2rem;
+        }
+        .case-body .col-8 {
+            width: 100%;
+        }
+        .case-body .col-3 h1, .case-body .col-3 h2, .case-body .col-3 h3 {
+            font-family: var(--font-display);
+            font-size: 1.9rem;
+            color: var(--text-primary);
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+            position: relative;
+            display: inline-block;
+        }
+        .case-body .col-3 h1::after, .case-body .col-3 h2::after, .case-body .col-3 h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 35px;
+            height: 3px;
+            background: var(--accent-red);
+            border-radius: 2px;
+        }
+        .case-body .col-8 p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.08rem;
+        }
+        .case-body .col-8 p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Wide Assets Breakout */
+        .case-body .wrap--xlg {
+            max-width: 100%;
+            margin: 3.5rem 0;
+        }
+        .case-body .base-img--grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .case-body .wrap--xlg img {
+            width: 100%;
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+        .case-body .wrap--xlg img:hover {
+            transform: translateY(-2px);
+        }
+        .case-body .wrap--xlg iframe, .case-body iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        }
+        @media (max-width: 768px) {
+            .case-body .base-img--grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .case-body .wrap--xlg {
+                margin: 2.5rem 0;
+            }
+        }
+        .detail-link {
+            color: var(--accent-red);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .detail-link:hover {
+            color: var(--accent-orange);
+        }
+        .detail-link span {
+            transition: transform 0.2s ease;
+        }
+        .detail-link:hover span {
+            transform: translateX(3px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Light Theme FX Canvas & Grid -->
+    <canvas id="pixel-canvas"></canvas>
+    <div class="cyber-grid"></div>
+    <div class="scanline-overlay"></div>
+    
+    <!-- Ambient Soft Glow Orbs -->
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+
+    <!-- Sticky Header -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo-wrapper">
+                <img src="../../../images/logo-innopixel.svg" alt="innopixel" class="logo-img">
+            </a>
+            
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">Hjem</a>
+                <a href="../about.html" class="nav-link">Om os</a>
+                <a href="../team.html" class="nav-link">Teamet</a>
+                <a href="../ydelser.html" class="nav-link">Ydelser</a>
+                <a href="../projekter.html" class="nav-link">Cases</a>
+                <a href="../kontakt.html" class="nav-link nav-btn">Kontakt</a>
+                
+                <!-- Language Selector Flags -->
+                <div class="lang-selector">
+                    <a href="sensible-xr.html" class="lang-btn active" title="Dansk">
+                        <svg class="flag-icon" viewBox="0 0 37 28" width="18" height="14">
+                            <rect width="37" height="28" fill="#c8102e"/>
+                            <rect x="12" width="4" height="28" fill="#ffffff"/>
+                            <rect y="12" width="37" height="4" fill="#ffffff"/>
+                        </svg>
+                    </a>
+                    <a href="../../projects/sensible-xr.html" class="lang-btn" title="English">
+                        <svg class="flag-icon" viewBox="0 0 50 30" width="18" height="11">
+                            <rect width="50" height="30" fill="#012169"/>
+                            <path d="M0 0 L50 30 M50 0 L0 30" stroke="#fff" stroke-width="6"/>
+                            <path d="M0 0 L50 30 M50 0 L0 30" stroke="#C8102E" stroke-width="2"/>
+                            <path d="M25 0 V30 M0 15 H50" stroke="#fff" stroke-width="10"/>
+                            <path d="M25 0 V30 M0 15 H50" stroke="#C8102E" stroke-width="6"/>
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- Theme Toggle Switch -->
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme" title="Toggle Theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </nav>
+            
+            <button class="mobile-nav-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Banner -->
+        <section class="page-banner">
+            <div class="container">
+                <span class="section-subtitle" style="justify-content: center;">Case Study</span>
+                <h1>Sensible - XR Turbinevedligeholdelse</h1>
+                <div style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem;">
+                    <span class="theme-tag">Industriel træning</span><span class="theme-tag">Grøn energi</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Case Detail Section -->
+        <section class="section" style="padding-top: 0;">
+            <div class="container case-detail-container">
+                <div class="back-btn-wrapper">
+                    <a href="../projekter.html" class="back-btn">
+                        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none" width="16" height="16">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        Tilbage til Cases
+                    </a>
+                </div>
+                
+                <!-- Horizontal Metadata Strip -->
+                <div class="case-meta-strip glass-panel">
+                    <div class="meta-col">
+                        <h4>Kunde / Partner</h4><ul><li>SDU Robotics, University of Southern Denmark</li><li>Department of Business Development and Technology, Aarhus University</li><li>Clobotics</li><li>XploR XR</li></ul>
+                    </div>
+                    <div class="meta-col">
+                        <h4>Ydelser</h4><ul><li>HoloLens 2 App</li><li>MRTK Integration</li><li>IoT telemetry</li><li>3D Animation</li></ul>
+                    </div>
+                    <div class="meta-col">
+                        <h4>Projektlinks</h4><ul><li><a href="https://xplorxr.dk/" target="_blank" class="detail-link">XploR XR <span>&rarr;</span></a></li><li><a href="https://www.sdu.dk/en/forskning/sdurobotics" target="_blank" class="detail-link">SDU Robotics, University of Southern Denmark <span>&rarr;</span></a></li><li><a href="https://btech.au.dk/" target="_blank" class="detail-link">Department of Business Development and Technology, Aarhus University <span>&rarr;</span></a></li><li><a href="https://clobotics.com/" target="_blank" class="detail-link">Clobotics <span>&rarr;</span></a></li></ul>
+                    </div>
+                </div>
+
+                <!-- Centered Case Body -->
+                <div class="case-body glass-panel">
+                    <p class="case-intro">
+                        <strong>Et avanceret augmented reality-træningsværktøj til teknikere, der udfører fjerndiagnostik og reparation på komplekse havvindmøller.</strong>
+                    </p>
+                    <article class="wrap--lg">
+<div class="col-3">
+<h1>Udfordringen</h1>
+</div>
+<div class="col-8">
+<p>For at klare den grønne omstilling er vi nødt til at investere i vedvarende energi – og i f.eks. langsigtet, bæredygtig vedligeholdelse af vindmøller.<br/>Udfordringen er derfor at skabe et fjernbetjent robotsystem, der er i stand til at udføre komplekse vedligeholdelsesopgaver på vindmøller.<br/>Vigtigst er det, at vedligeholdelse skal ske, uden at det kræver, at teknikere fysisk kravler op og rappeler ned af møllerne, hvilket i sidste ende sparer tid, ressourcer og sikrer sikkerhed.</p>
+</div>
+</article><article class="wrap--xlg base-img">
+<img alt="Sensible VR Windturbine - Innopixel" src="../../../images/sensible-windmill.jpg" style="width: 100%; border-radius: 8px;"/>
+</article><article class="wrap--lg font--light">
+<h1>Udnyttelse af XR til at revolutionere vedligeholdelse af vindmøller</h1>
+</article><article class="wrap--lg">
+<div class="col-4">
+<h1>Projekt<br/>ansvar</h1>
+</div>
+<div class="col-8">
+<p>Som partnere i dette projekt er vi fokuseret på at udvikle et udvidet virkelighed (XR) system til at forbedre teledrift og især træningsoplevelser.<br/>Vi begyndte med at definere kriterierne og målene for XR-systemet sammen, vores team begyndte derefter at samarbejde tæt med projektpartnere for at udvikle en VR-scene til den fysiske emulator og integrerede XR-systemet til både teleoperation og træningsformål.</p>
+</div>
+</article><article class="wrap--xlg base-img--grid">
+<div class="img">
+<img alt="Naturpark gameplay - Innopixel" src="../../../images/sensible-wing-tip.jpg" style="width: 100%; border-radius: 8px;"/>
+</div>
+<div class="img">
+<img alt="Naturpark gameplay - Innopixel" src="../../../images/sensible-sanding-wing.jpg" style="width: 100%; border-radius: 8px;"/>
+</div>
+</article><article class="wrap--lg">
+<div class="col-3">
+<h1>Projektmål</h1>
+</div>
+<div class="col-8 tags">
+<p>Projektets løb er 2023-2027, så der er endnu ikke en ende på vores del i den FORNÆMTIGE historie.<br/>Vi er dog allerede overbevist om, at vores samarbejde i dette projekt vil resultere i et innovativt XR-system, der markant forbedrer mulighederne for fjernvedligeholdelse og dermed sikrer teknikernes sikkerhed.<br/>På lang sigt mener vi, at succesen med dette projekt og projekter som det understreger vigtigheden af ​​at integrere banebrydende XR-teknologi i industrielle applikationer af hensyn til sikkerhed, effektivitet og for en generelt grønnere praksis.<br/>
+<br/>Vi er stolte af at være en del af det SENSIBLE økosystem og kan ikke vente med at se, hvor dette bringer os hen.</p>
+</div>
+</article><article class="wrap--lg border-b padding-b-100">
+<div class="col-12">
+<!-- <div class="col-3">
+
+
+
+                    <h1>Our <br>Conclusion</h1>
+
+
+
+                </div> -->
+<div class="col-8">
+<!-- <div class="col-12">
+
+
+
+
+
+                      <p>
+
+                        The project’s run is 2023-2027, so there is not yet an ending to our SENSIBLE story but we believe our collaboration in the SENSIBLE project will result in an innovative XR system that significantly enhances the teleoperation and training of robots for wind turbine maintenance. 
+
+                        This advancement will not only improve safety and efficiency but also support the growing demand for offshore wind energy solutions. The success of this project underscores the importance of integrating cutting-edge XR technology in industrial applications.
+
+                      </p>
+
+                      
+
+                    </div> -->
+<div class="col-12 margin-t-100 tags--vertical">
+<div class="col-4">
+</div>
+<div class="col-4">
+<h4>Kontaktoplysninger</h4>
+<ul>
+<li>administrerende direktør Michael Lundorff-Hansen</li>
+<li>lundorff@innopixel.dk</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <img src="../../../images/logo-innopixel-white-text.svg" alt="innopixel" class="footer-logo">
+                <p>Handcrafting pixels to fit tomorrow's reality. Vi er en agil multimedie-hub, der bygger immersive, formålsdrevne digitale produkter.</p>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="../index.html">Hjem</a></li>
+                    <li><a href="../about.html">Om os</a></li>
+                    <li><a href="../team.html">Teamet</a></li>
+                    <li><a href="../ydelser.html">Ydelser</a></li>
+                    <li><a href="../projekter.html">Cases</a></li>
+                    <li><a href="../kontakt.html">Kontakt</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-social">
+                <h4>Følg med</h4>
+                <div class="footer-social-icons">
+                    <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn" class="social-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p>&copy; 2026 Innopixel ApS &bull; CVR: 38861840 &bull; Odense NV, Denmark</p>
+                <p>Designet med passion & digitalt håndværk</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../../app.js"></script>
+</body>
+</html>

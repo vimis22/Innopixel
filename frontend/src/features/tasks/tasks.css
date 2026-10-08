@@ -16,3 +16,6 @@
 .checklist-add { display: flex; gap: var(--space-2); margin-top: var(--space-1); }
 .checklist-add .control { height: 38px; font-size: var(--text-sm); }
 .checklist-add .icon-btn { height: 38px; width: 38px; }
+
+/* With the detail panel open there is no room for progress; the panel shows it instead */
+.page-columns:not(.page-columns--single) .task-table .col-progress { display: none; }

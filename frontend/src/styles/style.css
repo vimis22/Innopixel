@@ -370,15 +370,15 @@ strong {
 }
 
 .header .logo img {
-    content: url("images/logo-innopixel-white-text.svg");
+    content: url("/images/logo-innopixel-white-text.svg");
 }
 
 [data-theme="light"] .header .logo img {
-    content: url("images/logo-innopixel.svg");
+    content: url("/images/logo-innopixel.svg");
 }
 
 .footer .logo img {
-    content: url("images/logo-innopixel-white-text.svg") !important;
+    content: url("/images/logo-innopixel-white-text.svg") !important;
 }
 
 .logo-inno {
@@ -1098,7 +1098,7 @@ strong {
 
 .contact-lead {
     font-size: 1.15rem;
-    margin-bottom: 3.5rem;
+    margin-bottom: 3rem;
 }
 
 .contact-details {
@@ -1694,3 +1694,85 @@ strong {
 }
 
 
+
+/* ==========================================================================
+   Layout helpers (moved from inline styles in the React components)
+   ========================================================================== */
+
+/* Section directly under a page banner */
+.section-flush {
+    padding-top: 0;
+}
+
+/* Story section without its own background band (history page) */
+.story-section.story-section--plain {
+    padding-top: 0;
+    background: transparent;
+    border-top: none;
+    border-bottom: none;
+}
+
+.story-action {
+    margin-top: 1.5rem;
+}
+
+/* Contact call-to-action on the front page */
+.contact-section.contact-cta {
+    text-align: center;
+    padding: 6rem 0;
+}
+
+.contact-cta .container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.contact-cta .section-title {
+    margin-bottom: 1.5rem;
+}
+
+.contact-cta-text {
+    font-size: 1.15rem;
+    margin-bottom: 2.5rem;
+}
+
+.contact-cta .btn {
+    padding: 1rem 3rem;
+}
+
+/* Small spinner inside the contact form's submit button */
+.spinner.btn-spinner {
+    width: 20px;
+    height: 20px;
+    border-width: 2px;
+    display: inline-block;
+    margin: 0;
+}
+
+/* Entry to the internal platform in the header */
+.nav-login {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.nav-login-icon {
+    width: 18px;
+    height: 18px;
+}
+
+/* Shown while the internal platform is loading (its own stylesheet loads with it) */
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 4rem 1rem;
+    color: var(--text-secondary);
+}
+
+.loading-state--fullscreen {
+    min-height: 100vh;
+    background: var(--bg-dark);
+}

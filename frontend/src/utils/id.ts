@@ -1,0 +1,7 @@
+// Ids generated on the client for the mock repository. A real backend assigns ids itself.
+export function createId(prefix: string): string {
+    const random = typeof crypto !== "undefined" && "randomUUID" in crypto
+        ? crypto.randomUUID().slice(0, 8)
+        : Math.random().toString(36).slice(2, 10);
+    return `${prefix}-${random}`;
+}

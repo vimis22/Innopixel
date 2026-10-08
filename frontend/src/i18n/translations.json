@@ -5,7 +5,9 @@
       "services": "Services",
       "projects": "Projects",
       "story": "Our Story",
-      "contact": "Contact"
+      "contact": "Contact",
+      "login": "Log in",
+      "workspace": "Workspace"
     },
     "hero": {
       "badge": "Innovation Hub & Production House",
@@ -84,7 +86,11 @@
       "filterAll": "All",
       "filterArVr": "AR / VR",
       "filterWeb": "3D & Web",
-      "filterEdu": "EduTech"
+      "filterEdu": "EduTech",
+      "readMore": "Read more →",
+      "client": "Client",
+      "tech": "Technology",
+      "close": "Close"
     },
     "storyPage": {
       "bannerSubtitle": "Who We Are",
@@ -117,13 +123,17 @@
       "formSubjectPlaceholder": "What is your project about?",
       "formMessage": "Message",
       "formMessagePlaceholder": "Tell us about your ideas, timeline, and requirements...",
-      "btnSend": "Send Message"
+      "btnSend": "Send Message",
+      "successTitle": "Thank you for reaching out!",
+      "successText": "We have received your message and will get back to you as soon as possible.",
+      "btnReset": "Send another message"
     },
     "footer": {
       "tagline": "Handcrafting pixels to fit tomorrow's reality. Based in Odense, Denmark.",
       "headingLinks": "Quick Links",
       "headingServices": "Services",
-      "copyright": "© 2026 Innopixel ApS. All rights reserved."
+      "copyright": "© 2026 Innopixel ApS. All rights reserved.",
+      "headingFollow": "Follow us"
     },
     "projects": {
       "lillebaelt-ar": {
@@ -176,7 +186,9 @@
       "services": "Ydelser",
       "projects": "Projekter",
       "story": "Vores Historie",
-      "contact": "Kontakt"
+      "contact": "Kontakt",
+      "login": "Log ind",
+      "workspace": "Arbejdsområde"
     },
     "hero": {
       "badge": "Innovation Hub & Production House",
@@ -255,7 +267,11 @@
       "filterAll": "Alle",
       "filterArVr": "AR / VR",
       "filterWeb": "3D & Web",
-      "filterEdu": "EduTech"
+      "filterEdu": "EduTech",
+      "readMore": "Læs mere →",
+      "client": "Kunde",
+      "tech": "Teknologi",
+      "close": "Luk"
     },
     "storyPage": {
       "bannerSubtitle": "Hvem vi er",
@@ -288,13 +304,17 @@
       "formSubjectPlaceholder": "Hvad handler din henvendelse om?",
       "formMessage": "Besked",
       "formMessagePlaceholder": "Fortæl os om dine idéer, tidsramme og ønsker...",
-      "btnSend": "Send Besked"
+      "btnSend": "Send Besked",
+      "successTitle": "Tak for din henvendelse!",
+      "successText": "Vi har modtaget din besked og vender tilbage til dig hurtigst muligt.",
+      "btnReset": "Send en ny besked"
     },
     "footer": {
       "tagline": "Handcrafting pixels to fit tomorrow's reality. Baseret i Odense, Danmark.",
       "headingLinks": "Hurtige Links",
       "headingServices": "Ydelser",
-      "copyright": "© 2026 Innopixel ApS. Alle rettigheder forbeholdes."
+      "copyright": "© 2026 Innopixel ApS. Alle rettigheder forbeholdes.",
+      "headingFollow": "Følg med"
     },
     "projects": {
       "lillebaelt-ar": {

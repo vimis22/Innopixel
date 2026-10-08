@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Innopixel - Handcrafting pixels to fit tomorrow's reality</title>
+    <meta name="description" content="Førende XR-produktionshus i Odense. Vi udvikler Virtual Reality (VR), Augmented Reality (AR), 3D-modellering og interaktive digitale oplevelser til uddannelse og erhverv." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Set theme and language before React loads, so the page doesn't flash the wrong theme -->
+    <script>
+      (function () {
+        var savedTheme = localStorage.getItem('theme');
+        var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+        document.documentElement.setAttribute('lang', localStorage.getItem('lang') || 'da');
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

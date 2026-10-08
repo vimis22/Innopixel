@@ -1,0 +1,58 @@
+/* Dashboard: project rows, quick task list, deadlines and the progress ring */
+
+.project-row { align-items: center; gap: var(--space-4); padding: var(--space-4) 0; }
+.project-row-body { display: flex; flex-direction: column; gap: var(--space-1); flex: 1; min-width: 0; }
+.project-row-head { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+.project-row .progress { margin-top: var(--space-2); }
+
+.task-quick-row { gap: var(--space-4); }
+.task-quick-title { flex: 1; font-weight: 500; }
+.task-quick-title.is-done { text-decoration: line-through; color: var(--text-3); }
+.task-quick-due { min-width: 5.5rem; text-align: right; font-size: var(--text-sm); color: var(--text-2); }
+
+/* Round check button; the ring color shows priority (the pill next to it says it in words) */
+.task-check {
+    --check-color: var(--tone-neutral);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid var(--check-color);
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    transition: background var(--duration-fast) var(--ease);
+}
+
+.task-check svg { width: 16px; height: 16px; }
+.task-check:hover:not(:disabled) { background: color-mix(in srgb, var(--check-color) 18%, transparent); }
+.task-check:disabled { cursor: default; opacity: 0.6; }
+.task-check.is-done { background: var(--tone-success); border-color: var(--tone-success); }
+.task-check--medium { --check-color: var(--tone-warning); }
+.task-check--high, .task-check--critical { --check-color: var(--tone-danger); }
+
+.deadline-row { gap: var(--space-4); }
+.deadline-row-body { flex: 1; }
+
+.date-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-strong);
+    background: var(--surface-3);
+    line-height: 1.1;
+}
+
+.date-block-day { font-family: var(--font-heading); font-size: var(--text-lg); font-weight: 800; color: var(--accent-strong); }
+.date-block-month { font-size: var(--text-xs); color: var(--text-2); }
+.date-block.is-urgent { border-color: color-mix(in srgb, var(--tone-danger) 50%, transparent); }
+
+.donut-panel { display: flex; align-items: center; justify-content: center; gap: var(--space-8); flex-wrap: wrap; padding: var(--space-2) 0; }

@@ -1,0 +1,20 @@
+/* Team directory and project distribution */
+
+.team-row { gap: var(--space-4); padding: var(--space-4) 0; }
+.team-row.is-inactive { opacity: 0.55; }
+.team-row-main { display: flex; flex-direction: column; gap: var(--space-2); flex: 1; min-width: 0; }
+.team-row-name { display: flex; align-items: baseline; gap: var(--space-3); flex-wrap: wrap; }
+.team-row-name strong { font-family: var(--font-heading); font-size: var(--text-lg); }
+.team-row-load { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; min-width: 8.5rem; padding-left: var(--space-4); border-left: 1px solid var(--border); font-size: var(--text-sm); cursor: help; }
+
+.distribution { display: flex; flex-direction: column; gap: var(--space-4); }
+.distribution-head span:last-child { white-space: nowrap; }
+.distribution-head { display: flex; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-1); font-weight: 600; }
+.distribution-bar { display: flex; align-items: center; gap: var(--space-3); }
+.distribution-track { position: relative; flex: 1; height: 8px; border-radius: var(--radius-pill); background: var(--surface-3); overflow: hidden; }
+.distribution-track span { position: absolute; inset: 0 auto 0 0; border-radius: inherit; }
+
+@media (max-width: 900px) {
+    .team-row { flex-wrap: wrap; }
+    .team-row-load { align-items: flex-start; border-left: none; padding-left: 0; }
+}

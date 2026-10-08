@@ -1,0 +1,29 @@
+/* Milestones: table icons, progress cell, side list */
+
+.milestone-icon {
+    --milestone-color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--milestone-color) 16%, transparent);
+    color: var(--milestone-color);
+}
+
+.milestone-icon svg { width: 19px; height: 19px; }
+.milestone-icon--overdue { --milestone-color: var(--tone-danger) !important; }
+.milestone-icon--completed { --milestone-color: var(--tone-success) !important; }
+.milestone-desc { max-width: 200px; }
+.milestone-project { color: var(--text-1); text-decoration: none; font-size: var(--text-sm); max-width: 160px; }
+.milestone-project:hover { color: var(--accent); }
+.milestone-progress { min-width: 110px; display: flex; align-items: center; gap: var(--space-3); }
+.milestone-progress .progress { flex: 1; }
+
+.panel--alert { border-color: color-mix(in srgb, var(--tone-danger) 40%, transparent); }
+.panel--alert .panel-title { color: var(--tone-danger-text); }
+
+.week-milestone { gap: var(--space-3); }
+.week-milestone .cell-text { flex: 1; }

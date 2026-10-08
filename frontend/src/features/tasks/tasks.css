@@ -1,0 +1,18 @@
+/* Task table and checklist (My Tasks, project detail) */
+
+.task-table .col-check { width: 48px; padding-right: 0; }
+.task-table .task-title { font-size: var(--text-md); }
+.task-table td:nth-child(2) { min-width: 240px; }
+.task-title.is-done { text-decoration: line-through; color: var(--text-3); }
+.task-subtitle { max-width: 320px; }
+.project-name-cell { max-width: 150px; font-size: var(--text-sm); }
+
+.checklist { display: flex; flex-direction: column; gap: 2px; }
+.checklist-item { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); padding: var(--space-1) 0; }
+.checklist-item label { display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-sm); cursor: pointer; min-width: 0; }
+.checklist-item .is-done { color: var(--text-3); text-decoration: line-through; }
+.checklist-item .icon-btn { opacity: 0; }
+.checklist-item:hover .icon-btn, .checklist-item .icon-btn:focus-visible { opacity: 1; }
+.checklist-add { display: flex; gap: var(--space-2); margin-top: var(--space-1); }
+.checklist-add .control { height: 38px; font-size: var(--text-sm); }
+.checklist-add .icon-btn { height: 38px; width: 38px; }

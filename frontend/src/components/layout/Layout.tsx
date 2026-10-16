@@ -3,6 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import PixelBackground from "../three/PixelBackground";
+import ChatbotWidget from "../../features/chatbot/components/ChatbotWidget";
 
 // Shared frame around every page. The current page is rendered in <Outlet />.
 function Layout() {
@@ -21,6 +22,7 @@ function Layout() {
                 <Outlet />
             </main>
             <Footer />
+            <ChatbotWidget />
         </>
     );
 }

@@ -131,6 +131,49 @@
       "headingServices": "Services",
       "copyright": "© 2026 Innopixel ApS. All rights reserved.",
       "headingFollow": "Follow us"
+    },
+    "chatbot": {
+      "name": "Innopixel AI Assistant",
+      "description": "Your guide to VR, AR, 3D and interactive digital solutions.",
+      "open": "Open chat with the Innopixel AI Assistant",
+      "close": "Close chat",
+      "newConversation": "Start a new conversation",
+      "dialogLabel": "Chat with the Innopixel AI Assistant",
+      "conversationLabel": "Conversation",
+      "status": {
+        "checking": "Connecting…",
+        "demo": "Demo mode",
+        "online": "Online",
+        "unavailable": "Unavailable"
+      },
+      "demoNotice": "Demo: answers come from the content of this website. I'm not connected to an AI language model yet. Please don't share personal information here.",
+      "unavailableNotice": "The assistant is unavailable right now. You can still reach us through the contact page.",
+      "welcomeTitle": "Hi there! 👋",
+      "welcomeIntro": "I'm the Innopixel AI Assistant.",
+      "welcomeBody": "I can help you explore our VR, AR, 3D modeling and interactive digital solutions. What would you like to know?",
+      "quick": {
+        "services": "Our services",
+        "servicesQuestion": "What services do you offer?",
+        "projects": "View projects",
+        "contact": "Contact us",
+        "vr": "What is VR?",
+        "vrQuestion": "What is VR?"
+      },
+      "suggestionsLabel": "Suggestions",
+      "you": "You",
+      "assistant": "Assistant",
+      "sentAt": "Sent at {time}",
+      "typing": "The assistant is writing…",
+      "inputLabel": "Your message",
+      "placeholder": "Ask me anything…",
+      "send": "Send message",
+      "inputHint": "Enter to send · Shift + Enter for a new line",
+      "tooLong": "Your message is too long (max {max} characters).",
+      "busy": "Please wait for the answer before sending another message.",
+      "failed": "The message could not be answered.",
+      "retry": "Try again",
+      "limitReached": "This conversation is full. Start a new conversation to continue.",
+      "errorReply": "Sorry, something went wrong and I couldn't answer. Please try again."
     }
   },
   "da": {
@@ -265,6 +308,49 @@
       "headingServices": "Ydelser",
       "copyright": "© 2026 Innopixel ApS. Alle rettigheder forbeholdes.",
       "headingFollow": "Følg med"
+    },
+    "chatbot": {
+      "name": "Innopixel AI Assistant",
+      "description": "Din guide til VR, AR, 3D og interaktive digitale løsninger.",
+      "open": "Åbn chat med Innopixels AI-assistent",
+      "close": "Luk chat",
+      "newConversation": "Start en ny samtale",
+      "dialogLabel": "Chat med Innopixels AI-assistent",
+      "conversationLabel": "Samtale",
+      "status": {
+        "checking": "Forbinder…",
+        "demo": "Demotilstand",
+        "online": "Online",
+        "unavailable": "Ikke tilgængelig"
+      },
+      "demoNotice": "Demo: svarene kommer fra indholdet på denne hjemmeside. Jeg er endnu ikke forbundet til en AI-sprogmodel. Del venligst ikke personlige oplysninger her.",
+      "unavailableNotice": "Assistenten er ikke tilgængelig lige nu. Du kan stadig kontakte os via kontaktsiden.",
+      "welcomeTitle": "Hej! 👋",
+      "welcomeIntro": "Jeg er Innopixels AI-assistent.",
+      "welcomeBody": "Jeg kan hjælpe dig med at finde information om vores VR-, AR- og 3D-løsninger samt vores projekter. Hvad vil du gerne vide?",
+      "quick": {
+        "services": "Vores ydelser",
+        "servicesQuestion": "Hvilke ydelser tilbyder I?",
+        "projects": "Se projekter",
+        "contact": "Kontakt os",
+        "vr": "Hvad er VR?",
+        "vrQuestion": "Hvad er VR?"
+      },
+      "suggestionsLabel": "Forslag",
+      "you": "Dig",
+      "assistant": "Assistent",
+      "sentAt": "Sendt kl. {time}",
+      "typing": "Assistenten skriver…",
+      "inputLabel": "Din besked",
+      "placeholder": "Spørg mig om hvad som helst…",
+      "send": "Send besked",
+      "inputHint": "Enter for at sende · Shift + Enter for ny linje",
+      "tooLong": "Din besked er for lang (højst {max} tegn).",
+      "busy": "Vent på svaret, før du sender en ny besked.",
+      "failed": "Beskeden kunne ikke besvares.",
+      "retry": "Prøv igen",
+      "limitReached": "Samtalen er fuld. Start en ny samtale for at fortsætte.",
+      "errorReply": "Beklager, noget gik galt, og jeg kunne ikke svare. Prøv venligst igen."
     }
   }
 }

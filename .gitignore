@@ -1,0 +1,18 @@
+# IDE
+.idea/
+.vs/
+.vscode/
+*.iml
+
+# Claude Code (lokale indstillinger)
+.claude/settings.local.json
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Miljøvariabler og hemmeligheder
+.env
+.env.*
+!.env.example

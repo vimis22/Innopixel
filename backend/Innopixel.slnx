@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Innopixel.ChatbotInterpreter/Innopixel.ChatbotInterpreter.csproj" />
+    <Project Path="src/Innopixel.ChatbotSystem/Innopixel.ChatbotSystem.csproj" />
+    <Project Path="src/Innopixel.Images/Innopixel.Images.csproj" />
+    <Project Path="src/Innopixel.Main/Innopixel.Main.csproj" />
+    <Project Path="src/Innopixel.Pages/Innopixel.Pages.csproj" />
+    <Project Path="src/Innopixel.Projects/Innopixel.Projects.csproj" />
+    <Project Path="src/Innopixel.Statistics/Innopixel.Statistics.csproj" />
+    <Project Path="src/Innopixel.User/Innopixel.User.csproj" />
+  </Folder>
+</Solution>

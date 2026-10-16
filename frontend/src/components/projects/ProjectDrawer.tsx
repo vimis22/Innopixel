@@ -9,7 +9,7 @@ interface ProjectDrawerProps {
 }
 
 function ProjectDrawer({ project, onClose }: ProjectDrawerProps) {
-    const { t, tList } = useLanguage();
+    const { t } = useLanguage();
     const isOpen = project !== null;
 
     // Keep showing the last project while the drawer slides out
@@ -35,8 +35,7 @@ function ProjectDrawer({ project, onClose }: ProjectDrawerProps) {
         };
     }, [isOpen, onClose]);
 
-    const key = displayed ? `projects.${displayed.id}` : "";
-    const title = displayed ? t(`${key}.title`) : "";
+    const title = displayed?.title ?? "";
 
     return (
         <>
@@ -48,10 +47,10 @@ function ProjectDrawer({ project, onClose }: ProjectDrawerProps) {
                 <div className="drawer-content">
                     {displayed && (
                         <div className="drawer-body">
-                            <div className="drawer-tag">{tList(`${key}.tags`).join(" / ")}</div>
+                            <div className="drawer-tag">{displayed.tags.join(" / ")}</div>
                             <h2 className="drawer-title">{title}</h2>
                             <div className="drawer-hero-img-wrapper glow-effect">
-                                <img src={displayed.image} alt={title} />
+                                {displayed.image && <img src={displayed.image} alt={title} />}
                             </div>
                             <div className="drawer-metadata">
                                 <div className="meta-item">
@@ -64,9 +63,9 @@ function ProjectDrawer({ project, onClose }: ProjectDrawerProps) {
                                 </div>
                             </div>
                             <div className="drawer-description">
-                                <p><strong>{t(`${key}.intro`)}</strong></p>
-                                {/* The body in translations.json contains HTML (<h4>, <p>) */}
-                                <div dangerouslySetInnerHTML={{ __html: t(`${key}.body`) }} />
+                                <p><strong>{displayed.intro}</strong></p>
+                                {/* The body comes from the database as HTML (<h4>, <p>), written by Innopixel's administrators */}
+                                <div dangerouslySetInnerHTML={{ __html: displayed.body }} />
                             </div>
                         </div>
                     )}

@@ -11,6 +11,7 @@ import KanbanPage from "../kanban/KanbanPage";
 import MilestonesPage from "../milestones/MilestonesPage";
 import TeamPage from "../team/TeamPage";
 import SettingsPage from "../settings/SettingsPage";
+import TimeRegistrationPage from "../time/TimeRegistrationPage";
 import "../../styles/app/index.css";
 
 // Routes below /app. Paths are relative; see APP_ROUTES in config/routes.ts.
@@ -28,6 +29,7 @@ function AppRoutes() {
                     <Route path="board" element={<KanbanPage />} />
                     <Route path="milestones" element={<MilestonesPage />} />
                     <Route path="team" element={<TeamPage />} />
+                    <Route path="time" element={<TimeRegistrationPage />} />
                     <Route path="settings" element={<SettingsPage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Route>

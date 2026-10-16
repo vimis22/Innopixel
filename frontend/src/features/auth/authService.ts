@@ -1,13 +1,13 @@
+import api, { apiErrorBody, apiStatus } from "../../services/api";
 import type { User } from "../../types/domain";
-import { createId } from "../../utils/id";
-import { DEMO_PASSWORD, delay, readDb } from "../workspace/mockDb";
+import { toRepositoryError } from "../workspace/apiErrors";
 
+// The session itself is an HttpOnly cookie set by the backend; JavaScript never sees a token.
 export interface Session {
     user: User;
-    token: string;
 }
 
-export type LoginErrorCode = "INVALID_CREDENTIALS" | "INACTIVE";
+export type LoginErrorCode = "INVALID_CREDENTIALS" | "INACTIVE" | "TOO_MANY_ATTEMPTS" | "UNAVAILABLE";
 
 export class LoginError extends Error {
     readonly code: LoginErrorCode;
@@ -19,64 +19,48 @@ export class LoginError extends Error {
     }
 }
 
-/*
- * Contract for authentication. A production implementation would call the ASP.NET Core API
- * (e.g. POST /auth/login returning a JWT or setting an HttpOnly cookie) and let the server
- * resolve the user and role on every request.
- */
 export interface AuthService {
     login(email: string, password: string): Promise<Session>;
     restore(): Promise<Session | null>;
     logout(): Promise<void>;
+    changePassword(currentPassword: string, newPassword: string): Promise<void>;
 }
 
-const SESSION_KEY = "innopixel.session.v1";
-
-/*
- * DEVELOPMENT ONLY. Accepts every active demo user with the shared demo password.
- * There is no real security here: the "token" is random and roles live in localStorage.
- */
-export const mockAuthService: AuthService = {
+// Login against the ASP.NET Core API (backend/src/Innopixel.Main/Controllers/AuthController.cs)
+export const apiAuthService: AuthService = {
     async login(email, password) {
-        await delay(600);
-        const user = readDb().users.find((u) => u.email.toLowerCase() === email.trim().toLowerCase());
-        if (!user || password !== DEMO_PASSWORD) throw new LoginError("INVALID_CREDENTIALS");
-        if (!user.active) throw new LoginError("INACTIVE");
-
-        const session: Session = { user, token: createId("mock-token") };
-        localStorage.setItem(SESSION_KEY, JSON.stringify({ userId: user.id, token: session.token }));
-        return session;
+        try {
+            const { data } = await api.post<User>("/auth/login", { email: email.trim(), password });
+            return { user: data };
+        } catch (error) {
+            const status = apiStatus(error);
+            if (status === 401) {
+                throw new LoginError(apiErrorBody(error)?.code === "INACTIVE" ? "INACTIVE" : "INVALID_CREDENTIALS");
+            }
+            throw new LoginError(status === 429 ? "TOO_MANY_ATTEMPTS" : "UNAVAILABLE");
+        }
     },
 
+    // Asks the server who is logged in (the cookie is sent automatically)
     async restore() {
-        const raw = localStorage.getItem(SESSION_KEY);
-        if (!raw) return null;
         try {
-            const { userId, token } = JSON.parse(raw) as { userId: string; token: string };
-            const user = readDb().users.find((u) => u.id === userId && u.active);
-            if (!user) {
-                localStorage.removeItem(SESSION_KEY);
-                return null;
-            }
-            return { user, token };
-        } catch {
-            localStorage.removeItem(SESSION_KEY);
-            return null;
+            const { data } = await api.get<User>("/auth/me");
+            return { user: data };
+        } catch (error) {
+            if (apiStatus(error) === 401) return null;
+            throw error;
         }
     },
 
     async logout() {
-        localStorage.removeItem(SESSION_KEY);
+        await api.post("/auth/logout");
+    },
+
+    async changePassword(currentPassword, newPassword) {
+        try {
+            await api.put("/auth/password", { currentPassword, newPassword });
+        } catch (error) {
+            throw toRepositoryError(error);
+        }
     },
 };
-
-// The demo accounts shown on the login page in development mode
-export function getDemoAccounts(): Pick<User, "name" | "email" | "role" | "title">[] {
-    const preferred = ["mette@innopixel.dk", "ahmad@innopixel.dk", "jonas@innopixel.dk"];
-    const users = readDb().users.filter((u) => u.active);
-    return preferred
-        .map((email) => users.find((u) => u.email === email))
-        .filter((u): u is User => Boolean(u));
-}
-
-export { DEMO_PASSWORD };

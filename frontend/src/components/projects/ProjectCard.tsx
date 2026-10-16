@@ -8,9 +8,8 @@ interface ProjectCardProps {
 }
 
 function ProjectCard({ project, onOpen }: ProjectCardProps) {
-    const { t, tList } = useLanguage();
+    const { t } = useLanguage();
     const { ref, inView } = useScrollAnimation<HTMLDivElement>();
-    const title = t(`projects.${project.id}.title`);
 
     return (
         <div
@@ -19,12 +18,12 @@ function ProjectCard({ project, onOpen }: ProjectCardProps) {
             onClick={() => onOpen(project)}
         >
             <div className="project-img-wrapper">
-                <img src={project.image} alt={title} />
+                {project.image && <img src={project.image} alt={project.title} />}
             </div>
             <div className="project-info">
-                <div className="project-tag">{tList(`projects.${project.id}.tags`).join(" / ")}</div>
-                <h3>{title}</h3>
-                <p className="project-intro">{t(`projects.${project.id}.intro`)}</p>
+                <div className="project-tag">{project.tags.join(" / ")}</div>
+                <h3>{project.title}</h3>
+                <p className="project-intro">{project.intro}</p>
                 <button type="button" className="btn-link text-btn">{t("projectsPage.readMore")}</button>
             </div>
         </div>

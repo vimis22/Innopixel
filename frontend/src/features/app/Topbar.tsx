@@ -1,13 +1,12 @@
 import { useCallback, useId, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { APP_ROUTES, ROUTES } from "../../config/routes";
-import { USE_MOCK_API } from "../../config/services";
 import { useAppText } from "../../i18n/app/useAppText";
 import { useDismiss } from "../../hooks/useDismiss";
 import ThemeToggle from "../../components/common/ThemeToggle";
 import { Avatar } from "../../components/ui/Avatar";
 import ProjectThumb from "../../components/ui/ProjectThumb";
-import { ChevronDownIcon, InfoIcon, LogoutIcon, MenuIcon, SearchIcon, SettingsIcon } from "../../components/icons/AppIcons";
+import { ChevronDownIcon, LogoutIcon, MenuIcon, SearchIcon, SettingsIcon } from "../../components/icons/AppIcons";
 import { useAuth } from "../auth/AuthContext";
 import { useCurrentUser, useWorkspace } from "../workspace/WorkspaceContext";
 
@@ -165,12 +164,6 @@ function Topbar({ onOpenMenu }: { onOpenMenu: () => void }) {
             </button>
             <GlobalSearch />
             <div className="app-topbar-actions">
-                {USE_MOCK_API && (
-                    <span className="demo-pill" title={text.topbar.demoTooltip} tabIndex={0} aria-label={text.topbar.demoTooltip}>
-                        <InfoIcon aria-hidden="true" />
-                        <span>{text.demoBadge}</span>
-                    </span>
-                )}
                 <ThemeToggle />
                 <UserMenu />
             </div>

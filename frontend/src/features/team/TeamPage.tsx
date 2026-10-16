@@ -15,6 +15,7 @@ import { useActiveProjects, useProjectColors } from "../workspace/hooks";
 import { visibleTasks } from "../workspace/selectors";
 import { useCurrentUser, useWorkspaceData } from "../workspace/WorkspaceContext";
 import AssignmentsModal from "./AssignmentsModal";
+import TemporaryPasswordModal from "./TemporaryPasswordModal";
 import TeamMemberRow from "./TeamMemberRow";
 import UserFormModal from "./UserFormModal";
 import { workloadOf } from "./teamStats";
@@ -35,6 +36,7 @@ function TeamPage() {
     const [showInactive, setShowInactive] = useState(false);
     const [editing, setEditing] = useState<User | "new" | null>(null);
     const [assigning, setAssigning] = useState<User | null>(null);
+    const [resetPassword, setResetPassword] = useState<{ name: string; password: string } | null>(null);
     const admin = canManageTeam(me);
 
     const tasks = useMemo(() => visibleTasks(data), [data]);
@@ -60,11 +62,22 @@ function TeamPage() {
         await run(() => actions.setUserActive(user.id, !user.active), t.updated_toast);
     }
 
+    async function resetPasswordOf(user: User) {
+        const yes = await confirm({ title: t.resetPasswordTitle, message: t.resetPasswordMessage(user.name), confirmLabel: t.resetPassword, danger: true });
+        if (!yes) return;
+        let password: string | null = null;
+        const ok = await run(async () => {
+            password = await actions.resetUserPassword(user.id);
+        });
+        if (ok && password) setResetPassword({ name: user.name, password });
+    }
+
     // Administration actions are only offered to administrators (and enforced again in the repository)
     function actionsFor(user: User): MenuAction[] {
         if (!admin) return [];
         const list: MenuAction[] = [{ label: text.common.edit, Icon: EditIcon, onSelect: () => setEditing(user) }];
         if (user.active) list.push({ label: t.manageAssignments, Icon: FolderIcon, onSelect: () => setAssigning(user) });
+        if (user.active && user.id !== me.id) list.push({ label: t.resetPassword, Icon: LockIcon, onSelect: () => void resetPasswordOf(user) });
         if (user.id !== me.id) {
             list.push(user.active
                 ? { label: t.deactivate, Icon: LockIcon, onSelect: () => void toggleActive(user), danger: true }
@@ -159,6 +172,7 @@ function TeamPage() {
 
             {editing && <UserFormModal user={editing === "new" ? undefined : editing} onClose={() => setEditing(null)} />}
             {assigning && <AssignmentsModal user={assigning} onClose={() => setAssigning(null)} />}
+            {resetPassword && <TemporaryPasswordModal name={resetPassword.name} password={resetPassword.password} onClose={() => setResetPassword(null)} />}
         </div>
     );
 }

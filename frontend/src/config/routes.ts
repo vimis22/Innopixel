@@ -26,5 +26,6 @@ export const APP_ROUTES = {
     board: "/app/board",
     milestones: "/app/milestones",
     team: "/app/team",
+    time: "/app/time",
     settings: "/app/settings",
 } as const;

@@ -56,14 +56,6 @@
       "bannerSubtitle": "What We Offer",
       "bannerTitle": "Our <span class=\"gradient-text\">Services</span>",
       "bannerDesc": "We design and craft digital pixel solutions tailored to your organization's educational or commercial needs. From immersive simulations to playful 3D elements.",
-      "vrTitle": "Virtual Reality (VR)",
-      "vrDesc": "Interactive 3D worlds created for Quest, Pico, and PC VR. Ideal for complex training, safety simulations, and virtual museum exhibits.",
-      "arTitle": "Augmented Reality (AR)",
-      "arDesc": "Digital layers superimposed on the real world via smartphones, tablets, or AR glasses. Perfect for outdoor learning paths, harbor exhibits, and product visualizers.",
-      "modelingTitle": "3D Modeling & Animation",
-      "modelingDesc": "Craftsmanship down to the smallest pixel. We create high-fidelity 3D assets, realistic low-poly environments, and smooth technical animations.",
-      "webTitle": "Interactive Web Experiences",
-      "webDesc": "The future of the web in 3D. We build lightning-fast WebGL and WebXR applications that run directly in standard browsers without installation.",
       "edutechTitle": "EduTech & Educational Games",
       "edutechDesc": "Pedagogical technology built with gamification principles. We transform dry educational material into engaging, tactile learning games.",
       "consultingTitle": "XR Consulting & Concept",
@@ -77,7 +69,9 @@
       "step3Title": "3. Development & 3D",
       "step3Desc": "Unity/WebGL coding, 3D modeling, and spatial sound design.",
       "step4Title": "4. Test & Deployment",
-      "step4Desc": "Field user testing, optimization, and final deployment."
+      "step4Desc": "Field user testing, optimization, and final deployment.",
+      "loading": "Loading services…",
+      "loadError": "The services could not be loaded. Please try again later."
     },
     "projectsPage": {
       "bannerSubtitle": "Cases & Portfolio",
@@ -90,7 +84,9 @@
       "readMore": "Read more →",
       "client": "Client",
       "tech": "Technology",
-      "close": "Close"
+      "close": "Close",
+      "loading": "Loading projects…",
+      "loadError": "The projects could not be loaded. Please try again later."
     },
     "storyPage": {
       "bannerSubtitle": "Who We Are",
@@ -126,7 +122,8 @@
       "btnSend": "Send Message",
       "successTitle": "Thank you for reaching out!",
       "successText": "We have received your message and will get back to you as soon as possible.",
-      "btnReset": "Send another message"
+      "btnReset": "Send another message",
+      "errorText": "Your message could not be sent. Please try again in a moment."
     },
     "footer": {
       "tagline": "Handcrafting pixels to fit tomorrow's reality. Based in Odense, Denmark.",
@@ -134,50 +131,6 @@
       "headingServices": "Services",
       "copyright": "© 2026 Innopixel ApS. All rights reserved.",
       "headingFollow": "Follow us"
-    },
-    "projects": {
-      "lillebaelt-ar": {
-        "title": "Naturpark Lillebælt AR App",
-        "tags": ["Augmented Reality", "EduTech", "UX Design"],
-        "image": "images/project_lillebaelt.png",
-        "intro": "An interactive underwater exploration application developed to engage school children in the marine ecosystem of the Lillebælt nature park.",
-        "body": "<h4>The Challenge</h4><p>Engaging children in environmental education can be challenging, especially when the subject is hidden beneath the ocean surface. Naturpark Lillebælt wanted an innovative solution that schools, museums, and visitors could use directly at the harbor docks to 'see' underwater wildlife in real-time.</p><h4>The Solution</h4><p>Innopixel developed a custom markerless AR app. When users point their mobile devices toward the water surface, a virtual 3D ecosystem renders. Students can interact with native species (like porpoises, crabs, and cod), play educational quizzes, and log sightings.</p><h4>Technical Integration</h4><p>Built with Unity and AR Foundation, optimizing custom 3D low-poly models to run smoothly at 60fps on consumer devices. It includes a custom spatial sound design that makes players feel fully submerged.</p>"
-      },
-      "sensible-xr": {
-        "title": "XR Turbine Maintenance Guide",
-        "tags": ["Extended Reality", "Industrial Training", "3D Simulation"],
-        "image": "images/project_turbine.png",
-        "intro": "An advanced augmented reality training tool for technicians performing remote diagnostics and repair on complex offshore wind turbines.",
-        "body": "<h4>The Challenge</h4><p>Offshore wind turbine maintenance is high-risk, expensive, and requires highly specialized skills. Errors during repair operations result in costly downtime. Our client needed a remote assistant guide that technicians could wear on-site to inspect turbine elements step-by-step.</p><h4>The Solution</h4><p>An immersive AR guide built for Microsoft HoloLens 2. The application overlays wireframe schematics, live diagnostic feeds, and vector directions directly over the physical wind turbine gears. Technicians can execute inspection checklists hands-free using hand gestures and voice controls.</p><h4>Technical Integration</h4><p>Built using MRTK (Mixed Reality Toolkit) and Unity. Integration with IoT sensors on the turbine allows real-time telemetry (RPM, heat levels) to stream directly into the technician's HUD.</p>"
-      },
-      "veterandykkerne": {
-        "title": "Veterandykkerne - Ocean Heroes",
-        "tags": ["3D Simulation", "Culture & History", "Web Experience"],
-        "image": "images/project_dive.png",
-        "intro": "A digital memorial exhibition and immersive 3D simulation documenting the perilous underwater missions of Denmark's pioneer commercial divers.",
-        "body": "<h4>The Challenge</h4><p>The history of pioneer divers who laid down the cables and pipelines in the North Sea is largely invisible. The Veterandykkerne organization wanted to preserve this heritage and educate the public on the physical toll and extreme conditions of historical diving.</p><h4>The Solution</h4><p>We created an interactive museum installation combining physical relics with a Virtual Reality diving helmet simulation. Users can put on a mock helmet and experience a simulated 1970s deep-sea dive, navigating through dark water, cold currents, and executing weld operations under pressure.</p><h4>Technical Integration</h4><p>Created detailed 3D models of vintage diving gear and environments. Rendered with custom lighting and particles in WebGL and WebXR to allow access from standard browsers as well as VR headsets.</p>"
-      },
-      "nfc-display": {
-        "title": "ErhvervsTanken NFC Exhibition",
-        "tags": ["Tangible Media", "NFC Hardware", "Interactive Installation"],
-        "image": "images/project_nfc.jpg",
-        "intro": "A tangible exhibition table utilizing NFC hardware and 3D printing to guide teenagers through green transition career opportunities.",
-        "body": "<h4>The Challenge</h4><p>Youth career exhibitions are often filled with flat screens and pamphlets that fail to hold teenagers' interest. ErhvervsTanken wanted a physical, tactile game that would spark curiosity about vocational schools in green energy.</p><h4>The Solution</h4><p>Innopixel designed and built a wooden smart table embedded with NFC sensors and glowing light tracks. Visitors pick up custom 3D-printed tokens representing different energy resources (wind blade, solar panel, hydrogen pipe) and slot them into sockets. The table reads the NFC tags and starts a projection-mapped visual showcasing how those energy choices affect a local town.</p><h4>Technical Integration</h4><p>Arduino/Raspberry Pi microcontrollers process sensor inputs, communicating with a custom front-end built in Node.js and HTML5 Canvas that drives the ultra-short-throw projector feed.</p>"
-      },
-      "lillebaelt-vr": {
-        "title": "Lillebælt VR Ecosystem Game",
-        "tags": ["Virtual Reality", "EduTech", "Gamification"],
-        "image": "images/project_lillebaelt_vr.png",
-        "intro": "A classroom-focused VR simulator where students take on the role of marine biologists restoring a depleted harbor ecosystem.",
-        "body": "<h4>The Challenge</h4><p>Understanding marine conservation requires seeing the macro-effects of human waste and agricultural runoff. Traditional classroom textbooks lack the immersion to drive emotional engagement with underwater conservation.</p><h4>The Solution</h4><p>An educational VR game where players dive into Lillebælt. Armed with a scanning tool, they identify pollutants, plant eelgrass meadows, build stone reefs, and watch marine life return. The simulation covers a 10-year span compressed into a 15-minute experience.</p><h4>Technical Integration</h4><p>Optimized for standalone VR headsets (Meta Quest 2/3) using Unity's Universal Render Pipeline (URP). It leverages active spatial audio and highly optimized water physics to simulate real underwater environments.</p>"
-      },
-      "jelling-metaverse": {
-        "title": "Kongernes Jelling Metaverse Exhibit",
-        "tags": ["Metaverse", "SynergyXR", "Museum Exhibition"],
-        "image": "images/project_jelling.png",
-        "intro": "A collaborative virtual museum gallery designed for Kongernes Jelling, bringing Viking monuments to global classrooms in the metaverse.",
-        "body": "<h4>The Challenge</h4><p>The Jelling runic stones and royal mounds are UNESCO heritage sites in Denmark. Due to distance and scale, many schools can never visit them physically. The museum wanted to create a collaborative virtual exhibition where guides could host digital school tours.</p><h4>The Solution</h4><p>We designed a custom virtual metaverse pavilion. Using SynergyXR, we imported high-fidelity photogrammetry scans of the Jelling mounds, runic stones, and archaeological finds. Museum educators can meet up with classes from around the world inside this virtual space as avatars, giving live, interactive presentations.</p><h4>Technical Integration</h4><p>Photogrammetry cleaning of large-scale scans, texturing, and rendering optimizations for cross-platform access across WebGL, HoloLens, PC VR, and mobile tablets.</p>"
-      }
     }
   },
   "da": {
@@ -237,14 +190,6 @@
       "bannerSubtitle": "Hvad vi tilbyder",
       "bannerTitle": "Vores <span class=\"gradient-text\">Ydelser</span>",
       "bannerDesc": "Vi designer og håndværker digitale pixel-løsninger tilpasset din virksomheds pædagogiske eller kommercielle behov. Fra immersive simuleringer til legende 3D-elementer.",
-      "vrTitle": "Virtual Reality (VR)",
-      "vrDesc": "Interaktive 3D-verdener skabt til Quest, Pico og PC VR. Ideelt til kompleks træning, sikkerhedssimuleringer og virtuelle museumsudstillinger.",
-      "arTitle": "Augmented Reality (AR)",
-      "arDesc": "Digitale lag oven på den virkelige verden via smartphones, tablets eller AR-briller. Perfekt til udendørs læringsruter, havneudstillinger og produktvisualiseringer.",
-      "modelingTitle": "3D-Modellering & Animation",
-      "modelingDesc": "Digitalt håndværk ned til mindste pixel. Vi producerer high-fidelity 3D-assets, realistiske low-poly miljøer og tekniske animationssekvenser.",
-      "webTitle": "Interaktive Web-oplevelser",
-      "webDesc": "Fremtidens web i 3D. Vi bygger lynsnarre WebGL- og WebXR-applikationer, der kører direkte i standard-browsere uden installation.",
       "edutechTitle": "EduTech & Læringsspil",
       "edutechDesc": "Pædagogisk teknologi bygget med gamification-principper. Vi forvandler tørt undervisningsmateriale til engagerende, taktile læringsspil.",
       "consultingTitle": "XR Rådgivning & Koncept",
@@ -258,7 +203,9 @@
       "step3Title": "3. Udvikling & 3D",
       "step3Desc": "Kodning i Unity/WebGL, 3D-modellering og lyd-design.",
       "step4Title": "4. Test & Udrulning",
-      "step4Desc": "Brugertest i felten, optimering og endelig lancering."
+      "step4Desc": "Brugertest i felten, optimering og endelig lancering.",
+      "loading": "Henter ydelser…",
+      "loadError": "Ydelserne kunne ikke hentes. Prøv igen senere."
     },
     "projectsPage": {
       "bannerSubtitle": "Cases & Portefølje",
@@ -271,7 +218,9 @@
       "readMore": "Læs mere →",
       "client": "Kunde",
       "tech": "Teknologi",
-      "close": "Luk"
+      "close": "Luk",
+      "loading": "Henter projekter…",
+      "loadError": "Projekterne kunne ikke hentes. Prøv igen senere."
     },
     "storyPage": {
       "bannerSubtitle": "Hvem vi er",
@@ -307,7 +256,8 @@
       "btnSend": "Send Besked",
       "successTitle": "Tak for din henvendelse!",
       "successText": "Vi har modtaget din besked og vender tilbage til dig hurtigst muligt.",
-      "btnReset": "Send en ny besked"
+      "btnReset": "Send en ny besked",
+      "errorText": "Din besked kunne ikke sendes. Prøv igen om lidt."
     },
     "footer": {
       "tagline": "Handcrafting pixels to fit tomorrow's reality. Baseret i Odense, Danmark.",
@@ -315,50 +265,6 @@
       "headingServices": "Ydelser",
       "copyright": "© 2026 Innopixel ApS. Alle rettigheder forbeholdes.",
       "headingFollow": "Følg med"
-    },
-    "projects": {
-      "lillebaelt-ar": {
-        "title": "Naturpark Lillebælt AR App",
-        "tags": ["Augmented Reality", "EduTech", "UX Design"],
-        "image": "images/project_lillebaelt.png",
-        "intro": "En interaktiv lærings-app, der gør det muligt for havnens gæster at se et simuleret marint økosystem under vandets overflade.",
-        "body": "<h4>Udfordringen</h4><p>At engagere børn i miljøundervisning kan være en udfordring, især når emnet befinder sig under havets overflade. Naturpark Lillebælt ønskede en innovativ løsning, som skoler, museer og besøgende kunne bruge direkte på havnekajen for at 'se' dyrelivet i realtid.</p><h4>Løsningen</h4><p>Innopixel udviklede en specialdesignet, markørløs AR-app. Når brugere peger deres mobile enheder mod vandoverfladen, renderes et virtuelt 3D-økosystem. Elever kan interagere med hjemmehørende arter (såsom marsvin, krabber og torsk), svare på quizzer og logge observationer.</p><h4>Teknisk integration</h4><p>Udviklet med Unity og AR Foundation, optimeret til at køre med 60fps på almindelige smartphones. Indeholder rumlig 3D-lyd, der skaber en autentisk undervandsstemning.</p>"
-      },
-      "sensible-xr": {
-        "title": "Sensible - XR Turbinevedligeholdelse",
-        "tags": ["Extended Reality", "Industriel Træning", "3D-simulering"],
-        "image": "images/project_turbine.png",
-        "intro": "Et avanceret augmented reality-træningsværktøj til teknikere, der udfører fjerndiagnostik og reparation på komplekse havvindmøller.",
-        "body": "<h4>Udfordringen</h4><p>Vedligeholdelse af havvindmøller er forbundet med høj risiko, store omkostninger og kræver specialiserede færdigheder. Fejl under reparationer medfører dyre nedetider. Vores kunde manglede en remote assistant-guide, som teknikere kunne bære on-site.</p><h4>Løsningen</h4><p>En immersiv AR-guide bygget til Microsoft HoloLens 2. Applikationen lægger wireframe-diagrammer, live diagnostiske data og retningsanvisninger direkte oven på de fysiske gearhjul. Teknikere kan gennemgå tjeklister håndfrit via gestus- og stemmestyring.</p><h4>Teknisk integration</h4><p>Udviklet med Unity og MRTK. Integration med IoT-sensorer på vindmøllen tillader realtidsdata (omdrejningstal, temperaturer) at streame direkte ind i teknikerens synsfelt.</p>"
-      },
-      "veterandykkerne": {
-        "title": "Veterandykkerne - Havets Helte",
-        "tags": ["3D-simulering", "Kultur & Historie", "Weboplevelse"],
-        "image": "images/project_dive.png",
-        "intro": "En digital mindeudstilling og immersiv 3D-simulering, der dokumenterer de farefulde missioner for Danmarks pioner-erhvervsdykkere.",
-        "body": "<h4>Udfordringen</h4><p>Historien om de pionerdykkere, der lagde kabler og rørledninger i Nordsøen, er i høj grad usynlig. Organisationen Veterandykkerne ønskede at bevare denne kulturarv og uddanne offentligheden om de ekstreme forhold under historiske dyk.</p><h4>Løsningen</h4><p>Vi skabte en interaktiv museumsinstallation, der kombinerer fysiske genstande med en Virtual Reality-dykkerhjelm-simulering. Brugere kan tage en replika af en historisk dykkerhjelm på og opleve et simuleret dybhavsdyk fra 1970'erne under stærk strøm.</p><h4>Teknisk integration</h4><p>Detaljerede 3D-modeller af vintage dykkerudstyr. Renderet med lys- og partikeleffekter i WebGL og WebXR for at tillade adgang direkte fra standard-browsere samt VR-headsets.</p>"
-      },
-      "nfc-display": {
-        "title": "ErhvervsTanken NFC-udstilling",
-        "tags": ["Taktile Medier", "NFC Hardware", "Interaktiv Installation"],
-        "image": "images/project_nfc.jpg",
-        "intro": "Et fysisk oplevelsesbord med NFC-sensorer og 3D-printede brikker, der guider unge igennem erhvervsuddannelsernes grønne omstilling.",
-        "body": "<h4>Udfordringen</h4><p>Uddannelsesmesser er ofte fyldt med flade skærme og foldere, der ikke fanger de unges opmærksomhed. ErhvervsTanken ønskede et fysisk, taktilt spil, der vækker nysgerrighed om grøn energi på erhvervsskolerne.</p><h4>Løsningen</h4><p>Innopixel designede og byggede et smart-bord i træ med indbyggede NFC-sensorer og lysspor. Besøgende placerer 3D-printede brikker (fx vindmøllevinge, solcelle, brintrør) i hullerne. Bordet aflæser NFC-brikken og starter en projection mapping-visning af effekten.</p><h4>Teknisk integration</h4><p>Arduino og Raspberry Pi mikrokontrollere behandler sensorinput og kommunikerer med en Node.js-backend, der driver projektions- og lysstyringen.</p>"
-      },
-      "lillebaelt-vr": {
-        "title": "Lillebælt VR Økosystemspil",
-        "tags": ["Virtual Reality", "EduTech", "Gamificering"],
-        "image": "images/project_lillebaelt_vr.png",
-        "intro": "En klasserumsfokuseret VR-simulator, hvor elever agerer havbiologer og genopretter et nedbrudt fjordmiljø.",
-        "body": "<h4>Udfordringen</h4><p>At forstå havmiljøet kræver, at man ser effekterne af forurening og iltsvind i stor skala. Traditionelle lærebøger mangler immersionen til at skabe følelsesmæssigt engagement i naturbevarelse.</p><h4>Løsningen</h4><p>Et læringsspil i VR, hvor spillere dykker ned i Lillebælt. Udrustet med scanningsværktøjer fjerner de affald, planter ålegræs, etablerer stenrev og ser livet vende tilbage. Spillet komprimerer 10 års miljøudvikling til 15 minutter.</p><h4>Teknisk integration</h4><p>Optimeret til standalone VR-headsets (Meta Quest 2/3) med Unitys Universal Render Pipeline (URP). Bruger rumlig lyd og partikeleffekter to simulere autentiske undervandsmiljøer.</p>"
-      },
-      "jelling-metaverse": {
-        "title": "InnovationCamp 2022 - Jelling",
-        "tags": ["Metaverse", "SynergyXR", "Museumsudstilling"],
-        "image": "images/project_jelling.png",
-        "intro": "Et virtuelt museumsgalleri designet til Kongernes Jelling, der bringer monumenterne direkte ind i globale klasserum.",
-        "body": "<h4>Udfordringen</h4><p>Jellingstenene og gravhøjene er på UNESCOs verdensarvsliste. På grund af geografi og rejseomkostninger kan mange klasser aldrig besøge monumenterne fysisk. Museet manglede et virtuelt udstillingsrum til guidede skoleture.</p><h4>Løsningen</h4><p>Vi designede en virtuel metaverse-pavillon. Ved hjælp af SynergyXR importerede vi detaljerede fotogrammetrisk-scannede 3D-modeller af runestenene og højene. Museumsformidlere kan mødes med klasser som avatarer og give live rundvisninger.</p><h4>Teknisk integration</h4><p>Fotogrammetrisk databehandling og optimering af store 3D-scanninger til cross-platform adgang på WebGL, HoloLens, PC VR og tablets.</p>"
-      }
     }
   }
 }

@@ -1,6 +1,6 @@
 // Domain models for the internal project management platform.
-// Shapes mirror the planned ASP.NET Core / PostgreSQL entities, so the mock
-// repository can later be replaced by HTTP calls without touching the UI.
+// Shapes match the JSON of the ASP.NET Core Web API (backend/src/Innopixel.Workspace/Contracts/WorkspaceDtos.cs).
+// Ids are strings; dates without time are "YYYY-MM-DD".
 
 export type ISODate = string;      // "YYYY-MM-DD" (calendar date, no time zone)
 export type ISODateTime = string;  // full ISO timestamp
@@ -16,6 +16,7 @@ export interface User {
     department: string | null;
     phone: string | null;
     active: boolean;
+    expectedWeeklyHours: number;   // planned hours per week (Mon–Fri) for time registration
     createdAt: ISODateTime;
 }
 
@@ -189,7 +190,14 @@ export interface UserInput {
     title: string;
     department: string | null;
     phone: string | null;
+    expectedWeeklyHours?: number;
 }
 
 // What users may change about themselves (never their role or e-mail)
 export type ProfileInput = Pick<User, "name" | "title" | "department" | "phone">;
+
+// A new account and its temporary password (shown once, the user changes it under Settings)
+export interface CreatedUser {
+    user: User;
+    temporaryPassword: string;
+}

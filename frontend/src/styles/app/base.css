@@ -100,6 +100,7 @@
     white-space: nowrap;
 }
 
+button.link-arrow { padding: 0; border: none; background: none; cursor: pointer; font-family: inherit; }
 .link-arrow svg { width: 16px; height: 16px; transition: transform var(--duration-fast) var(--ease); }
 .link-arrow:hover { color: var(--text-1); }
 .link-arrow:hover svg { transform: translateX(2px); }

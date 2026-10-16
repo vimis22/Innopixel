@@ -1,4 +1,4 @@
-// Ids generated on the client for the mock repository. A real backend assigns ids itself.
+// Temporary ids for items created in the browser before they are saved (the server assigns the real ids).
 export function createId(prefix: string): string {
     const random = typeof crypto !== "undefined" && "randomUUID" in crypto
         ? crypto.randomUUID().slice(0, 8)

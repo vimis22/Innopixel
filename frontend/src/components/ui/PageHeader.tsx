@@ -1,18 +1,21 @@
-import type { ReactNode } from "react";
+import type { ComponentType, ReactNode } from "react";
+import type { IconProps } from "../icons/Icons";
 
 interface PageHeaderProps {
     title: string;
     highlight?: string;          // appended to the title in the brand gradient, e.g. the user's first name
     lead?: ReactNode;
     aside?: ReactNode;           // primary actions or a date greeting
+    Icon?: ComponentType<IconProps>;
 }
 
-function PageHeader({ title, highlight, lead, aside }: PageHeaderProps) {
+function PageHeader({ title, highlight, lead, aside, Icon }: PageHeaderProps) {
     return (
         <header className="page-header">
             <PixelDecoration />
             <div className="page-header-text">
                 <h1 className="page-title">
+                    {Icon && <span className="page-title-icon" aria-hidden="true"><Icon /></span>}
                     {title}
                     {highlight && <span className="page-title-highlight">{highlight}</span>}
                 </h1>

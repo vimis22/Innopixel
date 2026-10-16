@@ -1,5 +1,7 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
+import { isAxiosError } from "axios";
 import { useLanguage } from "../../context/LanguageContext";
+import api from "../../services/api";
 import { CheckCircleIcon } from "../icons/Icons";
 
 interface FormData {
@@ -15,6 +17,7 @@ function ContactForm() {
     const [form, setForm] = useState<FormData>(emptyForm);
     const [sending, setSending] = useState(false);
     const [sent, setSent] = useState(false);
+    const [errors, setErrors] = useState<string[]>([]);
 
     // One handler for all fields: the input's id matches the key in FormData
     function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -22,16 +25,25 @@ function ContactForm() {
         setForm((prev) => ({ ...prev, [id]: value }));
     }
 
-    function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    // The success message is only shown once the backend has saved the inquiry (US-11)
+    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         setSending(true);
+        setErrors([]);
 
-        // Simulated request. Later: await api.post("/contact", form)
-        setTimeout(() => {
-            setSending(false);
+        try {
+            await api.post("/contact", form);
             setSent(true);
             setForm(emptyForm);
-        }, 1200);
+        } catch (error) {
+            // 400 = the backend's validation messages, anything else = a general error
+            const serverErrors = isAxiosError(error) && error.response?.status === 400
+                ? (error.response.data?.errors as string[] | undefined)
+                : undefined;
+            setErrors(serverErrors?.length ? serverErrors : [t("contactPage.errorText")]);
+        } finally {
+            setSending(false);
+        }
     }
 
     return (
@@ -79,6 +91,13 @@ function ContactForm() {
                             onChange={handleChange}
                         />
                     </div>
+                    {errors.length > 0 && (
+                        <ul className="form-error-message" role="alert">
+                            {errors.map((message) => (
+                                <li key={message}>{message}</li>
+                            ))}
+                        </ul>
+                    )}
                     <button type="submit" className="btn btn-primary btn-block" disabled={sending}>
                         {sending ? (
                             <span className="spinner btn-spinner" />

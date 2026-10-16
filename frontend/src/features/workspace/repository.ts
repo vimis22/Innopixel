@@ -1,49 +1,50 @@
 import type {
-    ChecklistItem, MilestoneInput, ProfileInput, Project, ProjectInput, Task, TaskInput, TaskProgressPatch,
-    TaskSchedulePatch, User, UserInput, WorkspaceData,
+    ChecklistItem, CreatedUser, MilestoneInput, ProfileInput, Project, ProjectInput, Task, TaskInput, TaskProgressPatch,
+    TaskSchedulePatch, UserInput, WorkspaceData,
 } from "../../types/domain";
 
 /*
- * Contract between the UI and the data source.
- *
- * Today it is implemented by mockRepository (localStorage, development only).
- * Later an ApiWorkspaceRepository can implement the same interface with axios calls to the
- * ASP.NET Core Web API (see services/api.ts). The server then takes the acting user from the
- * auth token instead of `actorId`, and enforces the permission rules itself.
+ * Contract between the UI and the data source, implemented by apiRepository (the ASP.NET Core Web API).
+ * The server takes the acting user from the login cookie and enforces the permission rules itself;
+ * the rules in auth/permissions.ts only decide what the UI shows.
  */
 export interface WorkspaceRepository {
-    load(actorId: string): Promise<WorkspaceData>;
+    load(): Promise<WorkspaceData>;
 
-    createProject(actorId: string, input: ProjectInput): Promise<Project>;
-    updateProject(actorId: string, projectId: string, input: ProjectInput): Promise<void>;
-    setProjectArchived(actorId: string, projectId: string, archived: boolean): Promise<void>;
-    addProjectMember(actorId: string, projectId: string, userId: string): Promise<void>;
-    removeProjectMember(actorId: string, projectId: string, userId: string): Promise<void>;
-    setUserProjects(actorId: string, userId: string, projectIds: string[]): Promise<void>;
+    createProject(input: ProjectInput): Promise<Project>;
+    updateProject(projectId: string, input: ProjectInput): Promise<void>;
+    setProjectArchived(projectId: string, archived: boolean): Promise<void>;
+    addProjectMember(projectId: string, userId: string): Promise<void>;
+    removeProjectMember(projectId: string, userId: string): Promise<void>;
+    setUserProjects(userId: string, projectIds: string[]): Promise<void>;
 
-    createTask(actorId: string, input: TaskInput): Promise<Task>;
-    updateTask(actorId: string, taskId: string, input: TaskInput): Promise<void>;
-    updateTaskProgress(actorId: string, taskId: string, patch: TaskProgressPatch): Promise<void>;
-    updateTaskSchedule(actorId: string, taskId: string, patch: TaskSchedulePatch): Promise<void>;
-    updateTaskChecklist(actorId: string, taskId: string, checklist: ChecklistItem[]): Promise<void>;
-    deleteTask(actorId: string, taskId: string): Promise<void>;
+    createTask(input: TaskInput): Promise<Task>;
+    updateTask(taskId: string, input: TaskInput): Promise<void>;
+    updateTaskProgress(taskId: string, patch: TaskProgressPatch): Promise<void>;
+    updateTaskSchedule(taskId: string, patch: TaskSchedulePatch): Promise<void>;
+    updateTaskChecklist(taskId: string, checklist: ChecklistItem[]): Promise<void>;
+    deleteTask(taskId: string): Promise<void>;
 
-    createMilestone(actorId: string, input: MilestoneInput): Promise<void>;
-    updateMilestone(actorId: string, milestoneId: string, input: MilestoneInput): Promise<void>;
-    setMilestoneCompleted(actorId: string, milestoneId: string, completed: boolean): Promise<void>;
-    deleteMilestone(actorId: string, milestoneId: string): Promise<void>;
+    createMilestone(input: MilestoneInput): Promise<void>;
+    updateMilestone(milestoneId: string, input: MilestoneInput): Promise<void>;
+    setMilestoneCompleted(milestoneId: string, completed: boolean): Promise<void>;
+    deleteMilestone(milestoneId: string): Promise<void>;
 
-    createUser(actorId: string, input: UserInput): Promise<User>;
-    updateUser(actorId: string, userId: string, input: UserInput): Promise<void>;
-    setUserActive(actorId: string, userId: string, active: boolean): Promise<void>;
-    updateOwnProfile(actorId: string, profile: ProfileInput): Promise<void>;
+    // Returns the new account and a temporary password, shown once to the administrator
+    createUser(input: UserInput): Promise<CreatedUser>;
+    updateUser(userId: string, input: UserInput): Promise<void>;
+    setUserActive(userId: string, active: boolean): Promise<void>;
+    resetUserPassword(userId: string): Promise<string>;
+    updateOwnProfile(profile: ProfileInput): Promise<void>;
 }
+
+export type RepositoryErrorCode = "FORBIDDEN" | "NOT_FOUND" | "VALIDATION" | "UNAVAILABLE";
 
 // Errors with a message that is safe to show to the user
 export class RepositoryError extends Error {
-    readonly code: "FORBIDDEN" | "NOT_FOUND" | "VALIDATION";
+    readonly code: RepositoryErrorCode;
 
-    constructor(code: "FORBIDDEN" | "NOT_FOUND" | "VALIDATION", message: string) {
+    constructor(code: RepositoryErrorCode, message: string) {
         super(message);
         this.code = code;
         this.name = "RepositoryError";

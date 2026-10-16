@@ -1,17 +1,15 @@
-import { useId, type ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../config/routes";
-import { USE_MOCK_API } from "../../config/services";
 import { useAppText } from "../../i18n/app/useAppText";
 import { useLanguage, type Language } from "../../context/LanguageContext";
 import { useTheme } from "../../context/ThemeContext";
 import Switch from "../../components/ui/Switch";
-import { useFeedback } from "../../components/ui/Feedback";
-import { InfoIcon, LockIcon, LogoutIcon, RefreshIcon } from "../../components/icons/AppIcons";
+import { InfoIcon, LockIcon, LogoutIcon } from "../../components/icons/AppIcons";
 import { useAuth } from "../auth/AuthContext";
 import { usePreferences, type NotificationPreferences } from "../preferences/PreferencesContext";
-import { resetDb } from "../workspace/mockDb";
 import { useCurrentUser } from "../workspace/WorkspaceContext";
+import ChangePasswordModal from "./ChangePasswordModal";
 
 // One labelled setting with its control on the right
 export function SettingRow({ title, description, children }: { title: string; description?: string; children: (descriptionId: string) => ReactNode }) {
@@ -110,34 +108,23 @@ export function SecuritySection() {
     const t = text.settings;
     const user = useCurrentUser();
     const { logout } = useAuth();
-    const { confirm } = useFeedback();
     const navigate = useNavigate();
+    const [changingPassword, setChangingPassword] = useState(false);
 
     async function signOut() {
         await logout();
         navigate(ROUTES.login, { replace: true });
     }
 
-    async function resetDemo() {
-        const yes = await confirm({ title: t.resetTitle, message: t.resetMessage, confirmLabel: t.resetData, danger: true });
-        if (!yes) return;
-        resetDb();
-        await signOut();
-    }
-
     return (
         <>
-            <SettingRow title={t.changePassword} description={t.changePasswordUnavailable}>
-                {(id) => <button type="button" className="app-btn app-btn--ghost app-btn--sm" disabled aria-describedby={id}><LockIcon aria-hidden="true" />{t.changePassword}</button>}
+            <SettingRow title={t.changePassword} description={t.changePasswordSub}>
+                {(id) => <button type="button" className="app-btn app-btn--ghost app-btn--sm" onClick={() => setChangingPassword(true)} aria-describedby={id}><LockIcon aria-hidden="true" />{t.changePassword}</button>}
             </SettingRow>
             <SettingRow title={t.signedInAs(user.email)} description={t.sessionNote}>
                 {() => <button type="button" className="app-btn app-btn--ghost app-btn--sm" onClick={() => void signOut()}><LogoutIcon aria-hidden="true" />{text.topbar.logout}</button>}
             </SettingRow>
-            {USE_MOCK_API && (
-                <SettingRow title={t.demoData} description={t.demoDataNote}>
-                    {() => <button type="button" className="app-btn app-btn--danger-ghost app-btn--sm" onClick={() => void resetDemo()}><RefreshIcon aria-hidden="true" />{t.resetData}</button>}
-                </SettingRow>
-            )}
+            {changingPassword && <ChangePasswordModal onClose={() => setChangingPassword(false)} />}
         </>
     );
 }

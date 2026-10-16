@@ -1,6 +1,6 @@
 import { beforeEach } from "vitest";
 
-// Minimal in-memory localStorage, so the mock repository and auth service run under Node
+// Minimal in-memory localStorage, so code that stores preferences runs under Node
 class MemoryStorage {
     private store = new Map<string, string>();
     get length() { return this.store.size; }

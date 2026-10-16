@@ -1,9 +1,8 @@
 import type { Project, ProjectMember, Task, User } from "../../types/domain";
 
 /*
- * Permission rules shared by the UI and the mock repository.
- * In the browser they only decide what to show. Real security requires the backend
- * (ASP.NET Core) to enforce the same rules on every request.
+ * Permission rules for the UI. In the browser they only decide what to show; the backend enforces
+ * the same rules on every request (backend/src/Innopixel.Workspace/Application/WorkspaceRules.cs).
  */
 
 export function isAdmin(user: User): boolean {

@@ -1221,6 +1221,17 @@ strong {
     max-width: 320px;
 }
 
+.form-error-message {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0.8rem 1rem;
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    border-radius: 8px;
+    background: rgba(239, 68, 68, 0.1);
+    color: #fca5a5;
+    font-size: 0.95rem;
+}
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -1775,4 +1786,11 @@ strong {
 .loading-state--fullscreen {
     min-height: 100vh;
     background: var(--bg-dark);
+}
+
+/* Loading / error message while content is fetched from the API */
+.content-status {
+    padding: 3rem 1rem;
+    text-align: center;
+    color: var(--text-secondary, #9ca3af);
 }

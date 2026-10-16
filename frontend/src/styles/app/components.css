@@ -221,6 +221,8 @@ select option { background: var(--surface-2); color: var(--text-1); }
 
 .notice svg { width: 18px; height: 18px; color: var(--accent); flex-shrink: 0; margin-top: 2px; }
 .form-hint-banner { padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); color: var(--text-2); font-size: var(--text-sm); margin-bottom: var(--space-5); }
+.temporary-password { display: flex; align-items: center; gap: var(--space-3); margin-top: var(--space-4); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); background: var(--surface-2, var(--accent-soft)); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); }
+.temporary-password code { flex: 1; font-size: var(--text-lg); letter-spacing: 0.06em; user-select: all; word-break: break-all; }
 
 .input-with-action { position: relative; }
 .input-with-action input { padding-right: 3rem; }
@@ -475,6 +477,9 @@ select option { background: var(--surface-2); color: var(--text-1); }
     letter-spacing: -0.025em;
     line-height: 1.1;
 }
+
+.page-title-icon { display: inline-flex; vertical-align: -0.12em; margin-right: 0.35em; color: var(--accent); }
+.page-title-icon svg { width: 0.85em; height: 0.85em; }
 
 .page-title-highlight {
     background: var(--gradient-brand);

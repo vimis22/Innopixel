@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { createSeedData } from "./seed";
+import { createTestData } from "../../test/fixtures";
 import { buildProjectSummaries } from "./selectors";
 import { EMPTY_PROJECT_FILTERS, filterProjects, sortProjects } from "../projects/projectFilters";
 import { EMPTY_TASK_FILTERS, filterTasks, sortTasks } from "../tasks/taskFilters";
 import { buildRows, computeRange, rowOffsets, ROW_HEIGHT } from "../gantt/ganttLayout";
 
 const TODAY = "2026-10-08";
-const data = createSeedData(TODAY);
+const data = createTestData(TODAY);
 const summaries = [...buildProjectSummaries(data, TODAY).values()];
 
 describe("project filters", () => {
@@ -33,7 +33,7 @@ describe("project filters", () => {
 });
 
 describe("task filters", () => {
-    const jonas = data.tasks.filter((t) => t.assigneeId === "u-jonas");
+    const sara = data.tasks.filter((t) => t.assigneeId === "u-dev");
 
     it("finds overdue tasks only among open ones", () => {
         const overdue = filterTasks(data.tasks, { ...EMPTY_TASK_FILTERS, deadline: "OVERDUE" }, TODAY);
@@ -42,7 +42,7 @@ describe("task filters", () => {
     });
 
     it("sinks finished tasks to the bottom", () => {
-        const sorted = sortTasks(jonas, "deadline", () => "");
+        const sorted = sortTasks(sara, "deadline", () => "");
         const firstDone = sorted.findIndex((t) => t.status === "DONE");
         expect(sorted.slice(firstDone).every((t) => t.status === "DONE")).toBe(true);
     });

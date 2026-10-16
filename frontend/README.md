@@ -4,53 +4,53 @@ Public website plus **Innopixel Studio**, the internal project management platfo
 
 ## Run
 
+The frontend needs the backend (ASP.NET Core, `../backend`) and its PostgreSQL database.
+
 ```bash
 npm install
-cp .env.example .env   # optional; mock mode is the default
-npm run dev            # http://localhost:5173
+cp .env.example .env   # VITE_API_BASE_URL=/api, VITE_API_PROXY_TARGET=http://localhost:5165
+npm run dev            # http://localhost:5173 (start the backend first: dotnet run in backend/src/Innopixel.Main)
 npm run build          # type-check + production build
 npm run lint
+npm test
 ```
 
-## Internal platform (development mode)
+In development Vite forwards `/api` (and uploaded images under `/uploads`) to the backend, so the website and the
+API share one address and the login cookie works without CORS.
 
-There is no backend yet. The platform runs on a **development-only mock**: login and all data live in the
-browser's `localStorage` (seeded with realistic demo projects on first use). It offers **no real security** –
-role checks in the browser only control what is shown.
+## Data
 
-Demo accounts (password for all: `innopixel-demo`, also listed on the login page):
+Everything comes from the API; the frontend contains no demo or mock data.
 
-| E-mail | Role | Note |
-|---|---|---|
-| mette@innopixel.dk | Administrator | Full access, project manager on two projects |
-| mikkel@innopixel.dk | Administrator | |
-| ahmad@innopixel.dk | Employee | Project manager of "AR-produktvisualisering" (can plan that project) |
-| jonas@innopixel.dk | Employee | Assigned to tasks in several projects |
-| sofie@, laura@, emil@innopixel.dk | Employee | |
+- **Public website:** projects and services (`GET /api/public/projects|services?lang=da|en`), contact form
+  (`POST /api/contact`).
+- **Innopixel Studio** (`/login`, `/app`): login with an HttpOnly session cookie (`/api/auth/*`) and all platform data
+  (`/api/workspace/*`). The server checks every permission; `features/auth/permissions.ts` only decides what is shown.
 
-*Indstillinger → Nulstil demo-data* restores the seed data.
+Accounts are created by an administrator under *Team*. A new account gets a temporary password, shown once, which
+the employee changes under *Indstillinger → Sikkerhed*. The first administrator (Michael Lundorff Hansen) is created
+by `backend/database/003_seed_content.sql`; see the backend for how the first password is set.
 
 ### Architecture
 
 ```text
 src/
   config/        routes, data-source selection (auth.ts, services.ts)
-  types/domain.ts  domain models (User, Project, ProjectMember, Task, TaskDependency, Milestone, …)
+  services/      axios instance (api.ts), public website content (publicContent.ts)
+  types/         domain.ts (platform, matches the API), project.ts / service.ts (website)
   features/
-    auth/        AuthContext, mock auth service, permission rules, route guard, login page
-    workspace/   WorkspaceContext (single source of truth), repository interface + mock, seed data,
-                 progress/schedule calculations (progress.ts), selectors
+    auth/        AuthContext, API auth service, permission rules, route guard, login page
+    workspace/   WorkspaceContext (single source of truth), repository interface + API implementation,
+                 error translation (apiErrors.ts), progress/schedule calculations (progress.ts), selectors
     app/         app shell: sidebar, topbar (search, user menu), navigation
     dashboard/ projects/ tasks/ gantt/ kanban/ milestones/ team/ settings/
   components/ui/ Modal, toasts/confirm, badges, progress bar, avatars, empty/error states
-  i18n/app/      Danish UI text for the platform (typed, ready for an English dictionary)
-  styles/app.css platform styles (built on the variables in style.css)
+  i18n/app/      Danish UI text for the platform; the backend sends message keys that are looked up here
+  test/          test fixtures (only used by the unit tests)
 ```
 
 Every change goes through `WorkspaceRepository` and the data is reloaded afterwards, so the dashboard, projects,
-Kanban, Gantt and milestones always agree. To connect the ASP.NET Core API, implement `AuthService` and
-`WorkspaceRepository` with axios (`services/api.ts`) and select them in `src/config/auth.ts` / `services.ts`.
-The server must enforce the same rules as `features/auth/permissions.ts`.
+Kanban, Gantt and milestones always agree.
 
 How progress is calculated is documented at the top of `features/workspace/progress.ts`.
 

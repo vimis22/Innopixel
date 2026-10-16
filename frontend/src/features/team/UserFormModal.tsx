@@ -6,11 +6,12 @@ import Modal from "../../components/ui/Modal";
 import { useRunAction } from "../../components/ui/Feedback";
 import { DEPARTMENTS } from "../workspace/constants";
 import { useWorkspaceData } from "../workspace/WorkspaceContext";
+import TemporaryPasswordModal from "./TemporaryPasswordModal";
 
 const ROLES: Role[] = ["EMPLOYEE", "ADMIN"];
 type Errors = Partial<Record<keyof UserInput, string>>;
 
-// Administrators create and edit accounts (demo mode: stored locally, demo password)
+// Administrators create and edit accounts. A new account gets a temporary password, shown once afterwards.
 function UserFormModal({ user, onClose }: { user?: User; onClose: () => void }) {
     const text = useAppText();
     const t = text.team;
@@ -23,9 +24,11 @@ function UserFormModal({ user, onClose }: { user?: User; onClose: () => void }) 
         title: user?.title ?? "",
         department: user?.department ?? null,
         phone: user?.phone ?? null,
+        expectedWeeklyHours: user?.expectedWeeklyHours ?? 37,
     });
     const [errors, setErrors] = useState<Errors>({});
     const [saving, setSaving] = useState(false);
+    const [created, setCreated] = useState<{ name: string; password: string } | null>(null);
 
     const set = <K extends keyof UserInput>(key: K, value: UserInput[K]) => setValues((v) => ({ ...v, [key]: value }));
 
@@ -36,15 +39,25 @@ function UserFormModal({ user, onClose }: { user?: User; onClose: () => void }) 
         if (!EMAIL_PATTERN.test(values.email.trim())) e.email = t.validation.emailInvalid;
         if (!values.title.trim()) e.title = t.validation.titleRequired;
         if (values.phone && !PHONE_PATTERN.test(values.phone.trim())) e.phone = t.validation.phoneInvalid;
+        const hours = values.expectedWeeklyHours ?? 37;
+        if (!Number.isFinite(hours) || hours < 0 || hours > 80 || !Number.isInteger(hours * 2)) e.expectedWeeklyHours = t.validation.expectedHoursInvalid;
         setErrors(e);
         if (Object.keys(e).length > 0) return;
 
         setSaving(true);
-        const ok = user
-            ? await run(() => actions.updateUser(user.id, values), t.updated_toast)
-            : await run(() => actions.createUser(values), t.created_toast);
+        if (user) {
+            const ok = await run(() => actions.updateUser(user.id, values), t.updated_toast);
+            setSaving(false);
+            if (ok) onClose();
+            return;
+        }
+
+        let password: string | null = null;
+        const ok = await run(async () => {
+            password = (await actions.createUser(values)).temporaryPassword;
+        }, t.created_toast);
         setSaving(false);
-        if (ok) onClose();
+        if (ok && password) setCreated({ name: values.name.trim(), password });
     }
 
     const fieldProps = (key: keyof UserInput) => ({
@@ -53,6 +66,10 @@ function UserFormModal({ user, onClose }: { user?: User; onClose: () => void }) 
         "aria-describedby": errors[key] ? `user-${key}-error` : undefined,
     });
     const error = (key: keyof UserInput) => errors[key] && <p id={`user-${key}-error`} className="field-error">{errors[key]}</p>;
+
+    if (created) {
+        return <TemporaryPasswordModal name={created.name} password={created.password} onClose={onClose} />;
+    }
 
     return (
         <Modal
@@ -68,7 +85,7 @@ function UserFormModal({ user, onClose }: { user?: User; onClose: () => void }) 
                 </>
             }
         >
-            {!user && <p className="form-hint-banner">{t.demoNotice}</p>}
+            {!user && <p className="form-hint-banner">{t.newAccountNotice}</p>}
             <form id="user-form" className="form-grid" onSubmit={handleSubmit} noValidate>
                 <fieldset className="form-fieldset" disabled={saving}>
                     <div className={`field field--full ${errors.name ? "field--invalid" : ""}`}>
@@ -103,6 +120,17 @@ function UserFormModal({ user, onClose }: { user?: User; onClose: () => void }) 
                         <select id="user-role" value={values.role} onChange={(e) => set("role", e.target.value as Role)}>
                             {ROLES.map((r) => <option key={r} value={r}>{text.roles[r]}</option>)}
                         </select>
+                    </div>
+                    <div className={`field ${errors.expectedWeeklyHours ? "field--invalid" : ""}`}>
+                        <label htmlFor="user-expectedWeeklyHours">{t.expectedHours}</label>
+                        <input
+                            {...fieldProps("expectedWeeklyHours")}
+                            type="number" min={0} max={80} step={0.5} inputMode="decimal"
+                            value={Number.isNaN(values.expectedWeeklyHours) ? "" : values.expectedWeeklyHours}
+                            onChange={(e) => set("expectedWeeklyHours", e.target.value === "" ? Number.NaN : Number(e.target.value))}
+                        />
+                        <p className="field-hint">{t.expectedHoursHint}</p>
+                        {error("expectedWeeklyHours")}
                     </div>
                 </fieldset>
             </form>

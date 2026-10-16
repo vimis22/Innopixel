@@ -4,7 +4,7 @@ import type { Role } from "../../types/domain";
 import type { AppText } from "../../i18n/app/da";
 import type { IconProps } from "../../components/icons/Icons";
 import {
-    CheckSquareIcon, DashboardIcon, FlagIcon, FolderIcon, GanttIcon, KanbanIcon, SettingsIcon, UsersIcon,
+    CheckSquareIcon, ClockIcon, DashboardIcon, FlagIcon, FolderIcon, GanttIcon, KanbanIcon, SettingsIcon, UsersIcon,
 } from "../../components/icons/AppIcons";
 
 export interface AppNavItem {
@@ -24,6 +24,7 @@ export const APP_NAV: AppNavItem[] = [
     { to: APP_ROUTES.board, label: (t) => t.nav.board, Icon: KanbanIcon },
     { to: APP_ROUTES.milestones, label: (t) => t.nav.milestones, Icon: FlagIcon },
     { to: APP_ROUTES.team, label: (t) => t.nav.team, Icon: UsersIcon },
+    { to: APP_ROUTES.time, label: (t) => t.nav.time, Icon: ClockIcon },
     { to: APP_ROUTES.settings, label: (t) => t.nav.settings, Icon: SettingsIcon },
 ];
 

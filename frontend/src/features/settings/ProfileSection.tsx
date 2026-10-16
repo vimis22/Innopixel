@@ -7,6 +7,7 @@ import { useRunAction } from "../../components/ui/Feedback";
 import { LockIcon } from "../../components/icons/AppIcons";
 import { DEPARTMENTS } from "../workspace/constants";
 import { useCurrentUser, useWorkspaceData } from "../workspace/WorkspaceContext";
+import ChangePasswordModal from "./ChangePasswordModal";
 
 type Errors = Partial<Record<keyof ProfileInput, string>>;
 
@@ -21,6 +22,7 @@ function ProfileSection() {
     const [values, setValues] = useState<ProfileInput>(initial);
     const [errors, setErrors] = useState<Errors>({});
     const [saving, setSaving] = useState(false);
+    const [changingPassword, setChangingPassword] = useState(false);
     const dirty = (Object.keys(initial) as (keyof ProfileInput)[]).some((key) => (values[key] ?? "") !== (initial[key] ?? ""));
 
     const set = <K extends keyof ProfileInput>(key: K, value: ProfileInput[K]) => setValues((v) => ({ ...v, [key]: value }));
@@ -53,10 +55,9 @@ function ProfileSection() {
                     <span className="text-secondary">{text.roles[user.role]}</span>
                     <span className="text-secondary">{user.email}</span>
                 </div>
-                <button type="button" className="app-btn app-btn--ghost" disabled aria-describedby="password-unavailable" title={t.changePasswordUnavailable}>
+                <button type="button" className="app-btn app-btn--ghost" onClick={() => setChangingPassword(true)}>
                     <LockIcon aria-hidden="true" /> {t.changePassword}
                 </button>
-                <p id="password-unavailable" className="sr-only">{t.changePasswordUnavailable}</p>
             </div>
 
             <form className="form-grid" onSubmit={handleSubmit} noValidate>
@@ -101,6 +102,8 @@ function ProfileSection() {
                     </div>
                 </fieldset>
             </form>
+
+            {changingPassword && <ChangePasswordModal onClose={() => setChangingPassword(false)} />}
         </>
     );
 }

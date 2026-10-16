@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import type {
-    ChecklistItem, MilestoneInput, ProfileInput, Project, ProjectInput, Task, TaskInput, TaskProgressPatch,
+    ChecklistItem, CreatedUser, MilestoneInput, ProfileInput, Project, ProjectInput, Task, TaskInput, TaskProgressPatch,
     TaskSchedulePatch, User, UserInput, WorkspaceData,
 } from "../../types/domain";
 import { workspaceRepository as repo } from "../../config/services";
@@ -10,8 +10,7 @@ import { buildProjectSummaries, type ProjectSummary } from "./selectors";
 /*
  * The single source of truth for the internal platform. Every page reads from `data`,
  * and every change goes through the repository, after which the data is reloaded.
- * That keeps the dashboard, projects, Kanban, Gantt and milestones in sync, and maps
- * directly onto a future REST API (mutate, then refetch).
+ * That keeps the dashboard, projects, Kanban, Gantt and milestones in sync (mutate, then refetch).
  */
 
 interface WorkspaceActions {
@@ -31,9 +30,10 @@ interface WorkspaceActions {
     updateMilestone(milestoneId: string, input: MilestoneInput): Promise<void>;
     setMilestoneCompleted(milestoneId: string, completed: boolean): Promise<void>;
     deleteMilestone(milestoneId: string): Promise<void>;
-    createUser(input: UserInput): Promise<User>;
+    createUser(input: UserInput): Promise<CreatedUser>;
     updateUser(userId: string, input: UserInput): Promise<void>;
     setUserActive(userId: string, active: boolean): Promise<void>;
+    resetUserPassword(userId: string): Promise<string>;
     updateOwnProfile(profile: ProfileInput): Promise<void>;
 }
 
@@ -57,7 +57,7 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
 
     const reload = useCallback(async () => {
         try {
-            const next = await repo.load(userId);
+            const next = await repo.load();
             setData(next);
             setError(null);
         } catch (e) {
@@ -65,13 +65,14 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
         } finally {
             setLoading(false);
         }
-    }, [userId]);
+    }, []);
 
-    // Initial fetch; state is only set after the request resolves
+    // Fetch when the signed-in user changes; the server decides what this user may see.
+    // State is only set after the request resolves.
     useEffect(() => {
         // eslint-disable-next-line react/set-state-in-effect
         void reload();
-    }, [reload]);
+    }, [reload, userId]);
 
     const actions = useMemo<WorkspaceActions>(() => {
         // Run the mutation, then refetch so all screens see the new state
@@ -81,28 +82,29 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
             return result;
         }
         return {
-            createProject: (input) => run(() => repo.createProject(userId, input)),
-            updateProject: (id, input) => run(() => repo.updateProject(userId, id, input)),
-            setProjectArchived: (id, archived) => run(() => repo.setProjectArchived(userId, id, archived)),
-            addProjectMember: (projectId, memberId) => run(() => repo.addProjectMember(userId, projectId, memberId)),
-            removeProjectMember: (projectId, memberId) => run(() => repo.removeProjectMember(userId, projectId, memberId)),
-            setUserProjects: (memberId, projectIds) => run(() => repo.setUserProjects(userId, memberId, projectIds)),
-            createTask: (input) => run(() => repo.createTask(userId, input)),
-            updateTask: (id, input) => run(() => repo.updateTask(userId, id, input)),
-            updateTaskProgress: (id, patch) => run(() => repo.updateTaskProgress(userId, id, patch)),
-            updateTaskSchedule: (id, patch) => run(() => repo.updateTaskSchedule(userId, id, patch)),
-            updateTaskChecklist: (id, checklist) => run(() => repo.updateTaskChecklist(userId, id, checklist)),
-            deleteTask: (id) => run(() => repo.deleteTask(userId, id)),
-            createMilestone: (input) => run(() => repo.createMilestone(userId, input)),
-            updateMilestone: (id, input) => run(() => repo.updateMilestone(userId, id, input)),
-            setMilestoneCompleted: (id, completed) => run(() => repo.setMilestoneCompleted(userId, id, completed)),
-            deleteMilestone: (id) => run(() => repo.deleteMilestone(userId, id)),
-            createUser: (input) => run(() => repo.createUser(userId, input)),
-            updateUser: (id, input) => run(() => repo.updateUser(userId, id, input)),
-            setUserActive: (id, active) => run(() => repo.setUserActive(userId, id, active)),
-            updateOwnProfile: (profile) => run(() => repo.updateOwnProfile(userId, profile)),
+            createProject: (input) => run(() => repo.createProject(input)),
+            updateProject: (id, input) => run(() => repo.updateProject(id, input)),
+            setProjectArchived: (id, archived) => run(() => repo.setProjectArchived(id, archived)),
+            addProjectMember: (projectId, memberId) => run(() => repo.addProjectMember(projectId, memberId)),
+            removeProjectMember: (projectId, memberId) => run(() => repo.removeProjectMember(projectId, memberId)),
+            setUserProjects: (memberId, projectIds) => run(() => repo.setUserProjects(memberId, projectIds)),
+            createTask: (input) => run(() => repo.createTask(input)),
+            updateTask: (id, input) => run(() => repo.updateTask(id, input)),
+            updateTaskProgress: (id, patch) => run(() => repo.updateTaskProgress(id, patch)),
+            updateTaskSchedule: (id, patch) => run(() => repo.updateTaskSchedule(id, patch)),
+            updateTaskChecklist: (id, checklist) => run(() => repo.updateTaskChecklist(id, checklist)),
+            deleteTask: (id) => run(() => repo.deleteTask(id)),
+            createMilestone: (input) => run(() => repo.createMilestone(input)),
+            updateMilestone: (id, input) => run(() => repo.updateMilestone(id, input)),
+            setMilestoneCompleted: (id, completed) => run(() => repo.setMilestoneCompleted(id, completed)),
+            deleteMilestone: (id) => run(() => repo.deleteMilestone(id)),
+            createUser: (input) => run(() => repo.createUser(input)),
+            updateUser: (id, input) => run(() => repo.updateUser(id, input)),
+            setUserActive: (id, active) => run(() => repo.setUserActive(id, active)),
+            resetUserPassword: (id) => run(() => repo.resetUserPassword(id)),
+            updateOwnProfile: (profile) => run(() => repo.updateOwnProfile(profile)),
         };
-    }, [userId, reload]);
+    }, [reload]);
 
     const summaries = useMemo(() => (data ? buildProjectSummaries(data) : new Map<string, ProjectSummary>()), [data]);
 

@@ -1,14 +1,13 @@
 import { useState, type FormEvent } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { APP_ROUTES, ROUTES } from "../../config/routes";
-import { USE_MOCK_API } from "../../config/auth";
 import { useAppText } from "../../i18n/app/useAppText";
 import { EMAIL_PATTERN } from "../../utils/validation";
 import ThemeToggle from "../../components/common/ThemeToggle";
 import LoadingState from "../../components/ui/LoadingState";
 import { AlertIcon, ArrowLeftIcon, EyeIcon, EyeOffIcon, LockIcon } from "../../components/icons/AppIcons";
 import { useAuth } from "./AuthContext";
-import { DEMO_PASSWORD, getDemoAccounts, LoginError } from "./authService";
+import { LoginError, type LoginErrorCode } from "./authService";
 import "../../styles/app/index.css";
 
 interface FieldErrors {
@@ -60,16 +59,15 @@ function LoginPage() {
             await login(email, password);
             navigate(target, { replace: true });
         } catch (error) {
-            setFormError(error instanceof LoginError && error.code === "INACTIVE" ? t.inactive : t.invalidCredentials);
+            const messages: Record<LoginErrorCode, string> = {
+                INVALID_CREDENTIALS: t.invalidCredentials,
+                INACTIVE: t.inactive,
+                TOO_MANY_ATTEMPTS: t.tooManyAttempts,
+                UNAVAILABLE: t.unavailable,
+            };
+            setFormError(error instanceof LoginError ? messages[error.code] : t.unavailable);
             setSubmitting(false);
         }
-    }
-
-    function fillDemo(demoEmail: string) {
-        setEmail(demoEmail);
-        setPassword(DEMO_PASSWORD);
-        setErrors({});
-        setFormError(null);
     }
 
     return (
@@ -152,25 +150,6 @@ function LoginPage() {
                         {t.noRegistration}
                     </p>
 
-                    {USE_MOCK_API && (
-                        <section className="demo-accounts" aria-labelledby="demo-title">
-                            <h2 id="demo-title">{t.demoTitle}</h2>
-                            <p>{t.demoHint(DEMO_PASSWORD)}</p>
-                            <ul>
-                                {getDemoAccounts().map((account) => (
-                                    <li key={account.email}>
-                                        <button type="button" className="demo-account" onClick={() => fillDemo(account.email)} disabled={submitting}>
-                                            <span className="demo-account-name">{account.name}</span>
-                                            <span className="demo-account-meta">
-                                                {text.roles[account.role]} · {account.title}
-                                            </span>
-                                            <span className="demo-account-email">{account.email}</span>
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul>
-                        </section>
-                    )}
                 </div>
             </main>
         </div>

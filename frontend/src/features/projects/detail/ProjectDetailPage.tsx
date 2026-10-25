@@ -1,8 +1,9 @@
-import { useEffect, useState, type KeyboardEvent } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { APP_ROUTES } from "../../../config/routes";
 import { useAppText } from "../../../i18n/app/useAppText";
 import { EmptyState } from "../../../components/ui/States";
+import Tabs, { TabPanel } from "../../../components/ui/Tabs";
 import { ArrowLeftIcon, FolderIcon } from "../../../components/icons/AppIcons";
 import { useTaskDialog } from "../../tasks/TaskDialog";
 import { useWorkspaceData } from "../../workspace/WorkspaceContext";
@@ -28,23 +29,23 @@ function ProjectDetailPage() {
     const { projectId = "" } = useParams();
     const [params, setParams] = useSearchParams();
     const { data, summaries } = useWorkspaceData();
-    const { openTask } = useTaskDialog();
+    const { showTask } = useTaskDialog();
     const [editing, setEditing] = useState(false);
 
     const summary = summaries.get(projectId);
     const requestedTab = params.get("tab") as Tab | null;
     const tab: Tab = requestedTab && TABS.includes(requestedTab) ? requestedTab : "overview";
 
-    // Deep link from search and dashboard: ?task=<id> opens that task
+    // Deep link from search and dashboard: ?task=<id> opens that task in the drawer
     const linkedTask = params.get("task");
     useEffect(() => {
         if (!linkedTask || !data.tasks.some((x) => x.id === linkedTask)) return;
-        openTask(linkedTask);
+        showTask(linkedTask);
         setParams((p) => {
             p.delete("task");
             return p;
         }, { replace: true });
-    }, [linkedTask, data.tasks, openTask, setParams]);
+    }, [linkedTask, data.tasks, showTask, setParams]);
 
     if (!summary) {
         return (
@@ -60,17 +61,6 @@ function ProjectDetailPage() {
         setParams(next === "overview" ? {} : { tab: next }, { replace: true });
     }
 
-    // Arrow keys move between tabs (WAI-ARIA tabs pattern)
-    function onTabKey(event: KeyboardEvent<HTMLButtonElement>) {
-        const index = TABS.indexOf(tab);
-        const moves: Record<string, number> = { ArrowRight: index + 1, ArrowLeft: index - 1, Home: 0, End: TABS.length - 1 };
-        if (!(event.key in moves)) return;
-        event.preventDefault();
-        const next = TABS[(moves[event.key] + TABS.length) % TABS.length];
-        selectTab(next);
-        document.getElementById(`tab-${next}`)?.focus();
-    }
-
     const counts: Partial<Record<Tab, number>> = {
         tasks: summary.tasks.length,
         milestones: summary.milestones.length,
@@ -83,27 +73,15 @@ function ProjectDetailPage() {
 
             <ProjectHero summary={summary} onEdit={() => setEditing(true)} />
 
-            <div className="tabs" role="tablist" aria-label={project.name}>
-                {TABS.map((key) => (
-                    <button
-                        key={key}
-                        id={`tab-${key}`}
-                        type="button"
-                        role="tab"
-                        aria-selected={tab === key}
-                        aria-controls={`panel-${key}`}
-                        tabIndex={tab === key ? 0 : -1}
-                        className={`tab ${tab === key ? "is-active" : ""}`}
-                        onClick={() => selectTab(key)}
-                        onKeyDown={onTabKey}
-                    >
-                        {t.tabs[key]}
-                        {counts[key] !== undefined && <span className="tab-count">{counts[key]}</span>}
-                    </button>
-                ))}
-            </div>
+            <Tabs
+                id="project"
+                label={project.name}
+                value={tab}
+                onChange={selectTab}
+                options={TABS.map((key) => ({ value: key, label: t.tabs[key], count: counts[key] }))}
+            />
 
-            <div id={`panel-${tab}`} role="tabpanel" aria-labelledby={`tab-${tab}`}>
+            <TabPanel id="project" value={tab}>
                 {tab === "overview" && <OverviewTab summary={summary} />}
                 {tab === "tasks" && <ProjectTasksTab summary={summary} />}
                 {tab === "timeline" && <ProjectTimeline projectIds={[project.id]} grouping="phase" />}
@@ -114,7 +92,7 @@ function ProjectDetailPage() {
                         <ActivityFeed entries={data.activity.filter((a) => a.projectId === project.id)} showProject={false} emptyText={t.noActivity} />
                     </Panel>
                 )}
-            </div>
+            </TabPanel>
 
             {editing && <ProjectFormModal project={project} onClose={() => setEditing(false)} />}
         </div>

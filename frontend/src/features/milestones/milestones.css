@@ -6,24 +6,27 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     background: color-mix(in srgb, var(--milestone-color) 16%, transparent);
     color: var(--milestone-color);
 }
 
-.milestone-icon svg { width: 19px; height: 19px; }
+.milestone-icon svg { width: 17px; height: 17px; }
 .milestone-icon--overdue { --milestone-color: var(--tone-danger) !important; }
 .milestone-icon--completed { --milestone-color: var(--tone-success) !important; }
 .milestone-desc { max-width: 200px; }
-.milestone-project { color: var(--text-1); text-decoration: none; font-size: var(--text-sm); max-width: 160px; }
+.milestone-title { padding: 0; border: none; background: none; color: inherit; font: inherit; font-weight: 600; text-align: left; cursor: pointer; }
+.milestone-title:hover { color: var(--accent); }
+.milestone-task { gap: var(--space-3); }
+.milestone-task-title { flex: 1; min-width: 0; }
+.milestone-project { display: block; color: var(--text-2); text-decoration: none; max-width: 240px; }
 .milestone-project:hover { color: var(--accent); }
 .milestone-progress { min-width: 110px; display: flex; align-items: center; gap: var(--space-3); }
 .milestone-progress .progress { flex: 1; }
 
-.panel--alert { border-color: color-mix(in srgb, var(--tone-danger) 40%, transparent); }
-.panel--alert .panel-title { color: var(--tone-danger-text); }
+.filter-note { display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-sm); color: var(--text-2); }
 
 .week-milestone { gap: var(--space-3); }
 .week-milestone .cell-text { flex: 1; }

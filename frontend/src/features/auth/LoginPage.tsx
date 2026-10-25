@@ -3,12 +3,17 @@ import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { APP_ROUTES, ROUTES } from "../../config/routes";
 import { useAppText } from "../../i18n/app/useAppText";
 import { EMAIL_PATTERN } from "../../utils/validation";
-import ThemeToggle from "../../components/common/ThemeToggle";
 import LoadingState from "../../components/ui/LoadingState";
-import { AlertIcon, ArrowLeftIcon, EyeIcon, EyeOffIcon, LockIcon } from "../../components/icons/AppIcons";
+import { AlertIcon, CheckIcon, LockIcon } from "../../components/icons/AppIcons";
 import { useAuth } from "./AuthContext";
 import { LoginError, type LoginErrorCode } from "./authService";
-import "../../styles/app/index.css";
+import AuthCard from "./components/AuthCard";
+import PasswordInput from "./components/PasswordInput";
+
+// Set by the reset page after a new password was saved (navigation state, not the URL)
+export interface LoginNotice {
+    notice?: "passwordReset";
+}
 
 interface FieldErrors {
     email?: string;
@@ -24,13 +29,13 @@ function LoginPage() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [showPassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState<FieldErrors>({});
     const [formError, setFormError] = useState<string | null>(null);
     const [submitting, setSubmitting] = useState(false);
 
     // Return to the page that required login, but only inside the app
-    const from = (location.state as { from?: string } | null)?.from;
+    const state = location.state as ({ from?: string } & LoginNotice) | null;
+    const from = state?.from;
     const target = from?.startsWith("/app") ? from : APP_ROUTES.dashboard;
 
     if (initializing) return <LoadingState fullscreen />;
@@ -71,88 +76,64 @@ function LoginPage() {
     }
 
     return (
-        <div className="login-page">
-            <div className="login-glow" aria-hidden="true" />
-            <header className="login-topbar">
-                <Link to={ROUTES.home} className="login-back">
-                    <ArrowLeftIcon aria-hidden="true" />
-                    {t.backToSite}
-                </Link>
-                <ThemeToggle />
-            </header>
-
-            <main className="login-main">
-                <div className="login-card glass-panel">
-                    <Link to={ROUTES.home} className="login-logo" aria-label="Innopixel">
-                        <img src="/images/logo-innopixel-white-text.svg" alt="innopixel" className="logo-dark" />
-                        <img src="/images/logo-innopixel.svg" alt="" aria-hidden="true" className="logo-light" />
-                    </Link>
-                    <h1 className="login-title">{t.title}</h1>
-                    <p className="login-subtitle">{t.subtitle}</p>
-
-                    {formError && (
-                        <div className="form-alert" role="alert">
-                            <AlertIcon aria-hidden="true" />
-                            <span>{formError}</span>
-                        </div>
-                    )}
-
-                    <form className="login-form" onSubmit={handleSubmit} noValidate>
-                        <div className={`field ${errors.email ? "field--invalid" : ""}`}>
-                            <label htmlFor="login-email">{t.email}</label>
-                            <input
-                                id="login-email"
-                                type="email"
-                                autoComplete="username"
-                                placeholder={t.emailPlaceholder}
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                aria-invalid={Boolean(errors.email)}
-                                aria-describedby={errors.email ? "login-email-error" : undefined}
-                                disabled={submitting}
-                            />
-                            {errors.email && <p id="login-email-error" className="field-error">{errors.email}</p>}
-                        </div>
-
-                        <div className={`field ${errors.password ? "field--invalid" : ""}`}>
-                            <label htmlFor="login-password">{t.password}</label>
-                            <div className="input-with-action">
-                                <input
-                                    id="login-password"
-                                    type={showPassword ? "text" : "password"}
-                                    autoComplete="current-password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    aria-invalid={Boolean(errors.password)}
-                                    aria-describedby={errors.password ? "login-password-error" : undefined}
-                                    disabled={submitting}
-                                />
-                                <button
-                                    type="button"
-                                    className="input-action"
-                                    onClick={() => setShowPassword((s) => !s)}
-                                    aria-label={showPassword ? t.hidePassword : t.showPassword}
-                                    aria-pressed={showPassword}
-                                >
-                                    {showPassword ? <EyeOffIcon /> : <EyeIcon />}
-                                </button>
-                            </div>
-                            {errors.password && <p id="login-password-error" className="field-error">{errors.password}</p>}
-                        </div>
-
-                        <button type="submit" className="app-btn app-btn--primary app-btn--block app-btn--lg" disabled={submitting}>
-                            {submitting ? <><span className="spinner btn-spinner" aria-hidden="true" />{t.submitting}</> : t.submit}
-                        </button>
-                    </form>
-
-                    <p className="login-note">
-                        <LockIcon aria-hidden="true" />
-                        {t.noRegistration}
-                    </p>
-
+        <AuthCard title={t.title} subtitle={t.subtitle}>
+            {state?.notice === "passwordReset" && !formError && (
+                <div className="form-success" role="status">
+                    <CheckIcon aria-hidden="true" />
+                    <span>{t.passwordResetDone}</span>
                 </div>
-            </main>
-        </div>
+            )}
+            {formError && (
+                <div className="form-alert" role="alert">
+                    <AlertIcon aria-hidden="true" />
+                    <span>{formError}</span>
+                </div>
+            )}
+
+            <form className="login-form" onSubmit={handleSubmit} noValidate>
+                <div className={`field ${errors.email ? "field--invalid" : ""}`}>
+                    <label htmlFor="login-email">{t.email}</label>
+                    <input
+                        id="login-email"
+                        type="email"
+                        autoComplete="username"
+                        placeholder={t.emailPlaceholder}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        aria-invalid={Boolean(errors.email)}
+                        aria-describedby={errors.email ? "login-email-error" : undefined}
+                        disabled={submitting}
+                    />
+                    {errors.email && <p id="login-email-error" className="field-error">{errors.email}</p>}
+                </div>
+
+                <div className={`field ${errors.password ? "field--invalid" : ""}`}>
+                    <div className="field-label-row">
+                        <label htmlFor="login-password">{t.password}</label>
+                        <Link to={ROUTES.forgotPassword} className="login-forgot">{t.forgotPassword}</Link>
+                    </div>
+                    <PasswordInput
+                        id="login-password"
+                        autoComplete="current-password"
+                        value={password}
+                        onChange={setPassword}
+                        aria-invalid={Boolean(errors.password)}
+                        aria-describedby={errors.password ? "login-password-error" : undefined}
+                        disabled={submitting}
+                    />
+                    {errors.password && <p id="login-password-error" className="field-error">{errors.password}</p>}
+                </div>
+
+                <button type="submit" className="app-btn app-btn--primary app-btn--block app-btn--lg" disabled={submitting}>
+                    {submitting ? <><span className="spinner btn-spinner" aria-hidden="true" />{t.submitting}</> : t.submit}
+                </button>
+            </form>
+
+            <p className="login-note">
+                <LockIcon aria-hidden="true" />
+                {t.noRegistration}
+            </p>
+        </AuthCard>
     );
 }
 

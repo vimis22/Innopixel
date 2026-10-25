@@ -6,6 +6,8 @@ export const ROUTES = {
     story: "/historie",
     contact: "/kontakt",
     login: "/login",
+    forgotPassword: "/glemt-adgangskode",
+    resetPassword: "/nulstil-adgangskode",     // the link in reset and invitation e-mails (backend PasswordService)
 } as const;
 
 // Links shown in both the header and the footer (the header adds Contact as a separate button)

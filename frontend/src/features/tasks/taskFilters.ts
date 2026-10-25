@@ -50,5 +50,5 @@ export function sortTasks(tasks: Task[], key: TaskSortKey, projectName: (id: str
 
 // Secondary filters live in the filter popover; count them for its badge
 export function countSecondaryFilters(filters: TaskFilters): number {
-    return [filters.query.trim() !== "", filters.projectId !== "", filters.priority !== "ALL"].filter(Boolean).length;
+    return [filters.projectId !== "", filters.priority !== "ALL"].filter(Boolean).length;
 }

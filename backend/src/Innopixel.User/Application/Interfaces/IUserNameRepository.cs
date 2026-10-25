@@ -1,6 +1,6 @@
 namespace Innopixel.User.Application.Interfaces;
 
-using Innopixel.User.Contracts.Enums;
+using Innopixel.Shared.Results;
 using Innopixel.User.Domain;
 
 public interface IUserNameRepository

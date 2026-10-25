@@ -1,30 +1,36 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import type { ISODate } from "../../types/domain";
-import type { TimeOverview, TimeRegistration } from "../../types/time";
+import type { TimeOverview } from "../../types/time";
 import { useAppText } from "../../i18n/app/useAppText";
 import PageHeader from "../../components/ui/PageHeader";
-import StatCard, { StatGrid } from "../../components/ui/StatCard";
+import Tabs, { TabPanel } from "../../components/ui/Tabs";
 import LoadingState from "../../components/ui/LoadingState";
 import { ErrorState } from "../../components/ui/States";
-import { AlertIcon, CalendarIcon, CheckSquareIcon, ClockIcon } from "../../components/icons/AppIcons";
-import { formatLongDate, startOfWeek } from "../../utils/date";
+import { ClockIcon } from "../../components/icons/AppIcons";
+import { formatLongDate } from "../../utils/date";
 import { isAdmin } from "../auth/permissions";
 import { useActiveProjects, useMyProjects } from "../workspace/hooks";
 import { useCurrentUser, useWorkspaceData } from "../workspace/WorkspaceContext";
-import AdjustHoursPanel from "./AdjustHoursPanel";
-import LiveClockPanel from "./LiveClockPanel";
-import MyHoursTable from "./MyHoursTable";
-import type { HoursPeriod } from "./timePeriod";
-import TeamHoursPanel from "./TeamHoursPanel";
-import WeeklyHoursChart from "./WeeklyHoursChart";
-import { formatHours, liveWorkedSeconds } from "./timeFormat";
+import ApprovalsTab from "./ApprovalsTab";
+import OverviewTab, { type TimeTabKey } from "./OverviewTab";
+import PunchesTab from "./PunchesTab";
+import ReportsTab from "./ReportsTab";
+import SchedulesTab from "./SchedulesTab";
 import { timeApi } from "./timeApi";
 import { useNow, useTimeQuery } from "./useTimeQuery";
 import "./time.css";
 
+const TABS: TimeTabKey[] = ["overview", "schedules", "punches", "approvals", "reports"];
+
 // The overview plus when it arrived, so the live clock can follow the server's time, not the device's
 type LoadedOverview = TimeOverview & { skewMs: number };
 
+/*
+ * Tidsregistrering in five tabs, each with one purpose. The tab is part of the URL (?tab=), so links,
+ * reloads and the browser's back button keep it. Planned time (Arbejdsplaner) and recorded time
+ * (Stemplinger) are kept apart; approvals and reports build on the recorded time.
+ */
 function TimeRegistrationPage() {
     const text = useAppText();
     const t = text.time;
@@ -35,8 +41,12 @@ function TimeRegistrationPage() {
     const myProjects = useMyProjects();
     const projects = admin ? activeProjects : myProjects;   // the projects the server lets this user pick
     const projectsById = useMemo(() => new Map(workspace.projects.map((p) => [p.id, p])), [workspace.projects]);
+    const activeUsers = useMemo(() => workspace.users.filter((u) => u.active).sort((a, b) => a.name.localeCompare(b.name, "da")), [workspace.users]);
+    const [params, setParams] = useSearchParams();
+    const requested = params.get("tab") as TimeTabKey | null;
+    const tab: TimeTabKey = requested && TABS.includes(requested) ? requested : "overview";
 
-    // Every change bumps `refresh`, and each section reloads its own data
+    // Every change bumps `refresh`, and each tab reloads its own data
     const [refresh, setRefresh] = useState(0);
     const changed = useCallback(() => setRefresh((r) => r + 1), []);
     const overviewQuery = useTimeQuery<LoadedOverview>(
@@ -49,11 +59,10 @@ function TimeRegistrationPage() {
     const overview = overviewQuery.data;
     const now = useNow(Boolean(overview?.active)) + (overview?.skewMs ?? 0);
 
-    const [chartWeek, setChartWeek] = useState<ISODate | null>(null);
-    const [period, setPeriod] = useState<{ kind: HoursPeriod; anchor: ISODate | null }>({ kind: "week", anchor: null });
-    const [adjust, setAdjust] = useState<{ date: ISODate | null; id: string | null }>({ date: null, id: null });
-    const adjustRef = useRef<HTMLDivElement>(null);
-    const tableRef = useRef<HTMLDivElement>(null);
+    // Pushes a history entry, so the back button returns to the previous tab. `from` opens Stemplinger at a given week.
+    function openTab(next: TimeTabKey, from?: ISODate) {
+        setParams(next === "overview" ? {} : { tab: next, ...(from ? { from } : {}) });
+    }
 
     if (!overview) {
         return overviewQuery.failed ? (
@@ -64,25 +73,13 @@ function TimeRegistrationPage() {
     }
 
     const today = overview.today;
-    const currentWeek = startOfWeek(today);
-
-    // The running registration keeps counting between requests
-    const active = overview.active;
-    const liveExtraSeconds = active ? Math.max(0, liveWorkedSeconds(active, now) - liveWorkedSeconds(active, Date.parse(overview.serverTime))) : 0;
-    const liveToday = active?.date === today ? liveExtraSeconds : 0;
-    const liveWeek = active && active.date >= currentWeek ? liveExtraSeconds : 0;
-    const todaySeconds = overview.todayMinutes * 60 + liveToday;
-    const weekMinutes = overview.weekMinutes + Math.floor(liveWeek / 60);
-
-    function editRegistration(registration: TimeRegistration) {
-        setAdjust({ date: registration.date, id: registration.id });
-        adjustRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
-    function showWeekDetails(weekStart: ISODate) {
-        setPeriod({ kind: "week", anchor: weekStart });
-        tableRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    const labels: Record<TimeTabKey, string> = {
+        overview: t.tabOverview,
+        schedules: t.tabSchedules,
+        punches: t.tabPunches,
+        approvals: t.tabApprovals,
+        reports: t.tabReports,
+    };
 
     return (
         <div className="page time-page">
@@ -93,58 +90,21 @@ function TimeRegistrationPage() {
                 aside={<p className="date-greeting"><span>{formatLongDate(today)}</span></p>}
             />
 
-            <StatGrid label={t.statsLabel}>
-                <StatCard label={t.statToday} value={formatHours(Math.floor(todaySeconds / 60))} Icon={ClockIcon}
-                    hint={t.ofPlanned(formatHours(overview.todayPlannedMinutes))} />
-                <StatCard label={t.statWeek} value={formatHours(weekMinutes)} Icon={CalendarIcon} tone="danger"
-                    hint={t.ofPlanned(formatHours(overview.weekPlannedMinutes))} />
-                <StatCard label={t.statMissing} value={overview.missingDaysThisMonth} Icon={AlertIcon} tone="pink" hint={t.missingHint} />
-                <StatCard label={t.statPending} value={formatHours(overview.pendingMinutes)} Icon={CheckSquareIcon} tone="success"
-                    hint={admin ? t.pendingTeamHint(overview.pendingEmployees) : t.pendingOwnHint} />
-            </StatGrid>
+            <Tabs id="time" label={t.title} value={tab} onChange={(next) => openTab(next)} options={TABS.map((key) => ({ value: key, label: labels[key] }))} />
 
-            <div className="time-columns">
-                <LiveClockPanel overview={overview} now={now} todaySeconds={todaySeconds} projects={projects} onChanged={changed}>
-                    <WeeklyHoursChart
-                        weekStart={chartWeek ?? currentWeek}
-                        currentWeekStart={currentWeek}
-                        refresh={refresh}
-                        liveMinutes={active ? { date: active.date, minutes: Math.floor(liveWorkedSeconds(active, now) / 60) } : null}
-                        onWeekChange={setChartWeek}
-                        onSeeDetails={showWeekDetails}
-                    />
-                </LiveClockPanel>
-                <div ref={adjustRef} className="time-anchor">
-                    <AdjustHoursPanel
-                        user={me}
-                        admin={admin}
-                        date={adjust.date ?? today}
-                        selectedId={adjust.id}
-                        today={today}
-                        refresh={refresh}
-                        projects={projects}
-                        onDateChange={(date) => setAdjust({ date, id: null })}
-                        onSaved={changed}
-                    />
-                </div>
-            </div>
-
-            <div className={`time-columns ${admin ? "time-columns--wide-aside" : "time-columns--single"}`}>
-                <div ref={tableRef} className="time-anchor">
-                    <MyHoursTable
-                        period={period.kind}
-                        anchor={period.anchor ?? today}
-                        today={today}
-                        admin={admin}
-                        refresh={refresh}
-                        projectsById={projectsById}
-                        onPeriodChange={(kind, anchor) => setPeriod({ kind, anchor })}
-                        onEdit={editRegistration}
-                        onChanged={changed}
-                    />
-                </div>
-                {admin && <TeamHoursPanel weekStart={currentWeek} refresh={refresh} onChanged={changed} />}
-            </div>
+            <TabPanel id="time" value={tab}>
+                {tab === "overview" && (
+                    <OverviewTab overview={overview} now={now} admin={admin} projects={projects} refresh={refresh} onChanged={changed} onOpenTab={openTab} />
+                )}
+                {tab === "schedules" && <SchedulesTab me={me} admin={admin} users={activeUsers} today={today} />}
+                {tab === "punches" && (
+                    <PunchesTab me={me} admin={admin} users={activeUsers} today={today} projects={projects} projectsById={projectsById} refresh={refresh} onChanged={changed} />
+                )}
+                {tab === "approvals" && (
+                    <ApprovalsTab me={me} admin={admin} users={workspace.users} today={today} projects={projects} refresh={refresh} onChanged={changed} />
+                )}
+                {tab === "reports" && <ReportsTab me={me} admin={admin} users={activeUsers} today={today} projects={activeProjects} refresh={refresh} />}
+            </TabPanel>
         </div>
     );
 }

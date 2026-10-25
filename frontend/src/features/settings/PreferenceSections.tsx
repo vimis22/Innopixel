@@ -2,8 +2,6 @@ import { useId, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../config/routes";
 import { useAppText } from "../../i18n/app/useAppText";
-import { useLanguage, type Language } from "../../context/LanguageContext";
-import { useTheme } from "../../context/ThemeContext";
 import Switch from "../../components/ui/Switch";
 import { InfoIcon, LockIcon, LogoutIcon } from "../../components/icons/AppIcons";
 import { useAuth } from "../auth/AuthContext";
@@ -11,16 +9,21 @@ import { usePreferences, type NotificationPreferences } from "../preferences/Pre
 import { useCurrentUser } from "../workspace/WorkspaceContext";
 import ChangePasswordModal from "./ChangePasswordModal";
 
-// One labelled setting with its control on the right
-export function SettingRow({ title, description, children }: { title: string; description?: string; children: (descriptionId: string) => ReactNode }) {
+// One labelled setting with its control on the right, or below it (stacked) for wide controls such as cards
+export function SettingRow({ title, description, children, stacked = false }: {
+    title: string;
+    description?: string;
+    children?: (descriptionId: string) => ReactNode;
+    stacked?: boolean;
+}) {
     const descriptionId = useId();
     return (
-        <div className="setting-row">
+        <div className={`setting-row ${stacked ? "setting-row--stacked" : ""}`}>
             <div>
                 <p className="setting-title">{title}</p>
                 {description && <p id={descriptionId} className="small text-secondary">{description}</p>}
             </div>
-            {children(descriptionId)}
+            {children?.(descriptionId)}
         </div>
     );
 }
@@ -32,7 +35,9 @@ export function NotificationsSection() {
     const rows: { key: keyof NotificationPreferences; title: string; description: string }[] = [
         { key: "taskAssigned", title: t.notifyTaskAssigned, description: t.notifyTaskAssignedSub },
         { key: "deadlines", title: t.notifyDeadlines, description: t.notifyDeadlinesSub },
+        { key: "projectChanges", title: t.notifyProjectChanges, description: t.notifyProjectChangesSub },
         { key: "milestones", title: t.notifyMilestones, description: t.notifyMilestonesSub },
+        { key: "timeTracking", title: t.notifyTimeTracking, description: t.notifyTimeTrackingSub },
         { key: "weekly", title: t.notifyWeekly, description: t.notifyWeeklySub },
     ];
 
@@ -55,54 +60,6 @@ export function NotificationsSection() {
     );
 }
 
-export function AppearanceSection() {
-    const t = useAppText().settings;
-    const { theme, toggleTheme } = useTheme();
-    const { preferences, update } = usePreferences();
-
-    return (
-        <>
-            <SettingRow title={t.darkMode} description={t.darkModeSub}>
-                {(id) => <Switch checked={theme === "dark"} onChange={toggleTheme} label={t.darkMode} describedBy={id} />}
-            </SettingRow>
-            <SettingRow title={t.compactSidebar} description={t.compactSidebarSub}>
-                {(id) => <Switch checked={preferences.sidebarCollapsed} onChange={(checked) => update({ sidebarCollapsed: checked })} label={t.compactSidebar} describedBy={id} />}
-            </SettingRow>
-        </>
-    );
-}
-
-// The workspace is Danish only for now; the public website's language can be chosen here
-export function LanguageSelect({ id }: { id?: string }) {
-    const t = useAppText().settings;
-    const { language, setLanguage } = useLanguage();
-    return (
-        <select id={id} className="control setting-select" value={language} onChange={(e) => setLanguage(e.target.value as Language)} aria-label={t.siteLanguage}>
-            <option value="da">{t.danish}</option>
-            <option value="en">{t.english}</option>
-        </select>
-    );
-}
-
-export function LanguageSection() {
-    const t = useAppText().settings;
-    return (
-        <>
-            <SettingRow title={t.appLanguage} description={t.languageNote}>
-                {() => (
-                    <select className="control setting-select" value="da" disabled aria-label={t.appLanguage}>
-                        <option value="da">{t.danish}</option>
-                        <option value="en">{t.englishUnavailable}</option>
-                    </select>
-                )}
-            </SettingRow>
-            <SettingRow title={t.siteLanguage} description={t.siteLanguageNote}>
-                {() => <LanguageSelect />}
-            </SettingRow>
-        </>
-    );
-}
-
 export function SecuritySection() {
     const text = useAppText();
     const t = text.settings;
@@ -121,9 +78,11 @@ export function SecuritySection() {
             <SettingRow title={t.changePassword} description={t.changePasswordSub}>
                 {(id) => <button type="button" className="app-btn app-btn--ghost app-btn--sm" onClick={() => setChangingPassword(true)} aria-describedby={id}><LockIcon aria-hidden="true" />{t.changePassword}</button>}
             </SettingRow>
-            <SettingRow title={t.signedInAs(user.email)} description={t.sessionNote}>
+            <SettingRow title={t.forgotPassword} description={t.forgotPasswordSub} />
+            <SettingRow title={t.signedInAs(user.email)} description={`${text.roles[user.role]} · ${t.sessionNote}`}>
                 {() => <button type="button" className="app-btn app-btn--ghost app-btn--sm" onClick={() => void signOut()}><LogoutIcon aria-hidden="true" />{text.topbar.logout}</button>}
             </SettingRow>
+            <p className="field-hint">{t.securityNote}</p>
             {changingPassword && <ChangePasswordModal onClose={() => setChangingPassword(false)} />}
         </>
     );

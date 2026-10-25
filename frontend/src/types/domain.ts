@@ -20,6 +20,12 @@ export interface User {
     createdAt: ISODateTime;
 }
 
+// The signed-in employee (login and /auth/me). mustChangePassword: a temporary password is in use and has to be
+// replaced before the platform can be used (the server blocks everything else until then).
+export interface SessionUser extends User {
+    mustChangePassword: boolean;
+}
+
 export type ProjectStatus = "PLANNED" | "ACTIVE" | "ON_HOLD" | "COMPLETED" | "CANCELLED";
 
 export interface Project {
@@ -191,13 +197,26 @@ export interface UserInput {
     department: string | null;
     phone: string | null;
     expectedWeeklyHours?: number;
+    sendInvitation?: boolean;      // only when creating: e-mail a link to choose a password
 }
 
 // What users may change about themselves (never their role or e-mail)
 export type ProfileInput = Pick<User, "name" | "title" | "department" | "phone">;
 
-// A new account and its temporary password (shown once, the user changes it under Settings)
+// A new account: either an invitation was e-mailed, or a temporary password is shown once
+// (the employee has to replace it at their first login)
 export interface CreatedUser {
     user: User;
-    temporaryPassword: string;
+    temporaryPassword: string | null;
+    invitationSent: boolean;
+}
+
+// Fanen Adgang. The password itself is never sent to the browser.
+export interface UserAccount {
+    email: string;
+    role: Role;
+    active: boolean;
+    mustChangePassword: boolean;
+    lastLoginAt: ISODateTime | null;
+    emailConfigured: boolean;
 }

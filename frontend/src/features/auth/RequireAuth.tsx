@@ -5,6 +5,7 @@ import type { Role } from "../../types/domain";
 import { useAuth } from "./AuthContext";
 import LoadingState from "../../components/ui/LoadingState";
 import ForbiddenPage from "../app/ForbiddenPage";
+import ForcedPasswordChange from "./ForcedPasswordChange";
 
 interface RequireAuthProps {
     children: ReactNode;
@@ -22,6 +23,9 @@ function RequireAuth({ children, roles }: RequireAuthProps) {
     if (!user) {
         return <Navigate to={ROUTES.login} replace state={{ from: location.pathname + location.search }} />;
     }
+
+    // A temporary password has to be replaced first (the server enforces the same)
+    if (user.mustChangePassword) return <ForcedPasswordChange />;
 
     if (roles && !roles.includes(user.role)) return <ForbiddenPage />;
 

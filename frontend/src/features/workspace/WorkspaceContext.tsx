@@ -33,7 +33,6 @@ interface WorkspaceActions {
     createUser(input: UserInput): Promise<CreatedUser>;
     updateUser(userId: string, input: UserInput): Promise<void>;
     setUserActive(userId: string, active: boolean): Promise<void>;
-    resetUserPassword(userId: string): Promise<string>;
     updateOwnProfile(profile: ProfileInput): Promise<void>;
 }
 
@@ -101,7 +100,6 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
             createUser: (input) => run(() => repo.createUser(input)),
             updateUser: (id, input) => run(() => repo.updateUser(id, input)),
             setUserActive: (id, active) => run(() => repo.setUserActive(id, active)),
-            resetUserPassword: (id) => run(() => repo.resetUserPassword(id)),
             updateOwnProfile: (profile) => run(() => repo.updateOwnProfile(profile)),
         };
     }, [reload]);

@@ -1,11 +1,12 @@
 namespace Innopixel.User.Infrastructure;
 
+using Innopixel.Shared.Data;
+using Innopixel.Shared.Results;
 using Innopixel.User.Application.Interfaces;
-using Innopixel.User.Contracts.Enums;
 using User = Innopixel.User.Domain.User;
 
 public class UserTelephoneRepository(IDbConnectionFactory connectionFactory)
-    : RepositoryBase(connectionFactory), IUserTelephoneRepository
+    : UserRepositoryBase(connectionFactory), IUserTelephoneRepository
 {
     public Task<IReadOnlyList<User>> GetUserByFullTelephoneAsync(int countrycode, long phonenumber) =>
         QueryUsersAsync(
@@ -19,13 +20,16 @@ public class UserTelephoneRepository(IDbConnectionFactory connectionFactory)
         QueryUsersAsync("t.phonenumber = @Phonenumber", new { Phonenumber = phonenumber });
 
     public Task<OperationResult> UpdateUserByAllTelephoneAsync(User user, int countrycode, long phonenumber) =>
-        ExecuteAsync(
-            "UPDATE telephone SET countrycode = @Countrycode, phonenumber = @Phonenumber WHERE id = @TelephoneId",
-            new { user.TelephoneId, Countrycode = countrycode, Phonenumber = phonenumber });
+        UpdateTelephoneAsync(
+            "countrycode = @Countrycode, phonenumber = @Phonenumber",
+            new { user.Id, Countrycode = countrycode, Phonenumber = phonenumber });
 
     public Task<OperationResult> UpdateUserByCountrycodeAsync(User user, int countrycode) =>
-        ExecuteAsync("UPDATE telephone SET countrycode = @Countrycode WHERE id = @TelephoneId", new { user.TelephoneId, Countrycode = countrycode });
+        UpdateTelephoneAsync("countrycode = @Countrycode", new { user.Id, Countrycode = countrycode });
 
     public Task<OperationResult> UpdateUserByPhonenumberAsync(User user, long phonenumber) =>
-        ExecuteAsync("UPDATE telephone SET phonenumber = @Phonenumber WHERE id = @TelephoneId", new { user.TelephoneId, Phonenumber = phonenumber });
+        UpdateTelephoneAsync("phonenumber = @Phonenumber", new { user.Id, Phonenumber = phonenumber });
+
+    private Task<OperationResult> UpdateTelephoneAsync(string setClause, object param) =>
+        UpdateUserPartAsync("telephone", "telephone_id", setClause, param);
 }

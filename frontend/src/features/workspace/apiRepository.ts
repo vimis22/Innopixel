@@ -68,8 +68,6 @@ export const apiRepository: WorkspaceRepository = {
     setUserActive: (userId, active) => call(async () => {
         await api.put(`/workspace/users/${id(userId)}/active`, { active });
     }),
-    resetUserPassword: (userId) => call(async () =>
-        (await api.post<{ temporaryPassword: string }>(`/workspace/users/${id(userId)}/password-reset`)).data.temporaryPassword),
     updateOwnProfile: (profile) => call(async () => {
         await api.put("/workspace/profile", profile);
     }),

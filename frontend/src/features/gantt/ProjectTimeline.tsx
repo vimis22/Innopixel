@@ -6,8 +6,8 @@ import { CalendarIcon } from "../../components/icons/AppIcons";
 import { useProjectColors } from "../workspace/hooks";
 import { useWorkspaceData } from "../workspace/WorkspaceContext";
 import GanttChart, { type GanttSelection } from "./GanttChart";
-import ProjectOverviewPanel from "./ProjectOverviewPanel";
-import TaskSchedulePanel from "./TaskSchedulePanel";
+import { useTaskDialog } from "../tasks/TaskDialog";
+import ProjectDrawer from "./ProjectDrawer";
 import { computeRange, type GanttGrouping, type GanttPeriod, type GanttViewMode } from "./ganttLayout";
 import "./gantt.css";
 
@@ -26,7 +26,8 @@ interface ProjectTimelineProps {
     projectFilter?: { options: Project[]; selected: string[]; onChange: (ids: string[]) => void };
 }
 
-// Toolbar + Gantt chart + side panel, shared by /app/gantt and the project timeline tab
+// Toolbar + Gantt chart, shared by /app/gantt and the project timeline tab.
+// Selecting a task opens the shared task drawer; selecting a project opens the project drawer.
 function ProjectTimeline({ projectIds, grouping, projectFilter }: ProjectTimelineProps) {
     const text = useAppText();
     const t = text.gantt;
@@ -37,6 +38,7 @@ function ProjectTimeline({ projectIds, grouping, projectFilter }: ProjectTimelin
     const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
     const [selection, setSelection] = useState<GanttSelection>(null);
     const [todaySignal, setTodaySignal] = useState(0);
+    const { showTask } = useTaskDialog();
 
     const { projects, tasks, milestones, dependencies } = useMemo(() => {
         const ids = new Set(projectIds);
@@ -52,11 +54,12 @@ function ProjectTimeline({ projectIds, grouping, projectFilter }: ProjectTimelin
 
     const range = useMemo(() => computeRange(tasks, milestones, mode, period), [tasks, milestones, mode, period]);
 
-    // Without an explicit choice the panel shows the first project
-    const selectedTask = selection?.kind === "task" ? tasks.find((task) => task.id === selection.id) : undefined;
-    const selectedProject = selectedTask
-        ? undefined
-        : projects.find((p) => p.id === (selection?.kind === "project" ? selection.id : projects[0]?.id));
+    const selectedProject = selection?.kind === "project" ? projects.find((p) => p.id === selection.id) : undefined;
+
+    function select(next: GanttSelection) {
+        setSelection(next);
+        if (next?.kind === "task") showTask(next.id);
+    }
 
     function changeMode(next: GanttViewMode) {
         setMode(next);
@@ -142,8 +145,8 @@ function ProjectTimeline({ projectIds, grouping, projectFilter }: ProjectTimelin
                         mode={mode}
                         range={range}
                         colors={colors}
-                        selection={selection ?? (selectedProject ? { kind: "project", id: selectedProject.id } : null)}
-                        onSelect={setSelection}
+                        selection={selection}
+                        onSelect={select}
                         collapsed={collapsed}
                         onToggleGroup={toggleGroup}
                         scrollToTodaySignal={todaySignal}
@@ -151,15 +154,9 @@ function ProjectTimeline({ projectIds, grouping, projectFilter }: ProjectTimelin
                 )}
             </section>
 
-            {selectedTask ? (
-                <TaskSchedulePanel
-                    key={`${selectedTask.id}-${selectedTask.startDate}-${selectedTask.dueDate}`}
-                    task={selectedTask}
-                    onClose={() => setSelection({ kind: "project", id: selectedTask.projectId })}
-                />
-            ) : selectedProject ? (
-                <ProjectOverviewPanel project={selectedProject} color={colors.get(selectedProject.id)} />
-            ) : null}
+            {selectedProject && (
+                <ProjectDrawer project={selectedProject} color={colors.get(selectedProject.id)} onClose={() => setSelection(null)} />
+            )}
         </div>
     );
 }

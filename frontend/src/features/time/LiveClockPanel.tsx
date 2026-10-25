@@ -139,9 +139,9 @@ function ClockRing({ progress, value, caption, label, paused }: { progress: numb
             <svg viewBox="0 0 200 200" aria-hidden="true" focusable="false">
                 <defs>
                     <linearGradient id="time-ring-gradient" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stopColor="#ff7a1a" />
-                        <stop offset="60%" stopColor="#ff4d4d" />
-                        <stop offset="100%" stopColor="#ff2d7a" />
+                        <stop offset="0%" style={{ stopColor: "var(--accent-start)" }} />
+                        <stop offset="60%" style={{ stopColor: "var(--accent-strong)" }} />
+                        <stop offset="100%" style={{ stopColor: "var(--accent-pink)" }} />
                     </linearGradient>
                 </defs>
                 <circle className="time-ring-track" cx="100" cy="100" r={radius} />

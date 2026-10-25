@@ -13,7 +13,6 @@ import { TASK_PRIORITIES, TASK_STATUSES } from "../workspace/constants";
 import { useMyTasks } from "../workspace/hooks";
 import { useWorkspaceData } from "../workspace/WorkspaceContext";
 import TaskTable from "./TaskTable";
-import TaskDetailPanel from "./TaskDetailPanel";
 import {
     countSecondaryFilters, EMPTY_TASK_FILTERS, filterTasks, matchesDeadline, sortTasks,
     type TaskDeadlineFilter, type TaskFilters, type TaskSortKey, type TaskStatusFilter,
@@ -27,7 +26,6 @@ function MyTasksPage() {
     const myTasks = useMyTasks();
     const [filters, setFilters] = useState<TaskFilters>(EMPTY_TASK_FILTERS);
     const [sort, setSort] = useState<TaskSortKey>("deadline");
-    const [selectedId, setSelectedId] = useState<string | null>(null);
 
     const today = todayISO();
     const projectName = (id: string) => data.projects.find((p) => p.id === id)?.name ?? "";
@@ -35,8 +33,6 @@ function MyTasksPage() {
         () => sortTasks(filterTasks(myTasks, filters, today), sort, (id) => data.projects.find((p) => p.id === id)?.name ?? ""),
         [myTasks, filters, sort, today, data.projects],
     );
-    // Keep the panel open only for tasks that still exist and belong to the user
-    const selected = myTasks.find((task) => task.id === selectedId) ?? null;
     const myProjectIds = [...new Set(myTasks.map((task) => task.projectId))];
 
     const set = <K extends keyof TaskFilters>(key: K, value: TaskFilters[K]) => setFilters((f) => ({ ...f, [key]: value }));
@@ -73,74 +69,76 @@ function MyTasksPage() {
                 />
             </StatGrid>
 
-            <div className={`page-columns ${selected ? "" : "page-columns--single"}`}>
-                <div className="stack">
-                    <div className="toolbar">
-                        <PillTabs label={text.common.status} options={statusTabs} value={filters.status} onChange={(status) => set("status", status)} />
-                        <div className="toolbar-end">
-                            <label className="labelled-control">
-                                {text.common.sortBy}
-                                <select className="control" value={sort} onChange={(e) => setSort(e.target.value as TaskSortKey)}>
-                                    <option value="deadline">{t.sortDeadline}</option>
-                                    <option value="priority">{t.sortPriority}</option>
-                                    <option value="progress">{t.sortProgress}</option>
-                                    <option value="project">{t.sortProject}</option>
-                                </select>
-                            </label>
-                            <FilterPopover
-                                label={text.common.filters}
-                                title={t.filtersTitle}
-                                activeCount={countSecondaryFilters(filters)}
-                                footer={countSecondaryFilters(filters) > 0 && (
-                                    <button type="button" className="app-btn app-btn--ghost app-btn--sm" onClick={() => setFilters((f) => ({ ...f, query: "", projectId: "", priority: "ALL" }))}>
-                                        {text.common.clearFilters}
-                                    </button>
-                                )}
-                            >
-                                <div className="field">
-                                    <label htmlFor="task-filter-query">{text.common.search}</label>
-                                    <div className="search-field">
-                                        <SearchIcon aria-hidden="true" />
-                                        <input id="task-filter-query" type="search" placeholder={t.searchPlaceholder} value={filters.query} onChange={(e) => set("query", e.target.value)} />
-                                    </div>
-                                </div>
-                                <div className="field">
-                                    <label htmlFor="task-filter-project">{text.common.project}</label>
-                                    <select id="task-filter-project" value={filters.projectId} onChange={(e) => set("projectId", e.target.value)}>
-                                        <option value="">{t.allProjects}</option>
-                                        {myProjectIds.map((id) => <option key={id} value={id}>{projectName(id)}</option>)}
-                                    </select>
-                                </div>
-                                <div className="field">
-                                    <label htmlFor="task-filter-priority">{text.common.priority}</label>
-                                    <select id="task-filter-priority" value={filters.priority} onChange={(e) => set("priority", e.target.value as TaskPriority | "ALL")}>
-                                        <option value="ALL">{t.allPriorities}</option>
-                                        {TASK_PRIORITIES.map((p) => <option key={p} value={p}>{text.priority[p]}</option>)}
-                                    </select>
-                                </div>
-                            </FilterPopover>
-                        </div>
-                    </div>
-
-                    <Panel flush>
-                        {rows.length === 0 ? (
-                            <EmptyState
-                                Icon={CheckSquareIcon}
-                                title={myTasks.length === 0 ? t.emptyNone : t.empty}
-                                action={myTasks.length > 0 && (
-                                    <button type="button" className="app-btn app-btn--ghost app-btn--sm" onClick={() => setFilters(EMPTY_TASK_FILTERS)}>
-                                        {text.common.clearFilters}
-                                    </button>
-                                )}
-                            />
-                        ) : (
-                            <TaskTable tasks={rows} selectedId={selected?.id ?? null} onSelect={(id) => setSelectedId(id === selectedId ? null : id)} />
-                        )}
-                    </Panel>
+            <div className="toolbar">
+                <div className="search-field">
+                    <SearchIcon aria-hidden="true" />
+                    <input
+                        type="search"
+                        className="control"
+                        placeholder={t.searchPlaceholder}
+                        aria-label={t.searchPlaceholder}
+                        value={filters.query}
+                        onChange={(e) => set("query", e.target.value)}
+                    />
                 </div>
-
-                {selected && <TaskDetailPanel task={selected} onClose={() => setSelectedId(null)} />}
+                <div className="toolbar-end">
+                    <label className="labelled-control">
+                        {text.common.sortBy}
+                        <select className="control" value={sort} onChange={(e) => setSort(e.target.value as TaskSortKey)}>
+                            <option value="deadline">{t.sortDeadline}</option>
+                            <option value="priority">{t.sortPriority}</option>
+                            <option value="progress">{t.sortProgress}</option>
+                            <option value="project">{t.sortProject}</option>
+                        </select>
+                    </label>
+                    <FilterPopover
+                        label={text.common.filters}
+                        title={t.filtersTitle}
+                        activeCount={countSecondaryFilters(filters)}
+                        footer={countSecondaryFilters(filters) > 0 && (
+                            <button type="button" className="app-btn app-btn--ghost app-btn--sm" onClick={() => setFilters((f) => ({ ...f, projectId: "", priority: "ALL" }))}>
+                                {text.common.clearFilters}
+                            </button>
+                        )}
+                    >
+                        <div className="field">
+                            <label htmlFor="task-filter-project">{text.common.project}</label>
+                            <select id="task-filter-project" value={filters.projectId} onChange={(e) => set("projectId", e.target.value)}>
+                                <option value="">{t.allProjects}</option>
+                                {myProjectIds.map((id) => <option key={id} value={id}>{projectName(id)}</option>)}
+                            </select>
+                        </div>
+                        <div className="field">
+                            <label htmlFor="task-filter-priority">{text.common.priority}</label>
+                            <select id="task-filter-priority" value={filters.priority} onChange={(e) => set("priority", e.target.value as TaskPriority | "ALL")}>
+                                <option value="ALL">{t.allPriorities}</option>
+                                {TASK_PRIORITIES.map((p) => <option key={p} value={p}>{text.priority[p]}</option>)}
+                            </select>
+                        </div>
+                    </FilterPopover>
+                </div>
             </div>
+
+            <PillTabs label={text.common.status} options={statusTabs} value={filters.status} onChange={(status) => set("status", status)} />
+
+            <Panel flush>
+                {rows.length === 0 ? (
+                    <EmptyState
+                        Icon={CheckSquareIcon}
+                        title={myTasks.length === 0 ? t.emptyNone : t.empty}
+                        action={myTasks.length > 0 && (
+                            <button type="button" className="app-btn app-btn--ghost app-btn--sm" onClick={() => setFilters(EMPTY_TASK_FILTERS)}>
+                                {text.common.clearFilters}
+                            </button>
+                        )}
+                    />
+                ) : (
+                    <>
+                        <TaskTable tasks={rows} />
+                        <p className="table-footer">{text.common.showing(rows.length, myTasks.length, t.noun)}</p>
+                    </>
+                )}
+            </Panel>
         </div>
     );
 }

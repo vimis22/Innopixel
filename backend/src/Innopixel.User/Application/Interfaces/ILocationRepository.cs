@@ -1,7 +1,7 @@
 namespace Innopixel.User.Application.Interfaces;
 
+using Innopixel.Shared.Results;
 using Innopixel.User.Contracts.Dtos;
-using Innopixel.User.Contracts.Enums;
 using Innopixel.User.Domain;
 
 // Ingen delete: en Location er forbundet med brugeren.

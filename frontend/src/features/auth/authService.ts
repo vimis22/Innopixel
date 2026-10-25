@@ -1,10 +1,10 @@
 import api, { apiErrorBody, apiStatus } from "../../services/api";
-import type { User } from "../../types/domain";
+import type { SessionUser } from "../../types/domain";
 import { toRepositoryError } from "../workspace/apiErrors";
 
 // The session itself is an HttpOnly cookie set by the backend; JavaScript never sees a token.
 export interface Session {
-    user: User;
+    user: SessionUser;
 }
 
 export type LoginErrorCode = "INVALID_CREDENTIALS" | "INACTIVE" | "TOO_MANY_ATTEMPTS" | "UNAVAILABLE";
@@ -23,14 +23,15 @@ export interface AuthService {
     login(email: string, password: string): Promise<Session>;
     restore(): Promise<Session | null>;
     logout(): Promise<void>;
-    changePassword(currentPassword: string, newPassword: string): Promise<void>;
+    // Returns the updated session (the server ends every other session and renews this one)
+    changePassword(currentPassword: string, newPassword: string): Promise<SessionUser>;
 }
 
 // Login against the ASP.NET Core API (backend/src/Innopixel.Main/Controllers/AuthController.cs)
 export const apiAuthService: AuthService = {
     async login(email, password) {
         try {
-            const { data } = await api.post<User>("/auth/login", { email: email.trim(), password });
+            const { data } = await api.post<SessionUser>("/auth/login", { email: email.trim(), password });
             return { user: data };
         } catch (error) {
             const status = apiStatus(error);
@@ -44,7 +45,7 @@ export const apiAuthService: AuthService = {
     // Asks the server who is logged in (the cookie is sent automatically)
     async restore() {
         try {
-            const { data } = await api.get<User>("/auth/me");
+            const { data } = await api.get<SessionUser>("/auth/me");
             return { user: data };
         } catch (error) {
             if (apiStatus(error) === 401) return null;
@@ -58,7 +59,7 @@ export const apiAuthService: AuthService = {
 
     async changePassword(currentPassword, newPassword) {
         try {
-            await api.put("/auth/password", { currentPassword, newPassword });
+            return (await api.put<SessionUser>("/auth/password", { currentPassword, newPassword })).data;
         } catch (error) {
             throw toRepositoryError(error);
         }

@@ -1,33 +1,44 @@
 import { useState, type FormEvent } from "react";
 import { useAppText } from "../../i18n/app/useAppText";
 import Modal from "../../components/ui/Modal";
-import { useRunAction } from "../../components/ui/Feedback";
+import { errorMessage, useFeedback } from "../../components/ui/Feedback";
 import { useAuth } from "../auth/AuthContext";
+import NewPasswordFields from "../auth/components/NewPasswordFields";
+import PasswordInput from "../auth/components/PasswordInput";
+import { newPasswordError, type NewPasswordError } from "../auth/passwordPolicy";
 
-const MIN_LENGTH = 10;
-
-// The signed-in user changes their own password (the server checks the current one)
+// The signed-in user changes their own password. The server checks the current one and ends every other session.
 function ChangePasswordModal({ onClose }: { onClose: () => void }) {
     const text = useAppText();
     const t = text.settings.password;
     const { changePassword } = useAuth();
-    const run = useRunAction();
+    const { toast } = useFeedback();
     const [current, setCurrent] = useState("");
     const [next, setNext] = useState("");
     const [confirmation, setConfirmation] = useState("");
-    const [error, setError] = useState<string | null>(null);
+    const [currentError, setCurrentError] = useState<string | null>(null);
+    const [error, setError] = useState<NewPasswordError | null>(null);
     const [saving, setSaving] = useState(false);
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        if (next.length < MIN_LENGTH) return setError(t.tooShort);
-        if (next !== confirmation) return setError(t.mismatch);
-        setError(null);
+        const problem = newPasswordError(next, confirmation, current);
+        setCurrentError(current ? null : text.login.passwordRequired);
+        setError(problem);
+        if (!current || problem) return;
 
         setSaving(true);
-        const ok = await run(() => changePassword(current, next), t.saved);
-        setSaving(false);
-        if (ok) onClose();
+        try {
+            await changePassword(current, next);
+            toast("success", t.saved);
+            onClose();
+        } catch (err) {
+            // A wrong current password belongs to that field; anything else is a general error
+            const message = errorMessage(err, text.common.genericError);
+            if (message === t.currentWrong) setCurrentError(message);
+            else toast("error", message);
+            setSaving(false);
+        }
     }
 
     return (
@@ -47,24 +58,28 @@ function ChangePasswordModal({ onClose }: { onClose: () => void }) {
         >
             <form id="password-form" className="form-grid" onSubmit={handleSubmit} noValidate>
                 <fieldset className="form-fieldset" disabled={saving}>
-                    <div className="field field--full">
+                    <div className={`field field--full ${currentError ? "field--invalid" : ""}`}>
                         <label htmlFor="password-current">{t.current}</label>
-                        <input id="password-current" type="password" autoComplete="current-password" value={current}
-                            onChange={(e) => setCurrent(e.target.value)} autoFocus required />
+                        <PasswordInput
+                            id="password-current"
+                            autoComplete="current-password"
+                            value={current}
+                            onChange={setCurrent}
+                            autoFocus
+                            aria-invalid={Boolean(currentError)}
+                            aria-describedby={currentError ? "password-current-error" : undefined}
+                        />
+                        {currentError && <p id="password-current-error" className="field-error" role="alert">{currentError}</p>}
                     </div>
-                    <div className={`field field--full ${error ? "field--invalid" : ""}`}>
-                        <label htmlFor="password-new">{t.new}</label>
-                        <input id="password-new" type="password" autoComplete="new-password" value={next} minLength={MIN_LENGTH}
-                            onChange={(e) => setNext(e.target.value)} aria-describedby="password-hint" required />
-                        <p id="password-hint" className="field-hint">{text.settings.changePasswordSub}</p>
-                    </div>
-                    <div className={`field field--full ${error ? "field--invalid" : ""}`}>
-                        <label htmlFor="password-confirm">{t.confirm}</label>
-                        <input id="password-confirm" type="password" autoComplete="new-password" value={confirmation}
-                            onChange={(e) => setConfirmation(e.target.value)} aria-invalid={Boolean(error)}
-                            aria-describedby={error ? "password-error" : undefined} required />
-                        {error && <p id="password-error" className="field-error">{error}</p>}
-                    </div>
+                    <NewPasswordFields
+                        idPrefix="password"
+                        password={next}
+                        confirmation={confirmation}
+                        onPasswordChange={setNext}
+                        onConfirmationChange={setConfirmation}
+                        error={error}
+                    />
+                    <p className="field-hint field--full">{t.sessionsNote}</p>
                 </fieldset>
             </form>
         </Modal>

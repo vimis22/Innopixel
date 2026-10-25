@@ -1,7 +1,7 @@
 namespace Innopixel.User.Contracts;
 
+using Innopixel.Shared.Results;
 using Innopixel.User.Contracts.Dtos;
-using Innopixel.User.Contracts.Enums;
 using Innopixel.User.Domain;
 
 public interface IUserService

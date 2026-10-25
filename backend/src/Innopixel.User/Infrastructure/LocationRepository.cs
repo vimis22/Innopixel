@@ -1,9 +1,10 @@
 namespace Innopixel.User.Infrastructure;
 
 using Dapper;
+using Innopixel.Shared.Data;
+using Innopixel.Shared.Results;
 using Innopixel.User.Application.Interfaces;
 using Innopixel.User.Contracts.Dtos;
-using Innopixel.User.Contracts.Enums;
 using Innopixel.User.Domain;
 
 public class LocationRepository(IDbConnectionFactory connectionFactory)

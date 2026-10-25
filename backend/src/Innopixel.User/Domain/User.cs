@@ -12,7 +12,7 @@ public class User
 
     public int? LocationId { get; set; }
     public int NameId { get; set; }
-    public int AddressId { get; set; }
-    public int TelephoneId { get; set; }
-    public int BirthId { get; set; }
+    public int? AddressId { get; set; }
+    public int? TelephoneId { get; set; }
+    public int? BirthId { get; set; }
 }

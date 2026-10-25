@@ -1,11 +1,12 @@
 namespace Innopixel.User.Infrastructure;
 
+using Innopixel.Shared.Data;
+using Innopixel.Shared.Results;
 using Innopixel.User.Application.Interfaces;
-using Innopixel.User.Contracts.Enums;
 using User = Innopixel.User.Domain.User;
 
 public class UserAddressRepository(IDbConnectionFactory connectionFactory)
-    : RepositoryBase(connectionFactory), IUserAddressRepository
+    : UserRepositoryBase(connectionFactory), IUserAddressRepository
 {
     public Task<IReadOnlyList<User>> GetUserByFullAddressAsync(string streetname, string housenumber) =>
         QueryUsersAsync(
@@ -19,13 +20,16 @@ public class UserAddressRepository(IDbConnectionFactory connectionFactory)
         QueryUsersAsync("a.housenumber = @Housenumber", new { Housenumber = housenumber });
 
     public Task<OperationResult> UpdateUserByFullAddressAsync(User user, string streetname, string housenumber) =>
-        ExecuteAsync(
-            "UPDATE address SET streetname = @Streetname, housenumber = @Housenumber WHERE id = @AddressId",
-            new { user.AddressId, Streetname = streetname, Housenumber = housenumber });
+        UpdateAddressAsync(
+            "streetname = @Streetname, housenumber = @Housenumber",
+            new { user.Id, Streetname = streetname, Housenumber = housenumber });
 
     public Task<OperationResult> UpdateUserByStreetnameAsync(User user, string streetname) =>
-        ExecuteAsync("UPDATE address SET streetname = @Streetname WHERE id = @AddressId", new { user.AddressId, Streetname = streetname });
+        UpdateAddressAsync("streetname = @Streetname", new { user.Id, Streetname = streetname });
 
     public Task<OperationResult> UpdateUserByHousenumberAsync(User user, string housenumber) =>
-        ExecuteAsync("UPDATE address SET housenumber = @Housenumber WHERE id = @AddressId", new { user.AddressId, Housenumber = housenumber });
+        UpdateAddressAsync("housenumber = @Housenumber", new { user.Id, Housenumber = housenumber });
+
+    private Task<OperationResult> UpdateAddressAsync(string setClause, object param) =>
+        UpdateUserPartAsync("address", "address_id", setClause, param);
 }

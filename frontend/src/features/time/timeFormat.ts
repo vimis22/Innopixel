@@ -17,6 +17,12 @@ export function formatHours(minutes: number): string {
     return hoursFormat.format(minutes / 60);
 }
 
+// Difference in minutes as hours with a sign: 90 -> "+1,50", -30 -> "−0,50"
+export function formatSigned(minutes: number): string {
+    if (minutes === 0) return formatHours(0);
+    return `${minutes > 0 ? "+" : "−"}${formatHours(Math.abs(minutes))}`;
+}
+
 // ISO timestamp -> "08:15" (Danish time)
 export function formatClock(iso: string): string {
     return clockFormat.format(new Date(iso)).replace(".", ":");

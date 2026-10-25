@@ -1,20 +1,21 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import type { User } from "../../types/domain";
+import type { SessionUser } from "../../types/domain";
 import { authService } from "../../config/auth";
-import api, { apiStatus } from "../../services/api";
+import api, { apiErrorBody, apiStatus } from "../../services/api";
 
 interface AuthContextValue {
-    user: User | null;
+    user: SessionUser | null;
     initializing: boolean;
-    login: (email: string, password: string) => Promise<User>;
+    login: (email: string, password: string) => Promise<SessionUser>;
     logout: () => Promise<void>;
+    // The server ends every other session; this one continues (and a required change is fulfilled)
     changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<SessionUser | null>(null);
     const [initializing, setInitializing] = useState(true);
 
     // Restore a previous session on page load (the server checks the login cookie)
@@ -35,11 +36,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         };
     }, []);
 
-    // When the session expires (or the account is deactivated) every API call answers 401:
-    // drop the user, so RequireAuth sends them back to the login page.
+    // When the session ends (expired, account deactivated, or the password changed on another device) every
+    // API call answers 401: drop the user, so RequireAuth sends them back to the login page.
+    // 403 PASSWORD_CHANGE_REQUIRED (e.g. an administrator set a temporary password meanwhile) shows the
+    // "Vælg ny adgangskode" screen.
     useEffect(() => {
         const interceptor = api.interceptors.response.use(undefined, (error: unknown) => {
             if (apiStatus(error) === 401) setUser(null);
+            if (apiStatus(error) === 403 && apiErrorBody(error)?.code === "PASSWORD_CHANGE_REQUIRED") {
+                setUser((current) => (current ? { ...current, mustChangePassword: true } : current));
+            }
             return Promise.reject(error);
         });
         return () => api.interceptors.response.eject(interceptor);
@@ -59,10 +65,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     }, []);
 
-    const changePassword = useCallback(
-        (currentPassword: string, newPassword: string) => authService.changePassword(currentPassword, newPassword),
-        [],
-    );
+    const changePassword = useCallback(async (currentPassword: string, newPassword: string) => {
+        setUser(await authService.changePassword(currentPassword, newPassword));
+    }, []);
 
     const value = useMemo(
         () => ({ user, initializing, login, logout, changePassword }),

@@ -1,9 +1,6 @@
 /* Time registration ("Tidsregistrering") */
 
 .time-columns { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: var(--space-5); align-items: start; }
-.time-columns--wide-aside { grid-template-columns: minmax(0, 1fr) 620px; }
-.time-columns--single { grid-template-columns: minmax(0, 1fr); }
-.time-anchor { scroll-margin-top: calc(var(--topbar-height) + var(--space-4)); min-width: 0; }
 
 .time-nav { display: inline-flex; align-items: center; gap: var(--space-2); }
 
@@ -35,7 +32,7 @@
 .time-week-error { font-size: var(--text-sm); color: var(--tone-danger-text); }
 .time-week-footer { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); flex-wrap: wrap; margin-top: auto; }
 
-.time-chart { --bar: #f0454f; display: grid; grid-template-columns: 2rem minmax(0, 1fr); flex: 1; min-height: 200px; padding-bottom: 1.6rem; }
+.time-chart { --bar: var(--accent-strong); display: grid; grid-template-columns: 2rem minmax(0, 1fr); flex: 1; min-height: 200px; padding-bottom: 1.6rem; }
 .time-chart-axis { position: relative; font-size: var(--text-xs); color: var(--text-3); font-variant-numeric: tabular-nums; }
 .time-chart-axis span { position: absolute; right: var(--space-2); transform: translateY(50%); }
 .time-chart-plot { position: relative; display: grid; grid-template-columns: repeat(var(--chart-columns), minmax(0, 1fr)); gap: 2px; }
@@ -56,26 +53,70 @@
 
 .time-legend { display: flex; gap: var(--space-5); flex-wrap: wrap; font-size: var(--text-sm); color: var(--text-2); }
 .time-legend li { display: inline-flex; align-items: center; gap: var(--space-2); }
-.time-legend-bar { width: 12px; height: 12px; border-radius: 3px; background: #f0454f; }
+.time-legend-bar { width: 12px; height: 12px; border-radius: 3px; background: var(--accent-strong); }
 .time-legend-target { width: 18px; border-top: 2px dashed var(--text-3); }
 
-/* Juster løntimer */
-.time-adjust-user { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); }
-.time-adjust-user div { display: flex; flex-direction: column; min-width: 0; }
-.time-adjust-user span { font-size: var(--text-sm); color: var(--text-2); }
-.time-adjust-date { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--space-2); margin-bottom: var(--space-4); }
-.time-adjust-date-field { position: relative; display: block; }
-.time-adjust-date-field .control { width: 100%; color: transparent; }
-.time-adjust-date-field .control:focus { color: var(--text-1); }
-.time-adjust-date-field .control:focus + .time-adjust-date-text { visibility: hidden; }
-.time-adjust-date-text { position: absolute; inset: 0 2.5rem 0 var(--space-4); display: flex; align-items: center; font-weight: 600; pointer-events: none; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.time-adjust-form { display: flex; flex-direction: column; gap: var(--space-4); }
-.time-adjust-form .form-fieldset { display: flex; flex-direction: column; gap: var(--space-4); }
+/* Registration form (drawer) */
+.time-form { display: flex; flex-direction: column; gap: var(--space-4); }
+.time-form .form-fieldset { gap: var(--space-4); }
 .time-adjust-notice { font-size: var(--text-sm); color: var(--text-2); }
 .time-adjust-notice.is-locked { color: var(--tone-warning-text); font-weight: 600; }
 .time-adjust-total { display: flex; align-items: center; height: 44px; padding: 0 var(--space-4); border-radius: var(--radius-sm); background: var(--surface-3); font-weight: 700; font-variant-numeric: tabular-nums; }
-.time-adjust-actions { display: flex; justify-content: flex-end; gap: var(--space-3); }
-.time-adjust-loading, .time-table-loading { min-height: 220px; }
+.time-adjust-loading, .time-table-loading { min-height: 160px; }
+.time-breaks { flex-wrap: wrap; }
+.time-row-button { padding: 0; border: none; background: none; color: inherit; font: inherit; font-weight: 600; cursor: pointer; }
+.time-row-button:hover { color: var(--accent); }
+
+/* Oversigt */
+.today-plan { display: flex; align-items: center; gap: var(--space-4); }
+.today-plan .cell-text { flex: 1; }
+.today-plan-date { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: var(--radius-md); background: var(--surface-3); font-size: var(--text-xs); color: var(--text-2); }
+.today-plan-date strong { font-family: var(--font-heading); font-size: var(--text-xl); color: var(--text-1); line-height: 1; }
+.time-recent { gap: var(--space-3); }
+.time-recent .cell-text { flex: 1; min-width: 0; }
+
+/* Stemplinger: day strip / month grid */
+.punch-days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--space-2); }
+.punch-day {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-height: 58px; padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface-1); color: var(--text-1); font: inherit; text-align: left; cursor: pointer;
+}
+.punch-day:hover:not(:disabled) { border-color: var(--border-strong); }
+.punch-day:disabled { cursor: default; opacity: 0.45; }
+.punch-day.is-blank { visibility: hidden; }
+.punch-day.is-today { border-color: var(--accent-border); }
+.punch-day.is-selected { border-color: var(--accent); background: var(--accent-soft); }
+.punch-day.is-missing { border-color: color-mix(in srgb, var(--tone-danger) 45%, transparent); }
+.punch-day.is-missing .punch-day-hours { color: var(--tone-danger-text); }
+.punch-day-name { font-size: var(--text-xs); color: var(--text-2); }
+.punch-day-hours { font-weight: 700; font-variant-numeric: tabular-nums; font-size: var(--text-sm); }
+.punch-days--month .punch-day { min-height: 48px; }
+
+/* Arbejdsplaner */
+.schedule-table th, .schedule-table td { padding-left: var(--space-2); padding-right: var(--space-2); text-align: center; }
+.schedule-table .schedule-name { text-align: left; padding-left: var(--space-5); min-width: 190px; position: sticky; left: 0; z-index: 1; background: var(--surface-2); }
+.schedule-day { font-weight: 600; }
+.schedule-day span { display: block; line-height: 1.3; }
+.schedule-day.is-weekend { color: var(--text-3); }
+.schedule-day.is-today, .schedule-cell.is-today { background: var(--accent-soft); }
+.schedule-table--month .schedule-cell, .schedule-table--month .schedule-day { min-width: 46px; }
+.schedule-table--day .schedule-cell { text-align: left; }
+.schedule-shift {
+    min-width: 52px; padding: 0.3rem 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--accent-border); background: var(--accent-soft);
+    color: var(--text-1); font: inherit; font-size: var(--text-xs); font-weight: 700; font-variant-numeric: tabular-nums; cursor: pointer;
+}
+.schedule-shift:hover { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+.planned-actual { gap: var(--space-3); }
+.planned-actual > :first-child { flex: 1; font-variant-numeric: tabular-nums; }
+
+/* Godkendelser og rapportering */
+.approvals-remarks { max-width: 260px; }
+.approvals-remarks .truncate { display: block; }
+.report-bars { display: flex; flex-direction: column; gap: var(--space-4); }
+.report-bars li { display: flex; flex-direction: column; gap: var(--space-2); }
+.report-bar-head { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); min-width: 0; }
+.date-range { display: inline-flex; align-items: center; gap: var(--space-2); }
+.date-range .control { min-width: 0; width: auto; }
 
 /* Mine løntimer */
 .time-period-label { display: inline-flex; align-items: center; gap: var(--space-2); min-width: 11rem; justify-content: center; font-size: var(--text-sm); font-weight: 600; white-space: nowrap; }
@@ -83,24 +124,8 @@
 .time-table tbody tr.is-live td { background: var(--accent-soft); }
 .time-table-footer { justify-content: flex-end; font-weight: 600; font-variant-numeric: tabular-nums; }
 
-/* Teamets løntimer */
-.time-team-panel .table th:first-child, .time-team-panel .table td:first-child { padding-left: 0; }
-.time-team-panel .table th:last-child, .time-team-panel .table td:last-child { padding-right: 0; }
-.table.time-team-table th, .table.time-team-table td { padding-left: var(--space-2); padding-right: var(--space-2); }
-.time-team-table .cell-text { min-width: 0; max-width: 10rem; }
-.time-team-table .cell-title { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.time-team-pending { display: block; font-size: var(--text-xs); color: var(--tone-warning-text); }
-.time-review-main { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; font-size: var(--text-sm); }
-.time-review-remarks { color: var(--text-2); font-style: italic; overflow-wrap: anywhere; }
-.time-review-actions { display: flex; gap: var(--space-2); flex-shrink: 0; }
-
 @media (max-width: 1400px) {
     .time-columns { grid-template-columns: minmax(0, 1fr) 360px; }
-}
-
-/* The team table needs room for its four columns; below this width it goes under "Mine løntimer" */
-@media (max-width: 1700px) {
-    .time-columns--wide-aside { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 1180px) {
@@ -110,7 +135,9 @@
 @media (max-width: 760px) {
     .time-clock-layout { grid-template-columns: minmax(0, 1fr); }
     .time-week { padding-left: 0; border-left: none; padding-top: var(--space-5); border-top: 1px solid var(--border); }
-    .time-review-list .list-row { flex-wrap: wrap; }
+    .punch-days { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .punch-days--month { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+    .punch-days--month .punch-day { padding: var(--space-1); }
 }
 
 @media (prefers-reduced-motion: reduce) {

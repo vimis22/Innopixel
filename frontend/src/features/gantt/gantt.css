@@ -1,6 +1,6 @@
 /* Gantt chart, its toolbar and the project overview panel */
 
-.timeline-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: var(--space-5); align-items: start; }
+.timeline-layout { display: block; }
 .timeline-main { min-width: 0; }
 
 .gantt-toolbar { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--border); }
@@ -211,8 +211,3 @@
 .overview-facts dt .dot { margin: 0 4px; }
 .overview-facts dd { font-weight: 600; font-variant-numeric: tabular-nums; }
 
-.dependency-list { display: flex; flex-direction: column; gap: 2px; margin-top: var(--space-1); font-size: var(--text-sm); }
-
-@media (max-width: 1280px) {
-    .timeline-layout { grid-template-columns: minmax(0, 1fr); }
-}

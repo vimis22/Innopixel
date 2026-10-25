@@ -11,6 +11,8 @@ import LoadingState from "./components/ui/LoadingState";
 
 // The internal platform is loaded on demand, so visitors of the public site don't download it
 const LoginPage = lazy(() => import("./features/auth/LoginPage"));
+const ForgotPasswordPage = lazy(() => import("./features/auth/ForgotPasswordPage"));
+const ResetPasswordPage = lazy(() => import("./features/auth/ResetPasswordPage"));
 const AppRoutes = lazy(() => import("./features/app/AppRoutes"));
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
 
                     {/* Internal platform: own layout, no public header or footer */}
                     <Route path={ROUTES.login} element={<LoginPage />} />
+                    <Route path={ROUTES.forgotPassword} element={<ForgotPasswordPage />} />
+                    <Route path={ROUTES.resetPassword} element={<ResetPasswordPage />} />
                     <Route path="/app/*" element={<AppRoutes />} />
                 </Routes>
             </Suspense>

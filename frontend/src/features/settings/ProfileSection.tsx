@@ -4,10 +4,8 @@ import { useAppText } from "../../i18n/app/useAppText";
 import { PHONE_PATTERN } from "../../utils/validation";
 import { Avatar } from "../../components/ui/Avatar";
 import { useRunAction } from "../../components/ui/Feedback";
-import { LockIcon } from "../../components/icons/AppIcons";
 import { DEPARTMENTS } from "../workspace/constants";
 import { useCurrentUser, useWorkspaceData } from "../workspace/WorkspaceContext";
-import ChangePasswordModal from "./ChangePasswordModal";
 
 type Errors = Partial<Record<keyof ProfileInput, string>>;
 
@@ -22,7 +20,6 @@ function ProfileSection() {
     const [values, setValues] = useState<ProfileInput>(initial);
     const [errors, setErrors] = useState<Errors>({});
     const [saving, setSaving] = useState(false);
-    const [changingPassword, setChangingPassword] = useState(false);
     const dirty = (Object.keys(initial) as (keyof ProfileInput)[]).some((key) => (values[key] ?? "") !== (initial[key] ?? ""));
 
     const set = <K extends keyof ProfileInput>(key: K, value: ProfileInput[K]) => setValues((v) => ({ ...v, [key]: value }));
@@ -54,10 +51,8 @@ function ProfileSection() {
                     <strong>{user.name}</strong>
                     <span className="text-secondary">{text.roles[user.role]}</span>
                     <span className="text-secondary">{user.email}</span>
+                    <span className="field-hint">{t.pictureNote}</span>
                 </div>
-                <button type="button" className="app-btn app-btn--ghost" onClick={() => setChangingPassword(true)}>
-                    <LockIcon aria-hidden="true" /> {t.changePassword}
-                </button>
             </div>
 
             <form className="form-grid" onSubmit={handleSubmit} noValidate>
@@ -95,15 +90,14 @@ function ProfileSection() {
                         </select>
                     </div>
                     <div className="form-actions">
-                        <button type="submit" className="app-btn app-btn--primary app-btn--lg" disabled={!dirty || saving}>{saving ? text.common.saving : t.saveChanges}</button>
-                        <button type="button" className="app-btn app-btn--ghost app-btn--lg" disabled={!dirty || saving} onClick={() => { setValues(initial); setErrors({}); }}>
+                        <button type="submit" className="app-btn app-btn--primary" disabled={!dirty || saving}>{saving ? text.common.saving : t.saveChanges}</button>
+                        <button type="button" className="app-btn app-btn--ghost" disabled={!dirty || saving} onClick={() => { setValues(initial); setErrors({}); }}>
                             {text.common.cancel}
                         </button>
                     </div>
                 </fieldset>
             </form>
 
-            {changingPassword && <ChangePasswordModal onClose={() => setChangingPassword(false)} />}
         </>
     );
 }

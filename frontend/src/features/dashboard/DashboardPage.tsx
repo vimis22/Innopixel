@@ -32,7 +32,7 @@ function DashboardPage() {
                 title={t.welcomePrefix}
                 highlight={user.name.split(" ")[0]}
                 lead={admin ? t.adminLeadShort : t.lead}
-                aside={<DateGreeting greeting={text.common.greeting} />}
+                aside={<DateGreeting greeting={text.common.greeting} withClock />}
             />
 
             <StatGrid label={t.statsLabel}>

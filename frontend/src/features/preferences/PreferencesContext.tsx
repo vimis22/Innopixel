@@ -1,35 +1,20 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
+import { DEFAULT_PREFERENCES, sanitizePreferences, type Preferences } from "./preferences";
+
+export type { NotificationPreferences, Preferences } from "./preferences";
 
 /*
  * Personal UI preferences, stored per user in this browser. They only affect the interface;
  * nothing here is sent anywhere (e-mail notifications would need a backend).
  */
 
-export interface NotificationPreferences {
-    taskAssigned: boolean;
-    deadlines: boolean;
-    milestones: boolean;
-    weekly: boolean;
-}
-
-export interface Preferences {
-    sidebarCollapsed: boolean;
-    notifications: NotificationPreferences;
-}
-
-const DEFAULTS: Preferences = {
-    sidebarCollapsed: false,
-    notifications: { taskAssigned: true, deadlines: true, milestones: true, weekly: false },
-};
-
 const storageKey = (userId: string) => `innopixel.preferences.${userId}`;
 
 function load(userId: string): Preferences {
     try {
-        const saved = JSON.parse(localStorage.getItem(storageKey(userId)) ?? "null") as Partial<Preferences> | null;
-        return { ...DEFAULTS, ...saved, notifications: { ...DEFAULTS.notifications, ...saved?.notifications } };
+        return sanitizePreferences(JSON.parse(localStorage.getItem(storageKey(userId)) ?? "null") as Partial<Preferences> | null);
     } catch {
-        return DEFAULTS;
+        return DEFAULT_PREFERENCES;
     }
 }
 

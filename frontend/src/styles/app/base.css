@@ -108,3 +108,12 @@ button.link-arrow { padding: 0; border: none; background: none; cursor: pointer;
 @media (prefers-reduced-motion: reduce) {
     .app-shell *, .app-modal, .toast { animation: none !important; transition: none !important; }
 }
+
+/* "Reducer animationer" under Indstillinger → Præferencer */
+.reduced-motion .app-shell *, .reduced-motion .app-shell *::before, .reduced-motion .app-shell *::after,
+.reduced-motion .app-modal, .reduced-motion .app-modal * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+}

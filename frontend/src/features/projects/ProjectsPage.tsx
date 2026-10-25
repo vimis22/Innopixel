@@ -63,7 +63,7 @@ function ProjectsPage() {
                 title={t.title}
                 lead={t.lead}
                 aside={canCreateProject(user) && (
-                    <button type="button" className="app-btn app-btn--primary app-btn--lg" onClick={() => setEditing("new")}>
+                    <button type="button" className="app-btn app-btn--primary" onClick={() => setEditing("new")}>
                         <PlusIcon aria-hidden="true" /> {t.create}
                     </button>
                 )}

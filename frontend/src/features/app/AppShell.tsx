@@ -6,6 +6,7 @@ import LoadingState from "../../components/ui/LoadingState";
 import { ErrorState } from "../../components/ui/States";
 import { useAuth } from "../auth/AuthContext";
 import { PreferencesProvider, usePreferences } from "../preferences/PreferencesContext";
+import { useApplyPreferences } from "../preferences/useApplyPreferences";
 import { TaskDialogProvider } from "../tasks/TaskDialog";
 import { WorkspaceProvider, useWorkspace } from "../workspace/WorkspaceContext";
 import Sidebar from "./Sidebar";
@@ -38,6 +39,8 @@ function ShellLayout() {
     } else content = <TaskDialogProvider><Outlet /></TaskDialogProvider>;
 
     const classes = ["app-shell", preferences.sidebarCollapsed ? "app-shell--collapsed" : "", drawerOpen ? "app-shell--drawer-open" : ""];
+
+    useApplyPreferences(preferences);
 
     return (
         <div className={classes.join(" ")}>

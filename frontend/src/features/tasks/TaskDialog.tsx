@@ -8,6 +8,7 @@ import { AlertIcon, TrashIcon } from "../../components/icons/AppIcons";
 import { canManageProject, canUpdateTaskProgress } from "../auth/permissions";
 import { useCurrentUser, useWorkspaceData } from "../workspace/WorkspaceContext";
 import { TASK_PRIORITIES, TASK_STATUSES } from "../workspace/constants";
+import TaskDrawer from "./TaskDrawer";
 
 
 type DialogState =
@@ -16,22 +17,29 @@ type DialogState =
     | { kind: "edit"; taskId: string };
 
 interface TaskDialogContextValue {
-    openTask: (taskId: string) => void;
+    showTask: (taskId: string) => void;     // the task drawer (details)
+    openTask: (taskId: string) => void;     // the task dialog (edit)
     createTask: (defaults?: Partial<TaskInput>) => void;
 }
 
 const TaskDialogContext = createContext<TaskDialogContextValue | undefined>(undefined);
 
-// One task dialog for the whole app, so every page edits tasks the same way
+// One task drawer and one task dialog for the whole app, so every page shows and edits tasks the same way
 export function TaskDialogProvider({ children }: { children: ReactNode }) {
+    const { data } = useWorkspaceData();
     const [state, setState] = useState<DialogState>({ kind: "closed" });
+    const [shownId, setShownId] = useState<string | null>(null);
+    const showTask = useCallback((taskId: string) => setShownId(taskId), []);
     const openTask = useCallback((taskId: string) => setState({ kind: "edit", taskId }), []);
     const createTask = useCallback((defaults: Partial<TaskInput> = {}) => setState({ kind: "create", defaults }), []);
-    const value = useMemo(() => ({ openTask, createTask }), [openTask, createTask]);
+    const value = useMemo(() => ({ showTask, openTask, createTask }), [showTask, openTask, createTask]);
+    // A task deleted meanwhile (here or by a colleague) closes its drawer
+    const shown = shownId ? data.tasks.find((task) => task.id === shownId) : undefined;
 
     return (
         <TaskDialogContext.Provider value={value}>
             {children}
+            {shown && <TaskDrawer task={shown} onClose={() => setShownId(null)} onEdit={() => openTask(shown.id)} />}
             {state.kind !== "closed" && (
                 <TaskForm
                     key={state.kind === "edit" ? state.taskId : "new"}
@@ -267,6 +275,7 @@ function TaskForm({ state, onClose }: { state: Exclude<DialogState, { kind: "clo
                             <option value="">{text.common.unassigned}</option>
                             {members.map((u) => <option key={u.id} value={u.id}>{u.name}</option>)}
                         </select>
+                        {fullEdit && <p className="field-hint">{t.singleAssigneeHint}</p>}
                     </div>
 
                     <div className="field">

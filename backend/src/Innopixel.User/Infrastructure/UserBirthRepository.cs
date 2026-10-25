@@ -1,11 +1,12 @@
 namespace Innopixel.User.Infrastructure;
 
+using Innopixel.Shared.Data;
+using Innopixel.Shared.Results;
 using Innopixel.User.Application.Interfaces;
-using Innopixel.User.Contracts.Enums;
 using User = Innopixel.User.Domain.User;
 
 public class UserBirthRepository(IDbConnectionFactory connectionFactory)
-    : RepositoryBase(connectionFactory), IUserBirthRepository
+    : UserRepositoryBase(connectionFactory), IUserBirthRepository
 {
     public Task<IReadOnlyList<User>> GetUserByFullBirthAsync(DateTime birthday, DateTime birthmonth, DateTime birthyear) =>
         QueryUsersAsync(
@@ -22,16 +23,19 @@ public class UserBirthRepository(IDbConnectionFactory connectionFactory)
         QueryUsersAsync("b.birthyear = @Birthyear", new { Birthyear = birthyear });
 
     public Task<OperationResult> UpdateUserByAllBirthAsync(User user, DateTime birthday, DateTime birthmonth, DateTime birthyear) =>
-        ExecuteAsync(
-            "UPDATE birth SET birthday = @Birthday, birthmonth = @Birthmonth, birthyear = @Birthyear WHERE id = @BirthId",
-            new { user.BirthId, Birthday = birthday, Birthmonth = birthmonth, Birthyear = birthyear });
+        UpdateBirthAsync(
+            "birthday = @Birthday, birthmonth = @Birthmonth, birthyear = @Birthyear",
+            new { user.Id, Birthday = birthday, Birthmonth = birthmonth, Birthyear = birthyear });
 
     public Task<OperationResult> UpdateUserByBirthdayAsync(User user, DateTime birthday) =>
-        ExecuteAsync("UPDATE birth SET birthday = @Birthday WHERE id = @BirthId", new { user.BirthId, Birthday = birthday });
+        UpdateBirthAsync("birthday = @Birthday", new { user.Id, Birthday = birthday });
 
     public Task<OperationResult> UpdateUserByBirthmonthAsync(User user, DateTime birthmonth) =>
-        ExecuteAsync("UPDATE birth SET birthmonth = @Birthmonth WHERE id = @BirthId", new { user.BirthId, Birthmonth = birthmonth });
+        UpdateBirthAsync("birthmonth = @Birthmonth", new { user.Id, Birthmonth = birthmonth });
 
     public Task<OperationResult> UpdateUserByBirthyearAsync(User user, DateTime birthyear) =>
-        ExecuteAsync("UPDATE birth SET birthyear = @Birthyear WHERE id = @BirthId", new { user.BirthId, Birthyear = birthyear });
+        UpdateBirthAsync("birthyear = @Birthyear", new { user.Id, Birthyear = birthyear });
+
+    private Task<OperationResult> UpdateBirthAsync(string setClause, object param) =>
+        UpdateUserPartAsync("birth", "birth_id", setClause, param);
 }

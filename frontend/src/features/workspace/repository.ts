@@ -30,11 +30,11 @@ export interface WorkspaceRepository {
     setMilestoneCompleted(milestoneId: string, completed: boolean): Promise<void>;
     deleteMilestone(milestoneId: string): Promise<void>;
 
-    // Returns the new account and a temporary password, shown once to the administrator
+    // Returns the new account, and a temporary password (shown once) unless an invitation was e-mailed.
+    // Passwords of existing accounts are managed in features/team/accountApi.ts.
     createUser(input: UserInput): Promise<CreatedUser>;
     updateUser(userId: string, input: UserInput): Promise<void>;
     setUserActive(userId: string, active: boolean): Promise<void>;
-    resetUserPassword(userId: string): Promise<string>;
     updateOwnProfile(profile: ProfileInput): Promise<void>;
 }
 

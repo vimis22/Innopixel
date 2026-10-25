@@ -15,24 +15,20 @@ import { useTaskActions } from "./useTaskActions";
 
 interface TaskTableProps {
     tasks: Task[];
-    selectedId?: string | null;
-    onSelect?: (taskId: string) => void;   // opens a side panel; without it, rows open the task dialog
     showProject?: boolean;
     showAssignee?: boolean;
 }
 
-// Concise task rows: title, project, priority, deadline, status, progress. Details live in the panel/dialog.
-function TaskTable({ tasks, selectedId = null, onSelect, showProject = true, showAssignee = false }: TaskTableProps) {
+// Concise task rows: title, project, priority, deadline, status, progress. A row opens the task drawer.
+function TaskTable({ tasks, showProject = true, showAssignee = false }: TaskTableProps) {
     const text = useAppText();
     const t = text.tasks;
     const { data } = useWorkspaceData();
-    const { openTask } = useTaskDialog();
+    const { showTask, openTask } = useTaskDialog();
     const { canUpdate, toggleDone } = useTaskActions();
-    const select = (task: Task) => (onSelect ? onSelect(task.id) : openTask(task.id));
 
     function actionsFor(task: Task): MenuAction[] {
-        const actions: MenuAction[] = [];
-        if (onSelect) actions.push({ label: text.common.details, Icon: EyeIcon, onSelect: () => onSelect(task.id) });
+        const actions: MenuAction[] = [{ label: text.common.details, Icon: EyeIcon, onSelect: () => showTask(task.id) }];
         actions.push({ label: t.editTask, Icon: EditIcon, onSelect: () => openTask(task.id) });
         if (canUpdate(task)) {
             actions.push({ label: task.status === "DONE" ? t.markOpen(task.title) : t.markDone(task.title), Icon: CheckIcon, onSelect: () => void toggleDone(task) });
@@ -61,7 +57,7 @@ function TaskTable({ tasks, selectedId = null, onSelect, showProject = true, sho
                         const project = data.projects.find((p) => p.id === task.projectId);
                         const done = task.status === "DONE";
                         return (
-                            <tr key={task.id} className={`is-clickable ${selectedId === task.id ? "is-selected" : ""}`} onClick={() => select(task)}>
+                            <tr key={task.id} className="is-clickable" onClick={() => showTask(task.id)}>
                                 <td className="col-check" onClick={(e) => e.stopPropagation()}>
                                     <input
                                         type="checkbox"
@@ -77,8 +73,7 @@ function TaskTable({ tasks, selectedId = null, onSelect, showProject = true, sho
                                         <button
                                             type="button"
                                             className={`cell-title task-title ${done ? "is-done" : ""}`}
-                                            onClick={(e) => { e.stopPropagation(); select(task); }}
-                                            aria-pressed={onSelect ? selectedId === task.id : undefined}
+                                            onClick={(e) => { e.stopPropagation(); showTask(task.id); }}
                                         >
                                             {task.title}
                                         </button>

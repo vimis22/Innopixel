@@ -6,7 +6,13 @@
     <Project Path="src/Innopixel.Main/Innopixel.Main.csproj" />
     <Project Path="src/Innopixel.Pages/Innopixel.Pages.csproj" />
     <Project Path="src/Innopixel.Projects/Innopixel.Projects.csproj" />
+    <Project Path="src/Innopixel.Shared/Innopixel.Shared.csproj" />
     <Project Path="src/Innopixel.Statistics/Innopixel.Statistics.csproj" />
     <Project Path="src/Innopixel.User/Innopixel.User.csproj" />
+    <Project Path="src/Innopixel.Workspace/Innopixel.Workspace.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Innopixel.IntegrationTests/Innopixel.IntegrationTests.csproj" />
+    <Project Path="tests/Innopixel.Tests/Innopixel.Tests.csproj" />
   </Folder>
 </Solution>

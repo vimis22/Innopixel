@@ -44,8 +44,8 @@ function StatCard({ label, value, Icon, tone = "accent", hint, to, onClick, acti
     return <div className="stat-card">{content}</div>;
 }
 
-export function StatGrid({ children, label }: { children: ReactNode; label: string }) {
-    return <section className="stat-grid" aria-label={label}>{children}</section>;
+export function StatGrid({ children, label, columns = 4 }: { children: ReactNode; label: string; columns?: 3 | 4 }) {
+    return <section className={`stat-grid ${columns === 3 ? "stat-grid--3" : ""}`} aria-label={label}>{children}</section>;
 }
 
 export default StatCard;

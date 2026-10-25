@@ -1,11 +1,12 @@
 namespace Innopixel.User.Infrastructure;
 
+using Innopixel.Shared.Data;
+using Innopixel.Shared.Results;
 using Innopixel.User.Application.Interfaces;
-using Innopixel.User.Contracts.Enums;
 using User = Innopixel.User.Domain.User;
 
 public class UserNameRepository(IDbConnectionFactory connectionFactory)
-    : RepositoryBase(connectionFactory), IUserNameRepository
+    : UserRepositoryBase(connectionFactory), IUserNameRepository
 {
     public Task<IReadOnlyList<User>> GetUserByFullnameAsync(string firstname, string? middlename, string lastname) =>
         QueryUsersAsync(
@@ -22,16 +23,19 @@ public class UserNameRepository(IDbConnectionFactory connectionFactory)
         QueryUsersAsync("n.lastname = @Lastname", new { Lastname = lastname });
 
     public Task<OperationResult> UpdateUserByFullnameAsync(User user, string firstname, string? middlename, string lastname) =>
-        ExecuteAsync(
-            "UPDATE name SET firstname = @Firstname, middlename = @Middlename, lastname = @Lastname WHERE id = @NameId",
-            new { user.NameId, Firstname = firstname, Middlename = middlename, Lastname = lastname });
+        UpdateNameAsync(
+            "firstname = @Firstname, middlename = @Middlename, lastname = @Lastname",
+            new { user.Id, Firstname = firstname, Middlename = middlename, Lastname = lastname });
 
     public Task<OperationResult> UpdateUserByFirstnameAsync(User user, string firstname) =>
-        ExecuteAsync("UPDATE name SET firstname = @Firstname WHERE id = @NameId", new { user.NameId, Firstname = firstname });
+        UpdateNameAsync("firstname = @Firstname", new { user.Id, Firstname = firstname });
 
     public Task<OperationResult> UpdateUserByMiddlenameAsync(User user, string? middlename) =>
-        ExecuteAsync("UPDATE name SET middlename = @Middlename WHERE id = @NameId", new { user.NameId, Middlename = middlename });
+        UpdateNameAsync("middlename = @Middlename", new { user.Id, Middlename = middlename });
 
     public Task<OperationResult> UpdateUserByLastnameAsync(User user, string lastname) =>
-        ExecuteAsync("UPDATE name SET lastname = @Lastname WHERE id = @NameId", new { user.NameId, Lastname = lastname });
+        UpdateNameAsync("lastname = @Lastname", new { user.Id, Lastname = lastname });
+
+    private Task<OperationResult> UpdateNameAsync(string setClause, object param) =>
+        UpdateUserPartAsync("name", "name_id", setClause, param);
 }

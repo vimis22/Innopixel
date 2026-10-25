@@ -25,15 +25,17 @@
     --text-3: #71717a;
     --text-on-accent: #ffffff;
 
-    /* Brand */
+    /* Brand. The accent can be changed under Indstillinger → Præferencer (see "Accent colors" below);
+       everything else derives from these four, so a new accent only sets them. */
+    --accent-start: #ff7a1a;
     --accent: #ff6a2b;
     --accent-strong: #ff4d4d;
     --accent-pink: #ff2d7a;
-    --accent-soft: rgba(255, 106, 43, 0.13);
-    --accent-border: rgba(255, 106, 43, 0.55);
-    --gradient-brand: linear-gradient(90deg, #ff7a1a 0%, #ff4d4d 60%, #ff2d7a 100%);
-    --gradient-button: linear-gradient(135deg, #ff7a1a 0%, #ff4d4d 100%);
-    --gradient-nav-active: linear-gradient(90deg, rgba(255, 106, 43, 0.2), rgba(255, 106, 43, 0.05));
+    --accent-soft: color-mix(in srgb, var(--accent) 13%, transparent);
+    --accent-border: color-mix(in srgb, var(--accent) 55%, transparent);
+    --gradient-brand: linear-gradient(90deg, var(--accent-start) 0%, var(--accent-strong) 60%, var(--accent-pink) 100%);
+    --gradient-button: linear-gradient(135deg, var(--accent-start) 0%, var(--accent-strong) 100%);
+    --gradient-nav-active: linear-gradient(90deg, color-mix(in srgb, var(--accent) 20%, transparent), color-mix(in srgb, var(--accent) 5%, transparent));
 
     /* Status tones: text, background, border. Always paired with a label or icon. */
     --tone-success: #22c55e;
@@ -73,7 +75,7 @@
     --text-lg: 1.125rem;
     --text-xl: 1.375rem;
     --text-2xl: 1.75rem;
-    --text-stat: 2rem;
+    --text-stat: 1.6rem;
     --text-display: clamp(2.1rem, 3vw, 3.1rem);
 
     /* Spacing (4px grid) */
@@ -93,7 +95,7 @@
     --radius-pill: 999px;
     --shadow-popover: 0 16px 40px rgba(0, 0, 0, 0.45);
     --shadow-modal: 0 30px 80px rgba(0, 0, 0, 0.55);
-    --focus-ring: 0 0 0 3px rgba(255, 106, 43, 0.35);
+    --focus-ring: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
 
     /* Layout */
     --sidebar-width: 268px;
@@ -124,8 +126,8 @@
     --text-2: #52525b;
     --text-3: #71717a;
 
-    --accent-soft: rgba(255, 106, 43, 0.1);
-    --gradient-nav-active: linear-gradient(90deg, rgba(255, 106, 43, 0.14), rgba(255, 106, 43, 0.03));
+    --accent-soft: color-mix(in srgb, var(--accent) 10%, transparent);
+    --gradient-nav-active: linear-gradient(90deg, color-mix(in srgb, var(--accent) 14%, transparent), color-mix(in srgb, var(--accent) 3%, transparent));
 
     --tone-success-text: #15803d;
     --tone-warning-text: #a16207;
@@ -144,4 +146,40 @@
 
     --shadow-popover: 0 16px 40px rgba(15, 23, 42, 0.14);
     --shadow-modal: 0 30px 80px rgba(15, 23, 42, 0.2);
+}
+
+/* ==========================================================================
+   Personal preferences (Indstillinger → Præferencer), set on <html> by useApplyPreferences
+   ========================================================================== */
+
+/* Accent colors. White text sits on --gradient-button, so start and strong stay dark enough for it.
+   .accent-swatch[data-accent] (the color choices in Præferencer) uses the same values, so they are defined once. */
+.accent-swatch[data-accent="orange"] { --accent-start: #ff7a1a; --accent: #ff6a2b; --accent-strong: #ff4d4d; --accent-pink: #ff2d7a; }
+[data-accent="blue"] :is(.app-shell, .app-modal, .toast-region), .accent-swatch[data-accent="blue"] { --accent-start: #3b82f6; --accent: #4f8ff7; --accent-strong: #2563eb; --accent-pink: #6366f1; }
+[data-accent="violet"] :is(.app-shell, .app-modal, .toast-region), .accent-swatch[data-accent="violet"] { --accent-start: #8b5cf6; --accent: #9b72f8; --accent-strong: #7c3aed; --accent-pink: #c026d3; }
+[data-accent="pink"] :is(.app-shell, .app-modal, .toast-region), .accent-swatch[data-accent="pink"] { --accent-start: #ec4899; --accent: #f0569f; --accent-strong: #db2777; --accent-pink: #e11d48; }
+[data-accent="teal"] :is(.app-shell, .app-modal, .toast-region), .accent-swatch[data-accent="teal"] { --accent-start: #0d9488; --accent: #14b8a6; --accent-strong: #0f766e; --accent-pink: #0891b2; }
+[data-accent="green"] :is(.app-shell, .app-modal, .toast-region), .accent-swatch[data-accent="green"] { --accent-start: #16a34a; --accent: #22c55e; --accent-strong: #15803d; --accent-pink: #65a30d; }
+
+/* Text size: everything in the platform is sized in rem, so the root size scales text and spacing together */
+html[data-text-size="small"] { font-size: 93.75%; }
+html[data-text-size="large"] { font-size: 112.5%; }
+
+/* High contrast: brighter secondary text and clearly visible borders and focus */
+.high-contrast :is(.app-shell, .app-modal, .toast-region) {
+    --text-2: #e4e4e7;
+    --text-3: #c4c4cc;
+    --border: rgba(255, 255, 255, 0.28);
+    --border-strong: rgba(255, 255, 255, 0.5);
+    --surface-hover: rgba(255, 255, 255, 0.1);
+    --focus-ring: 0 0 0 3px var(--accent);
+}
+
+[data-theme="light"].high-contrast :is(.app-shell, .app-modal, .toast-region) {
+    --text-1: #000000;
+    --text-2: #27272a;
+    --text-3: #3f3f46;
+    --border: rgba(15, 23, 42, 0.38);
+    --border-strong: rgba(15, 23, 42, 0.62);
+    --surface-hover: rgba(15, 23, 42, 0.09);
 }

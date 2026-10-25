@@ -1,61 +1,31 @@
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
-import type { Milestone } from "../../types/domain";
 import { APP_ROUTES } from "../../config/routes";
 import { formatDate } from "../../utils/date";
 import { useAppText } from "../../i18n/app/useAppText";
-import ProjectThumb from "../../components/ui/ProjectThumb";
 import ProgressBar from "../../components/ui/ProgressBar";
-import ActionMenu, { type MenuAction } from "../../components/ui/ActionMenu";
+import ActionMenu from "../../components/ui/ActionMenu";
 import { AvatarStack } from "../../components/ui/Avatar";
 import { MilestoneBadge } from "../../components/ui/Badges";
 import DueLabel from "../../components/ui/DueLabel";
-import { useFeedback, useRunAction } from "../../components/ui/Feedback";
-import { CheckIcon, EditIcon, FlagIcon, RefreshIcon, TrashIcon } from "../../components/icons/AppIcons";
-import { canManageProject } from "../auth/permissions";
+import { CheckIcon, FlagIcon } from "../../components/icons/AppIcons";
 import { useProjectColors } from "../workspace/hooks";
-import { useCurrentUser, useWorkspaceData } from "../workspace/WorkspaceContext";
+import { useMilestoneActions } from "./useMilestoneActions";
 import type { MilestoneRow } from "./useMilestoneRows";
 
 interface MilestoneTableProps {
     rows: MilestoneRow[];
-    variant?: "open" | "completed";
     showProject?: boolean;
-    onEdit: (milestone: Milestone) => void;
+    onOpen: (row: MilestoneRow) => void;     // opens the milestone drawer
+    onEdit: (row: MilestoneRow) => void;
 }
 
-function MilestoneTable({ rows, variant = "open", showProject = true, onEdit }: MilestoneTableProps) {
+// Open milestones show their deadline, completed ones the day they were completed
+function MilestoneTable({ rows, showProject = true, onOpen, onEdit }: MilestoneTableProps) {
     const text = useAppText();
     const t = text.milestones;
-    const user = useCurrentUser();
-    const { actions } = useWorkspaceData();
     const colors = useProjectColors();
-    const { confirm } = useFeedback();
-    const run = useRunAction();
-
-    function actionsFor({ milestone, info, project }: MilestoneRow): MenuAction[] {
-        if (!canManageProject(user, project)) return [];
-        const list: MenuAction[] = [{ label: text.common.edit, Icon: EditIcon, onSelect: () => onEdit(milestone) }];
-        // Milestones with related tasks complete themselves; only manual ones can be toggled
-        if (!info.automatic) {
-            const completing = info.state !== "COMPLETED";
-            list.push({
-                label: completing ? t.markComplete : t.markIncomplete,
-                Icon: completing ? CheckIcon : RefreshIcon,
-                onSelect: () => void run(() => actions.setMilestoneCompleted(milestone.id, completing), completing ? t.completed_toast : t.reopened_toast),
-            });
-        }
-        list.push({
-            label: text.common.delete,
-            Icon: TrashIcon,
-            danger: true,
-            onSelect: async () => {
-                const yes = await confirm({ title: t.deleteTitle, message: t.deleteMessage(milestone.title), confirmLabel: text.common.delete, danger: true });
-                if (yes) await run(() => actions.deleteMilestone(milestone.id), t.deleted_toast);
-            },
-        });
-        return list;
-    }
+    const actionsFor = useMilestoneActions(onEdit);
 
     return (
         <div className="table-wrap">
@@ -63,8 +33,7 @@ function MilestoneTable({ rows, variant = "open", showProject = true, onEdit }: 
                 <thead>
                     <tr>
                         <th scope="col">{t.colMilestone}</th>
-                        {showProject && <th scope="col">{text.common.project}</th>}
-                        <th scope="col">{variant === "completed" ? t.colCompleted : t.colDue}</th>
+                        <th scope="col">{t.colDue}</th>
                         <th scope="col">{t.colResponsible}</th>
                         <th scope="col">{text.common.status}</th>
                         <th scope="col">{text.common.progress}</th>
@@ -75,7 +44,7 @@ function MilestoneTable({ rows, variant = "open", showProject = true, onEdit }: 
                     {rows.map((row) => {
                         const { milestone, info, project, responsible, percent } = row;
                         return (
-                            <tr key={milestone.id}>
+                            <tr key={milestone.id} className="is-clickable" onClick={() => onOpen(row)}>
                                 <td>
                                     <div className="cell-main">
                                         <span
@@ -86,23 +55,28 @@ function MilestoneTable({ rows, variant = "open", showProject = true, onEdit }: 
                                             {info.state === "COMPLETED" ? <CheckIcon /> : <FlagIcon />}
                                         </span>
                                         <div className="cell-text">
-                                            <span className="cell-title">{milestone.title}</span>
-                                            <span className="cell-sub truncate milestone-desc">{milestone.description}</span>
+                                            <button
+                                                type="button"
+                                                className="cell-title milestone-title"
+                                                onClick={(e) => { e.stopPropagation(); onOpen(row); }}
+                                            >
+                                                {milestone.title}
+                                            </button>
+                                            {showProject ? (
+                                                <Link to={`${APP_ROUTES.project(project.id)}?tab=milestones`} className="cell-sub truncate milestone-project" onClick={(e) => e.stopPropagation()}>
+                                                    {project.name}
+                                                </Link>
+                                            ) : <span className="cell-sub truncate milestone-desc">{milestone.description}</span>}
                                         </div>
                                     </div>
                                 </td>
-                                {showProject && (
-                                    <td>
-                                        <Link to={`${APP_ROUTES.project(project.id)}?tab=milestones`} className="cell-main milestone-project">
-                                            <ProjectThumb project={project} size="sm" />
-                                            <span className="truncate">{project.name}</span>
-                                        </Link>
-                                    </td>
-                                )}
                                 <td className="nowrap">
-                                    {variant === "completed"
-                                        ? formatDate(row.completedOn)
-                                        : <DueLabel date={milestone.dueDate} withRelative />}
+                                    {info.state === "COMPLETED" ? (
+                                        <span className="due-label">
+                                            <span>{formatDate(row.completedOn)}</span>
+                                            <span className="due-label-relative">{t.colCompleted}</span>
+                                        </span>
+                                    ) : <DueLabel date={milestone.dueDate} withRelative />}
                                 </td>
                                 <td><AvatarStack users={responsible} max={3} /></td>
                                 <td><MilestoneBadge state={info.state} /></td>
@@ -116,7 +90,7 @@ function MilestoneTable({ rows, variant = "open", showProject = true, onEdit }: 
                                         </div>
                                     )}
                                 </td>
-                                <td className="col-actions">
+                                <td className="col-actions" onClick={(e) => e.stopPropagation()}>
                                     <ActionMenu label={text.common.actionsFor(milestone.title)} actions={actionsFor(row)} />
                                 </td>
                             </tr>

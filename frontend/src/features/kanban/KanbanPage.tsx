@@ -24,7 +24,7 @@ function KanbanPage() {
     const user = useCurrentUser();
     const { data, actions } = useWorkspaceData();
     const projects = useActiveProjects();
-    const { openTask, createTask } = useTaskDialog();
+    const { showTask, createTask } = useTaskDialog();
     const { canUpdate } = useTaskActions();
     const run = useRunAction();
     const [params, setParams] = useSearchParams();
@@ -70,11 +70,13 @@ function KanbanPage() {
 
     return (
         <div className="page">
-            <PageHeader
-                title={t.title}
-                lead={t.lead}
-                aside={projects.length > 0 && (
-                    <>
+            <PageHeader title={t.title} lead={t.lead} />
+
+            {projects.length === 0 ? (
+                <EmptyState Icon={KanbanIcon} title={t.noProjects} />
+            ) : (
+                <>
+                    <div className="toolbar">
                         <span className="control-with-icon">
                             <FolderIcon aria-hidden="true" />
                             <select
@@ -87,23 +89,16 @@ function KanbanPage() {
                                 {projects.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
                             </select>
                         </span>
+                        <label className="labelled-control">
+                            <input type="checkbox" className="checkbox" checked={onlyMine} onChange={(e) => setOnlyMine(e.target.checked)} />
+                            {t.filterMine}
+                        </label>
                         {createTarget && (
-                            <button type="button" className="app-btn app-btn--primary app-btn--lg" onClick={() => createTask({ projectId: createTarget.id })}>
+                            <button type="button" className="app-btn app-btn--primary toolbar-end" onClick={() => createTask({ projectId: createTarget.id })}>
                                 <PlusIcon aria-hidden="true" /> {t.newTask}
                             </button>
                         )}
-                    </>
-                )}
-            />
-
-            {projects.length === 0 ? (
-                <EmptyState Icon={KanbanIcon} title={t.noProjects} />
-            ) : (
-                <>
-                    <label className="labelled-control kanban-filter">
-                        <input type="checkbox" className="checkbox" checked={onlyMine} onChange={(e) => setOnlyMine(e.target.checked)} />
-                        {t.filterMine}
-                    </label>
+                    </div>
 
                     <div className="kanban">
                         {TASK_STATUSES.map((status, columnIndex) => {
@@ -143,7 +138,7 @@ function KanbanPage() {
                                                 dragging={dragging === task.id}
                                                 canMoveLeft={columnIndex > 0}
                                                 canMoveRight={columnIndex < TASK_STATUSES.length - 1}
-                                                onOpen={() => openTask(task.id)}
+                                                onOpen={() => showTask(task.id)}
                                                 onMove={(direction) => void move(task, TASK_STATUSES[columnIndex + direction])}
                                                 onDragStart={(e) => {
                                                     e.dataTransfer.setData("text/plain", task.id);

@@ -1,24 +1,34 @@
 import { useMemo, useState, type CSSProperties } from "react";
-import { Link } from "react-router-dom";
-import type { ISODate, Milestone } from "../../types/domain";
-import { APP_ROUTES } from "../../config/routes";
+import type { ISODate } from "../../types/domain";
+import type { MilestoneState } from "../workspace/progress";
 import { addDays, formatDate, startOfWeek, todayISO } from "../../utils/date";
 import { useAppText } from "../../i18n/app/useAppText";
 import PageHeader from "../../components/ui/PageHeader";
-import StatCard, { StatGrid } from "../../components/ui/StatCard";
 import Panel from "../../components/ui/Panel";
+import PillTabs from "../../components/ui/PillTabs";
 import MiniCalendar from "../../components/ui/MiniCalendar";
 import { EmptyState } from "../../components/ui/States";
-import { AlertIcon, CalendarIcon, CheckIcon, FlagIcon, PlusIcon } from "../../components/icons/AppIcons";
+import { AlertIcon, FlagIcon, FolderIcon, PlusIcon } from "../../components/icons/AppIcons";
 import { canManageProject } from "../auth/permissions";
 import { useActiveProjects, useProjectColors } from "../workspace/hooks";
 import { useCurrentUser } from "../workspace/WorkspaceContext";
+import MilestoneDrawer from "./MilestoneDrawer";
 import MilestoneFormModal from "./MilestoneFormModal";
 import MilestoneTable from "./MilestoneTable";
+import { useMilestoneActions } from "./useMilestoneActions";
 import { useMilestoneRows, type MilestoneRow } from "./useMilestoneRows";
 import "./milestones.css";
 
-const COMPLETED_PREVIEW = 5;
+type StateFilter = MilestoneState | "ALL";
+
+// What needs attention first: overdue, then upcoming by date, then the most recently completed
+const ORDER: Record<MilestoneState, number> = { OVERDUE: 0, UPCOMING: 1, COMPLETED: 2 };
+function compareRows(a: MilestoneRow, b: MilestoneRow): number {
+    return ORDER[a.info.state] - ORDER[b.info.state]
+        || (a.info.state === "COMPLETED"
+            ? b.completedOn.localeCompare(a.completedOn)
+            : a.milestone.dueDate.localeCompare(b.milestone.dueDate));
+}
 
 function MilestonesPage() {
     const text = useAppText();
@@ -27,79 +37,71 @@ function MilestonesPage() {
     const projects = useActiveProjects();
     const colors = useProjectColors();
     const [projectId, setProjectId] = useState("");
-    const [editing, setEditing] = useState<Milestone | "new" | null>(null);
+    const [state, setState] = useState<StateFilter>("ALL");
+    const [editing, setEditing] = useState<MilestoneRow | "new" | null>(null);
+    const [openId, setOpenId] = useState<string | null>(null);
     const [selectedDay, setSelectedDay] = useState<ISODate | null>(null);
-    const [showAllCompleted, setShowAllCompleted] = useState(false);
     const rows = useMilestoneRows(projectId || undefined);
+    const actionsFor = useMilestoneActions(setEditing);
 
     const today = todayISO();
     const weekEnd = addDays(startOfWeek(today), 6);
-
-    const groups = useMemo(() => {
-        const byDue = (a: MilestoneRow, b: MilestoneRow) => a.milestone.dueDate.localeCompare(b.milestone.dueDate);
-        return {
-            overdue: rows.filter((r) => r.info.state === "OVERDUE").sort(byDue),
-            upcoming: rows.filter((r) => r.info.state === "UPCOMING").sort(byDue),
-            completed: rows.filter((r) => r.info.state === "COMPLETED").sort((a, b) => b.completedOn.localeCompare(a.completedOn)),
-        };
-    }, [rows]);
-
-    const open = [...groups.overdue, ...groups.upcoming];
-    const thisWeek = open.filter((r) => r.milestone.dueDate <= weekEnd);
-    const sideList = selectedDay ? rows.filter((r) => r.milestone.dueDate === selectedDay) : thisWeek;
+    const sorted = useMemo(() => [...rows].sort(compareRows), [rows]);
+    const shown = sorted.filter((r) => (state === "ALL" || r.info.state === state) && (!selectedDay || r.milestone.dueDate === selectedDay));
+    const count = (s: MilestoneState) => rows.filter((r) => r.info.state === s).length;
+    const thisWeek = sorted.filter((r) => r.info.state !== "COMPLETED" && r.milestone.dueDate <= weekEnd);
+    // The drawer follows the data, so it closes by itself when the milestone is deleted
+    const opened = rows.find((r) => r.milestone.id === openId);
     const canCreate = projects.some((p) => canManageProject(user, p));
+
+    const tabs = [
+        { value: "ALL" as StateFilter, label: text.common.all, count: rows.length },
+        { value: "UPCOMING" as StateFilter, label: t.tabUpcoming, count: count("UPCOMING") },
+        { value: "COMPLETED" as StateFilter, label: t.tabCompleted, count: count("COMPLETED") },
+        { value: "OVERDUE" as StateFilter, label: t.tabOverdue, count: count("OVERDUE") },
+    ];
 
     return (
         <div className="page">
             <PageHeader
                 title={t.title}
                 lead={t.lead}
-                aside={
-                    <>
-                        <select className="control" aria-label={text.common.project} value={projectId} onChange={(e) => setProjectId(e.target.value)}>
-                            <option value="">{t.allProjects}</option>
-                            {projects.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
-                        </select>
-                        {canCreate && (
-                            <button type="button" className="app-btn app-btn--primary app-btn--lg" onClick={() => setEditing("new")}>
-                                <PlusIcon aria-hidden="true" /> {t.create}
-                            </button>
-                        )}
-                    </>
-                }
+                aside={canCreate && (
+                    <button type="button" className="app-btn app-btn--primary" onClick={() => setEditing("new")}>
+                        <PlusIcon aria-hidden="true" /> {t.create}
+                    </button>
+                )}
             />
-
-            <StatGrid label={text.dashboard.statsLabel}>
-                <StatCard label={t.statWeek} value={thisWeek.length} Icon={CalendarIcon} />
-                <StatCard label={t.statMonth} value={open.filter((r) => r.milestone.dueDate.slice(0, 7) === today.slice(0, 7)).length} Icon={CalendarIcon} tone="pink" />
-                <StatCard label={t.statDone} value={groups.completed.length} Icon={CheckIcon} tone="success" />
-                <StatCard label={t.statOverdue} value={groups.overdue.length} Icon={FlagIcon} tone={groups.overdue.length ? "danger" : "neutral"} hint={t.statOverdueHint(groups.overdue.length)} />
-            </StatGrid>
 
             <div className="page-columns">
                 <div className="stack">
-                    {groups.overdue.length > 0 && (
-                        <Panel title={t.overdueTitle} flush className="panel--alert">
-                            <MilestoneTable rows={groups.overdue} onEdit={setEditing} />
-                        </Panel>
+                    <div className="toolbar">
+                        <span className="control-with-icon">
+                            <FolderIcon aria-hidden="true" />
+                            <select className="control" aria-label={text.common.project} value={projectId} onChange={(e) => setProjectId(e.target.value)}>
+                                <option value="">{t.allProjects}</option>
+                                {projects.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
+                            </select>
+                        </span>
+                        <PillTabs label={text.common.status} options={tabs} value={state} onChange={setState} />
+                    </div>
+
+                    {selectedDay && (
+                        <p className="filter-note">
+                            {t.selectedDay(formatDate(selectedDay))}
+                            <button type="button" className="link-arrow" onClick={() => setSelectedDay(null)}>{t.clearDay}</button>
+                        </p>
                     )}
-                    <Panel title={t.upcomingTitle} flush>
-                        {groups.upcoming.length === 0
-                            ? <EmptyState Icon={FlagIcon} title={t.empty} compact />
-                            : <MilestoneTable rows={groups.upcoming} onEdit={setEditing} />}
-                    </Panel>
-                    <Panel
-                        title={t.completedTitle}
-                        flush
-                        action={groups.completed.length > COMPLETED_PREVIEW && (
-                            <button type="button" className="link-arrow" onClick={() => setShowAllCompleted((v) => !v)}>
-                                {showAllCompleted ? t.showFewerCompleted : t.showAllCompleted}
-                            </button>
+
+                    <Panel flush>
+                        {shown.length === 0 ? (
+                            <EmptyState Icon={FlagIcon} title={t.empty} compact />
+                        ) : (
+                            <>
+                                <MilestoneTable rows={shown} onOpen={(row) => setOpenId(row.milestone.id)} onEdit={setEditing} />
+                                <p className="table-footer">{text.common.showing(shown.length, rows.length, t.noun)}</p>
+                            </>
                         )}
-                    >
-                        {groups.completed.length === 0
-                            ? <EmptyState Icon={CheckIcon} title={t.empty} compact />
-                            : <MilestoneTable rows={showAllCompleted ? groups.completed : groups.completed.slice(0, COMPLETED_PREVIEW)} variant="completed" onEdit={setEditing} />}
                     </Panel>
                 </div>
 
@@ -113,23 +115,20 @@ function MilestonesPage() {
                                 previous: text.dates.previousMonth,
                                 next: text.dates.nextMonth,
                                 weekdays: text.dates.weekdaysShort,
-                                markersOn: (date, count) => t.markersOn(formatDate(date), count),
+                                markersOn: (date, n) => t.markersOn(formatDate(date), n),
                             }}
                         />
                     </Panel>
-                    <Panel
-                        title={selectedDay ? t.selectedDay(formatDate(selectedDay, false)) : t.thisWeekTitle}
-                        action={selectedDay && <button type="button" className="link-arrow" onClick={() => setSelectedDay(null)}>{t.clearDay}</button>}
-                    >
-                        {sideList.length === 0 ? (
-                            <p className="muted small">{selectedDay ? t.noneOnDay : t.noneThisWeek}</p>
+                    <Panel title={t.thisWeekTitle}>
+                        {thisWeek.length === 0 ? (
+                            <p className="muted small">{t.noneThisWeek}</p>
                         ) : (
                             <ul className="list">
-                                {sideList.map((r) => (
+                                {thisWeek.map((r) => (
                                     <li key={r.milestone.id} className="list-row week-milestone">
                                         <span className="milestone-icon" style={{ "--milestone-color": colors.get(r.project.id) } as CSSProperties} aria-hidden="true"><FlagIcon /></span>
                                         <div className="cell-text">
-                                            <Link to={`${APP_ROUTES.project(r.project.id)}?tab=milestones`} className="cell-title truncate">{r.milestone.title}</Link>
+                                            <button type="button" className="cell-title truncate milestone-title" onClick={() => setOpenId(r.milestone.id)}>{r.milestone.title}</button>
                                             <span className="cell-sub truncate">{r.project.name}</span>
                                         </div>
                                         <span className={`small nowrap ${r.info.state === "OVERDUE" ? "text-danger" : "text-secondary"}`}>
@@ -143,9 +142,10 @@ function MilestonesPage() {
                 </div>
             </div>
 
+            {opened && <MilestoneDrawer row={opened} actions={actionsFor(opened)} onClose={() => setOpenId(null)} />}
             {editing && (
                 <MilestoneFormModal
-                    milestone={editing === "new" ? undefined : editing}
+                    milestone={editing === "new" ? undefined : editing.milestone}
                     projectId={projectId || undefined}
                     onClose={() => setEditing(null)}
                 />

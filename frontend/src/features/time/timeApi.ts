@@ -14,15 +14,17 @@ const id = encodeURIComponent;
 export const timeApi = {
     overview: () => call(async () => (await api.get<TimeOverview>("/time/overview")).data),
 
-    week: (weekStart: ISODate) => call(async () => (await api.get<TimeWeek>("/time/week", { params: { weekStart } })).data),
+    // Administrators may pass a colleague's userId (the server answers 403 to everyone else)
+    week: (weekStart: ISODate, userId?: string) =>
+        call(async () => (await api.get<TimeWeek>("/time/week", { params: { weekStart, userId } })).data),
 
     registrations: (from: ISODate, to: ISODate, userId?: string) =>
         call(async () => (await api.get<TimeRegistration[]>("/time/registrations", { params: { from, to, userId } })).data),
 
     team: (weekStart: ISODate) => call(async () => (await api.get<TeamTime>("/time/team", { params: { weekStart } })).data),
 
-    // Administrators: a colleague's finished registrations awaiting approval, from any date
-    pending: (userId: string) => call(async () => (await api.get<TimeRegistration[]>("/time/pending", { params: { userId } })).data),
+    // Administrators: finished registrations awaiting approval, from any date; all employees without userId
+    pending: (userId?: string) => call(async () => (await api.get<TimeRegistration[]>("/time/pending", { params: { userId } })).data),
 
     clockIn: (projectId: string | null) =>
         call(async () => (await api.post<TimeRegistration>("/time/clock-in", { projectId, remarks: null })).data),

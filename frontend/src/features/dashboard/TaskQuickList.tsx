@@ -9,7 +9,7 @@ import { useTaskActions } from "../tasks/useTaskActions";
 // The user's next tasks: a round check button (colored by priority) to finish a task right here
 function TaskQuickList({ tasks }: { tasks: Task[] }) {
     const text = useAppText();
-    const { openTask } = useTaskDialog();
+    const { showTask } = useTaskDialog();
     const { canUpdate, toggleDone } = useTaskActions();
 
     return (
@@ -28,7 +28,7 @@ function TaskQuickList({ tasks }: { tasks: Task[] }) {
                         >
                             {done && <CheckIcon aria-hidden="true" />}
                         </button>
-                        <button type="button" className={`cell-title task-quick-title truncate ${done ? "is-done" : ""}`} onClick={() => openTask(task.id)}>
+                        <button type="button" className={`cell-title task-quick-title truncate ${done ? "is-done" : ""}`} onClick={() => showTask(task.id)}>
                             {task.title}
                         </button>
                         <PriorityBadge priority={task.priority} />
